@@ -396,3 +396,20 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Config file
+config.json
+
+# Visual Studio
+.vs/
+x64/
+
+# Solution file
+*.aps
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Others
+*.exe
