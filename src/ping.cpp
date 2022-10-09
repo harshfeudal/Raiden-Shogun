@@ -1,0 +1,2 @@
+#include "../commands/ping.h"
+
