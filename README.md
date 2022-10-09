@@ -1,7 +1,7 @@
-<div align="center"><img src="https://user-images.githubusercontent.com/87577447/194767433-b6e04d5e-f937-44e9-81a0-c8df37537a1e.jpg" width="100" height="100"/>
-<h3>Raiden Shogun Discord Bot</h3>
+<div align="center"><img src="https://user-images.githubusercontent.com/87577447/194767433-b6e04d5e-f937-44e9-81a0-c8df37537a1e.jpg" width="200" height="200"/>
+<h3 style="font-size:70px">Raiden Shogun Discord Bot</h3>
     <b>
-        <p style="font-size:30px">A new Genshin Impact Discord bot, using Dpp version 10.0.20</p>
+        <p style="font-size:40px">A new Genshin Impact Discord bot, using Dpp version 10.0.20</p>
     </b>
 </div>
 
