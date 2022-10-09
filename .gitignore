@@ -413,5 +413,4 @@ x64/
 
 # Others
 *.exe
-*.rc
 dependencies/
