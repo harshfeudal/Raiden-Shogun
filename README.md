@@ -1,7 +1,7 @@
-<div align="center">
+<div align="center"><img src="https://user-images.githubusercontent.com/87577447/194767433-b6e04d5e-f937-44e9-81a0-c8df37537a1e.jpg"/>
 <h3>Raiden Shogun Discord Bot</h3>
 <br />
-    A new Genshin Impact Discord bot, using Dpp version `10.0.20`
+    A new Genshin Impact Discord bot, using Dpp version **10.0.20**
 </div>
 
 <hr />
