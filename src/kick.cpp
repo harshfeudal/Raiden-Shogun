@@ -11,8 +11,8 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	auto target_user = event.get_parameter("member");
 	auto target_reason = event.get_parameter("reason");
-
 	auto* guild_find = dpp::find_guild(event.command.guild_id);
+	dpp::message kick_confirm("Press to confirm");
 
 	if (!guild_find)
 	{
@@ -33,8 +33,6 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 			);
 		}
 	}
-
-	dpp::message kick_confirm("Press to confirm");
 
 	kick_confirm.add_component(
 		dpp::component()
@@ -73,8 +71,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
-				dpp::message()
-				.set_flags(dpp::m_ephemeral)
+				dpp::message().set_flags(dpp::m_ephemeral)
 				.set_content(kick_content)
 			);
 		}
@@ -84,8 +81,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
-				dpp::message()
-				.set_flags(dpp::m_ephemeral)
+				dpp::message().set_flags(dpp::m_ephemeral)
 				.set_content(cancel_content)
 			);
 		}
