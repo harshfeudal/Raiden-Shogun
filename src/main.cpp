@@ -39,7 +39,6 @@ int main()
 			}
 		});
 
-
 	client.start(false);
 	return 0;
 }

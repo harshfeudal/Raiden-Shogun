@@ -14,8 +14,8 @@
 
 ### 📚 Libraries and version
 These are libraries that we're using in this project:
-- [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.20` (lastest)
-- [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (lastest)
+- [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.20` (latest)
+- [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
 - BETA version - `0.1.2.56`
