@@ -9,8 +9,6 @@
 
 using json = nlohmann::json;
 
-void SlashCommand(dpp::cluster& client);
-
 int main()
 {
 	json reader;

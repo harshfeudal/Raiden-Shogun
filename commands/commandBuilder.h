@@ -4,12 +4,33 @@
 
 #include "handler.h"
 #include "ping.h"
+#include "kick.h"
 
 std::map<std::string, command_def> commands
 {
 	{
 		"ping", { "Check Raiden Shogun latecy", ping }
-	}
+	},
+	{
+		"kick",
+			{
+				"Raiden Shogun will kick a member you mentioned", kick,
+				{
+					dpp::command_option(
+						dpp::co_mentionable,
+						"member",
+						"Mention a member to kick",
+						true
+					),
+					dpp::command_option(
+						dpp::co_string,
+						"reason",
+						"Reason why they got kick",
+						false
+					)
+				}
+			}
+	},
 };
 
 void SlashCommand(dpp::cluster& client)
