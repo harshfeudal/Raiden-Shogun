@@ -12,6 +12,11 @@
 - This respiratory is under-construction! I'll update it as soon as possible.
 - I'm not highly recommended you to use C++ to code a Discord bot, instead of JavaScript or others library. To know how's this project works, you should learn some basics about C++ so that you can know what I am doing.
 
+### 📚 Libraries
+These are libraries that we're using in this project:
+- [Dpp](https://github.com/brainboxdotcc/DPP)
+- [Spdlog](https://github.com/gabime/spdlog)
+
  ### 🤝 Support me
  - Please leave me a star if you like it. Thank you very much!
  - You can probably help me to develop this project too by DMing me on my [Discord profile (Harshfeudal#0001)](https://discord.com/users/622450109317251088).
