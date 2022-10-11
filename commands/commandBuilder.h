@@ -5,6 +5,7 @@
 #include "handler.h"
 #include "ping.h"
 #include "kick.h"
+#include "ban.h"
 
 std::map<std::string, command_def> commands
 {
@@ -31,6 +32,26 @@ std::map<std::string, command_def> commands
 				}
 			}
 	},
+	{
+		"ban",
+			{
+				"Raiden Shogun will ban a member you mentioned", ban,
+				{
+					dpp::command_option(
+						dpp::co_mentionable,
+						"member",
+						"Mention a member to ban",
+						true
+					),
+					dpp::command_option(
+						dpp::co_string,
+						"reason",
+						"Reason why they got ban",
+						false
+					)
+				}
+			}
+	}
 };
 
 void SlashCommand(dpp::cluster& client)

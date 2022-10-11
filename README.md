@@ -18,8 +18,12 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.2.56`
+- BETA version - `0.1.2.62`
 - Stable version - `Unknown`
+
+### 👷 Code platform
+- Visual Studio Enterprise 2022
+- Visual Studio Code
 
  ### 🤝 Support me
  - Please leave me a star if you like it. Thank you very much!
