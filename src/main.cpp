@@ -30,12 +30,12 @@ int main()
 
 	client.on_slashcommand([&client](const dpp::slashcommand_t& event)
 		{
-			dpp::command_interaction command_data = event.command.get_command_interaction();
-			auto command_filter = commands.find(command_data.name);
+			dpp::command_interaction commandData = event.command.get_command_interaction();
+			auto commandFilter = commands.find(commandData.name);
 
-			if (command_filter != commands.end())
+			if (commandFilter != commands.end())
 			{
-				command_filter->second.function(client, event);
+				commandFilter->second.function(client, event);
 			}
 		});
 

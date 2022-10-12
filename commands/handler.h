@@ -4,12 +4,12 @@
 
 #include <dpp/dpp.h>
 
-using command_func = std::function<void(dpp::cluster&, const dpp::slashcommand_t&)>;
+using commandFunc = std::function<void(dpp::cluster&, const dpp::slashcommand_t&)>;
 
-struct command_def
+struct commandDef
 {
 	std::string description;
-	command_func function;
+	commandFunc function;
 
 	std::vector<dpp::command_option> param = {};
 };

@@ -6,8 +6,9 @@
 #include "ping.h"
 #include "kick.h"
 #include "ban.h"
+#include "userInfo.h"
 
-std::map<std::string, command_def> commands
+std::map<std::string, commandDef> commands
 {
 	{
 		"ping", { "Check Raiden Shogun latecy", ping }
@@ -51,6 +52,20 @@ std::map<std::string, command_def> commands
 					)
 				}
 			}
+	},
+	{
+		"user info",
+			{
+				"Raiden Shogun will show your info or someone info", userInfo,
+				{
+					dpp::command_option(
+						dpp::co_user,
+						"id",
+						"User ID you would like to know",
+						false
+					)
+				}
+			}
 	}
 };
 
@@ -58,7 +73,7 @@ void SlashCommand(dpp::cluster& client)
 {
 	if (dpp::run_once<struct bulk_register>())
 	{
-		std::vector<dpp::slashcommand> slash_cmds;
+		std::vector<dpp::slashcommand> slashCmds;
 
 		for (auto& def : commands)
 		{
@@ -69,9 +84,9 @@ void SlashCommand(dpp::cluster& client)
 				.set_application_id(client.me.id);
 
 			cmd.options = def.second.param;
-			slash_cmds.push_back(cmd);
+			slashCmds.push_back(cmd);
 		}
 
-		client.global_bulk_command_create(slash_cmds);
+		client.global_bulk_command_create(slashCmds);
 	}
 }
