@@ -18,12 +18,42 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.2.78`
+- BETA version - `0.1.2.78` (`Release` Version)
 - Stable version - `Unknown`
+
+### 🚨 Generating and using
+ This project was made by Visual Studio, so basically you cannot see my `.sln` file to open because I have ignored it. To use this project, you should generate it by using [Premake](https://premake.github.io/).
+
+ So basically, I have written `premake5.lua` for generating it (still working with that file, I'll finish it ASAP). Here are these steps:
+ 1. Download `premake5.exe` from [their website](https://premake.github.io/)
+ 2. Open the correct folder that you've downloaded this project, put that `premake5.exe` file into this project (put that file where you can see the `Raiden Shogun.rc` located)
+ 3. On the navigation bar, for example `D:/Harshfeudal/Raiden Shogun/`, clear all and type `cmd` on that, then enter and the terminal will release
+ 4. On that terminal, type:
+ ```
+ $ premake5 vs<add_their_version_here_without_bracelets>
+ ```
+ If you're using Visual Studio 2022 like me, just do like this:
+ ```
+ $ premake5 vs2022
+ ```
+ 5. Open it, build and run. And enjoy!
+
+ ### 📜 Some notes
+ This project is currently support for who's accept these cases:
+ - Microsoft Windows 10
+ - Visual Studio platform
+ - C++ 17
+
+ Other cases may not compile or crash occurs.
 
 ### 👷 Code platform
 - Visual Studio Enterprise 2022
 - Visual Studio Code
+
+### 💎 Future plan
+- [ ] Add `premake5.lua` (pending)
+- [ ] CMake support soon!
+- [x] Code works well (currently)
 
  ### 🤝 Support me
  - Please leave me a star if you like it. Thank you very much!
