@@ -1,3 +1,11 @@
+workspace "Raiden Shogun"
+	architecture "x64"
+
+	configurations
+	{
+		"Release"
+	}
+
 project "Raiden Shogun"
 	kind "ConsoleApp"
 	language "C++"
@@ -6,8 +14,9 @@ project "Raiden Shogun"
 
     -- Working in progress --
 
-	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
+	outputdir = "%{cfg.architecture}/%{cfg.buildcfg}"
+
+	targetdir ("%{wks.location}/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{
