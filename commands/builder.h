@@ -8,6 +8,8 @@
 #include "ban.h"
 #include "userInfo.h"
 
+void SlashCommand(dpp::cluster& client);
+
 std::map<std::string, commandDef> commands
 {
 	{

@@ -1,4 +1,5 @@
 #include <spdlog/spdlog.h>
+#include <harshfeudal/shorten.h>
 
 #include "../commands/handler.h"
 #include "../commands/ban.h"

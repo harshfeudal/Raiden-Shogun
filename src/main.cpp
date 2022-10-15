@@ -5,7 +5,7 @@
 #include <dpp/nlohmann/json.hpp>
 #include <dpp/dpp.h>
 
-#include "../commands/commandBuilder.h"
+#include "../commands/builder.h"
 
 using json = nlohmann::json;
 

@@ -10,6 +10,5 @@ struct commandDef
 {
 	std::string description;
 	commandFunc function;
-
 	std::vector<dpp::command_option> param = {};
 };

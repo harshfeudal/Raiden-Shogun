@@ -1,4 +1,5 @@
 #include <spdlog/spdlog.h>
+#include <harshfeudal/shorten.h>
 
 #include "../commands/ping.h"
 #include "../commands/handler.h"
@@ -12,9 +13,5 @@ void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 		(client.rest_ping + ws) * 1000
 	);
 
-	event.reply(
-		dpp::message()
-		.set_flags(dpp::m_ephemeral)
-		.set_content(message_content)
-	);
+	MessageReply(event, message_content, false);
 }
