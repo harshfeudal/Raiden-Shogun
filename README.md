@@ -4,6 +4,7 @@
         <p>A new Genshin Impact Discord bot, using Dpp version 10.0.20</p>
     </b>
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7560cc9516554677887087f791f40f82)](https://app.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun?utm_source=github.com&utm_medium=referral&utm_content=Harshfeudal-Projects/Raiden-Shogun&utm_campaign=Badge_Grade_Settings)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harshfeudal-Projects/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
 
 </div>
