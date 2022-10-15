@@ -54,7 +54,7 @@ std::map<std::string, commandDef> commands
 			}
 	},
 	{
-		"user info",
+		"userinfo",
 			{
 				"Raiden Shogun will show your info or someone info", userInfo,
 				{
