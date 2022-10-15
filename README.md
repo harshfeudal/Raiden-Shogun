@@ -5,6 +5,7 @@
     </b>
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harshfeudal-Projects/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
+[![Discord](https://img.shields.io/discord/900408551573438584?style=flat&logo=discord)](https://discord.gg/6Faaqhaqjs)
 
 </div>
 
