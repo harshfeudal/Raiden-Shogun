@@ -65,7 +65,7 @@ Bot current version:
  - You can probably help me to develop this project too by DMing me on my [Discord profile (Harshfeudal#0001)](https://discord.com/users/622450109317251088).
 
  ### :computer: Contribution and Pull Request
-  I'd probably glad to see if you have anything new to help and support me. To do that, please make a pull request and before you request a new pull request, make sure that you've tested the code by using your bot. I won't bite you if you do wrong, but just make sure that you need to test it clearly before I merge it.
+  I'd probably glad to see if you have anything new to help and support me. To do that, please make one and before you request a new pull request, make sure that you've tested the code by using your bot. I won't bite you if you do wrong, but just make sure that you need to test it clearly before I merge it.
 
  ### :sparkling_heart: Special thanks
   - My bot avatar artist (Please contact me if you're the owner of that avatar so that I can link your resource).

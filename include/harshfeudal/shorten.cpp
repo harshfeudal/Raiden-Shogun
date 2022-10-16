@@ -11,5 +11,5 @@ void MessageReply(const dpp::slashcommand_t& event, std::string content, dpp::me
 
 void MessageEmbed(const dpp::slashcommand_t& event)
 {
-
+	// Working in process ...
 }
