@@ -1,5 +1,4 @@
 #include <spdlog/spdlog.h>
-#include <harshfeudal/shorten.h>
 
 #include "../commands/ping.h"
 #include "../commands/handler.h"
