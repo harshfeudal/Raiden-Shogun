@@ -413,4 +413,4 @@ x64/
 
 # Others
 *.exe
-lib/
+lib/**.cmake

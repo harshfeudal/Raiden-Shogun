@@ -4,10 +4,10 @@
         <p>A new Genshin Impact Discord bot, using Dpp version 10.0.20</p>
     </b>
 
+[![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harshfeudal-Projects/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
 [![GitHub issues](https://img.shields.io/github/issues/Harshfeudal-Projects/Raiden-Shogun)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/issues)
 [![GitHub license](https://img.shields.io/github/license/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
 [![Discord](https://img.shields.io/discord/900408551573438584?style=flat&logo=discord)](https://discord.gg/6Faaqhaqjs)
 
 </div>
@@ -23,7 +23,7 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.2.126` (`Release` Version)
+- BETA version - `0.1.2.153` (`Release` Version)
 - Stable version - `Unknown`
 
 ### 🚨 Generating and using
@@ -35,9 +35,9 @@ Bot current version:
  3. On the navigation bar, for example `D:/Harshfeudal/Raiden Shogun/`, clear all and type `cmd` on that, then enter and the terminal will release
  4. On that terminal, type:
  ```
- $ premake5 vs<add_their_version_here_without_bracelets>
+ $ premake5 vs<version>
  ```
- If you're using Visual Studio 2022 like me, just do like this:
+ Example: If you're using Visual Studio 2022 like me, just do like this:
  ```
  $ premake5 vs2022
  ```
@@ -45,9 +45,10 @@ Bot current version:
 
  ### 📜 Some notes
  This project is currently support for who's accept these cases:
- - Microsoft Windows 10
- - Visual Studio platform
- - C++ 17
+ - Microsoft Windows 10 `x64`
+ - Visual Studio platform `x64`
+ - C++ 17 `ISO/IEC 14882`
+ - Please install `.dll` files on [dpp page](https://dpp.dev/) and put it near your `.exe` executable file so that it will run well
 
  Other cases may not compile or crash occurs.
 
@@ -56,7 +57,7 @@ Bot current version:
 - Visual Studio Code
 
 ### 💎 Future plan
-- [ ] Add `premake5.lua` (pending)
+- [x] Add `premake5.lua`
 - [ ] CMake support soon!
 - [x] Code works well (currently)
 
@@ -65,7 +66,7 @@ Bot current version:
  - You can probably help me to develop this project too by DMing me on my [Discord profile (Harshfeudal#0001)](https://discord.com/users/622450109317251088).
 
  ### :computer: Contribution and Pull Request
-  I'd probably glad to see if you have anything new to help and support me. To do that, please make one and before you request a new pull request, make sure that you've tested the code by using your bot. I won't bite you if you do wrong, but just make sure that you need to test it clearly before I merge it.
+  I'd probably glad to see if you have anything new to help and support me. To do that, please make one and before you do that, just make sure you've tested the code by using your bot. I won't bite you if you do wrong, but just make sure that you need to test it clearly before I merge it.
 
  ### :sparkling_heart: Special thanks
   - My bot avatar artist (Please contact me if you're the owner of that avatar so that I can link your resource).
