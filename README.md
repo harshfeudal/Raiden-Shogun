@@ -5,6 +5,7 @@
     </b>
 
 [![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Harshfeudal-Coding/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Coding/Raiden-Shogun/network)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harshfeudal-Projects/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
 [![GitHub issues](https://img.shields.io/github/issues/Harshfeudal-Projects/Raiden-Shogun)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/issues)
 [![GitHub license](https://img.shields.io/github/license/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/LICENSE)
