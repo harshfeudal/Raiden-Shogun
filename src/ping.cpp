@@ -13,5 +13,5 @@ void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 		(client.rest_ping + ws) * 1000
 	);
 
-	MessageReply(event, message_content, false);
+	MessageReply(event, message_content, dpp::m_null);
 }

@@ -1,20 +1,15 @@
 #include "shorten.h"
 
-void MessageReply(const dpp::slashcommand_t& event, std::string content, bool ephemeral)
+void MessageReply(const dpp::slashcommand_t& event, std::string content, dpp::message_flags messageFlag)
 {
-	if (ephemeral == true)
-	{
-		event.reply(
-			dpp::message()
-			.set_flags(dpp::m_ephemeral)
-			.set_content(content)
-		);
-	}
-	else
-	{
-		event.reply(
-			dpp::message()
-			.set_content(content)
-		);
-	}
+	event.reply(
+		dpp::message()
+		.set_flags(messageFlag)
+		.set_content(content)
+	);
+}
+
+void MessageEmbed(const dpp::slashcommand_t& event)
+{
+
 }
