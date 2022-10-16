@@ -44,7 +44,7 @@ Bot current version:
  5. Open it, build and run. And enjoy!
 
  ### 📜 Some notes
- This project is currently support for who's accept these cases:
+ This project is currently support for who is in these cases:
  - Microsoft Windows 10 `x64`
  - Visual Studio platform `x64`
  - C++ 17 `ISO/IEC 14882`
