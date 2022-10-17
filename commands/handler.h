@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-#include <harshfeudal/shorten.h>
 
 #include <dpp/dpp.h>
 

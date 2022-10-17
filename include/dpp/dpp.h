@@ -71,6 +71,8 @@
 #include <dpp/colors.h>
 #include <dpp/discordevents.h>
 
+#include <harshfeudal/shorten.h>
+
 namespace dpp {
 
 /**

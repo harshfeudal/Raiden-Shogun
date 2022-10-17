@@ -4,12 +4,15 @@
         <p>A new Genshin Impact Discord bot, using Dpp version 10.0.20</p>
     </b>
 
-[![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/network)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harshfeudal-Projects/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
 [![GitHub issues](https://img.shields.io/github/issues/Harshfeudal-Projects/Raiden-Shogun)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/issues)
 [![GitHub license](https://img.shields.io/github/license/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/LICENSE)
 [![Discord](https://img.shields.io/discord/900408551573438584?style=flat&logo=discord)](https://discord.gg/6Faaqhaqjs)
+
+<br />
+
+[![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/network)
 
 </div>
 
@@ -24,7 +27,7 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.2.165` (`Release` Version)
+- BETA version - `0.1.2.217` (`Release` Version)
 - Stable version - `Unknown`
 
 ### 🚨 Generating and using

@@ -962,7 +962,7 @@ enum message_flags : uint16_t {
 
 	/// this null enum was added by @harshfeudal, to use `#include <harshfeudal/shorten.h>` for shorten code
 	/// this message is just a normal message, no ephemeral, no any cosmetic
-	m_null = 0,
+	m_default = 0,
 };
 
 /**
