@@ -15,18 +15,19 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto* gFind = dpp::find_guild(event.command.guild_id);
 
 	if (!gFind)
-	{
 		harshfeudal::SlashMessageReply(
 			event, "No guild found", dpp::m_ephemeral, dpp::mt_default
 		);
-	}
 
-	auto permissionCheck = gFind->base_permissions(&event.command.usr).has(dpp::p_kick_members);
-	if (!permissionCheck)
+	if (gFind)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "You have lack of permission to kick", dpp::m_ephemeral, NOMSGTYPE
-		);
+		auto permissionCheck = gFind->base_permissions(&event.command.usr).has(dpp::p_kick_members);
+		if (!permissionCheck)
+		{
+			harshfeudal::SlashMessageReply(
+				event, "You have lack of permission to kick", dpp::m_ephemeral, NOMSGTYPE
+			);
+		}
 	}
 
 	dpp::message kickConfirm("Do you want to kick? Press the button below to confirm");
