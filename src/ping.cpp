@@ -13,6 +13,6 @@ void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 	);
 	
 	harshfeudal::SlashMessageReply(
-		event, content, NOMSGFLAG, NOMSGTYPE
+		event, content, NO_MSG_FLAG, NO_MSG_TYPE
 	);
 }

@@ -5,18 +5,17 @@
 
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
-	dpp::snowflake guild_target;
-	dpp::snowflake user_targeted;
-	std::string reason;
+	dpp::snowflake tgtGuild;
+	dpp::snowflake tgtUser;
+	std::string    k_Reason;
 
-	auto trgUser = event.get_parameter("member");
+	auto trgUser   = event.get_parameter("member");
 	auto trgReason = event.get_parameter("reason");
-
-	auto* gFind = dpp::find_guild(event.command.guild_id);
+	auto gFind     = dpp::find_guild(event.command.guild_id);
 
 	if (!gFind)
 		harshfeudal::SlashMessageReply(
-			event, "No guild found", dpp::m_ephemeral, dpp::mt_default
+			event, "No guild found", dpp::m_ephemeral, NO_MSG_TYPE
 		);
 
 	if (gFind)
@@ -25,14 +24,17 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		if (!permissionCheck)
 		{
 			harshfeudal::SlashMessageReply(
-				event, "You have lack of permission to kick", dpp::m_ephemeral, NOMSGTYPE
+				event, "You have lack of permission to kick", dpp::m_ephemeral, NO_MSG_TYPE
 			);
 		}
 	}
 
-	dpp::message kickConfirm("Do you want to kick? Press the button below to confirm");
+	dpp::message k_Confirm("Do you want to kick? Press the button below to confirm");
 
-	kickConfirm.add_component(
+	// harshfeudal::ButtonBasicCreate(k_Confirm, "Kick", dpp::cos_danger, "k_kickId", false, NULL);
+	// harshfeudal::ButtonBasicCreate(k_Confirm, "Cancel", dpp::cos_secondary, "k_cancelId", false, NULL);
+
+	k_Confirm.add_component(
 		dpp::component().add_component(
 			dpp::component()
 			.set_label("Kick")
@@ -50,12 +52,12 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (std::holds_alternative<std::string>(trgReason)) 
 	{ 
-		reason = std::get<std::string>(trgReason); 
+		k_Reason = std::get<std::string>(trgReason); 
 	}
-	else { reason = "No kick reason provided"; }
+	else { k_Reason = "No kick reason provided"; }
 
 	event.reply(
-		kickConfirm.set_flags(dpp::m_ephemeral)
+		k_Confirm.set_flags(dpp::m_ephemeral)
 	);
 
 	// Working in progress ...

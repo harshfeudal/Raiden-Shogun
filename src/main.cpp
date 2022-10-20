@@ -14,6 +14,15 @@ int main()
 	json reader;
 	{
 		std::ifstream reading("config.json");
+
+		if (!reading)
+		{
+			std::cout << "No configuration file found! Please add it with the name \"config.json\"!";
+			std::cin.get();
+
+			exit(0);
+		}
+		
 		reading >> reader;
 		reading.close();
 	}
@@ -31,7 +40,7 @@ int main()
 	client.on_slashcommand([&client](const dpp::slashcommand_t& event)
 		{
 			dpp::command_interaction commandData = event.command.get_command_interaction();
-			auto commandFilter = commands.find(commandData.name);
+			auto commandFilter                   = commands.find(commandData.name);
 
 			if (commandFilter != commands.end())
 			{
