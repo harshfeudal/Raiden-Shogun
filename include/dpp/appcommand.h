@@ -287,6 +287,8 @@ void to_json(nlohmann::json& j, const command_option& opt);
  * @brief Response types when responding to an interaction within on_interaction_create.
  */
 enum interaction_response_type {
+	ir_default = 0,					// From Harshfeudal's shorten
+
 	ir_pong = 1,					//!< Acknowledge a Ping
 	ir_channel_message_with_source = 4,		//!< respond to an interaction with a message
 	ir_deferred_channel_message_with_source = 5,	//!< Acknowledge an interaction and edit a response later, the user sees a loading state
