@@ -9,10 +9,6 @@
 
 using commandFunc = std::function<void(dpp::cluster&, const dpp::slashcommand_t&)>;
 
-std::unordered_map<uint64_t, Session> cachedSessions;
-std::shared_mutex                     cachedSessionsMutex;
-uint64_t                              customIdCounter;
-
 struct commandDef
 {
 	std::string description;
@@ -30,6 +26,10 @@ struct Session {
 		return difftime(time(nullptr), created_at) > COMPONENT_CACHE_DURATION;
 	}
 };
+
+std::unordered_map<uint64_t, Session> cachedSessions;
+std::shared_mutex                     cachedSessionsMutex;
+uint64_t                              customIdCounter;
 
 void Buttonhandle(const dpp::button_click_t& event)
 {
