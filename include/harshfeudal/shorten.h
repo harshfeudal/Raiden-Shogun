@@ -18,10 +18,9 @@ namespace harshfeudal
 	{
 		event.reply(
 			resType,
-			dpp::message()
-			.set_content(content)
-			.set_flags(msgFlag)
-			.set_type(msgType)
+			dpp::message().set_content(content)
+			              .set_flags(msgFlag)
+			              .set_type(msgType)
 		);
 	}
 
@@ -31,36 +30,19 @@ namespace harshfeudal
 	)
 	{
 		event.reply(
-			dpp::message()
-			.set_content(content)
-			.set_flags(msgFlag)
-			.set_type(msgType)
+			dpp::message().set_content(content)
+			              .set_flags(msgFlag)
+			              .set_type(msgType)
 		);
 	}
 
-	inline void ButtonMessageReply(
-		const dpp::button_click_t& btnEvent, std::string content,
-		dpp::message_flags msgFlag, dpp::message_type msgType,
-		dpp::interaction_response_type resType
-	)
-	{
-		btnEvent.reply(
-			resType,
-			dpp::message()
-			.set_content(content)
-			.set_flags(msgFlag)
-			.set_type(msgType)
-		);
-	}
-
-	inline void ButtonMessageReply(
-		const dpp::button_click_t& btnEvent, std::string content,
+	inline void ButtonReply(
+		const dpp::button_click_t& event, std::string content,
 		dpp::message_flags msgFlag, dpp::message_type msgType
 	)
 	{
-		btnEvent.reply(
-			dpp::message()
-			.set_content(content)
+		event.reply(
+			dpp::message().set_content(content)
 			.set_flags(msgFlag)
 			.set_type(msgType)
 		);

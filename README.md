@@ -24,10 +24,10 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.2.312` (`Release` Version)
+- BETA version - `0.1.2.324` (`Release`)
 - Stable version - `Unknown`
 
-### 🚨 Generating and using
+### 🚨 Generate and use
  This project was made by Visual Studio, so basically you cannot see my `.sln` file to open because I have ignored it. To use this project, you should generate it by using [Premake](https://premake.github.io/).
 
  So basically, I have written `premake5.lua` for generating it (still working with that file, I'll finish it ASAP). Here are these steps:
@@ -42,7 +42,14 @@ Bot current version:
  ```
  $ premake5 vs2022
  ```
- 5. Open it, build and run. And enjoy!
+ 5. Rename the `.example.config.json` file to `config.json`. Add your bot token and client secret in that file:
+ ```json
+ {
+    "token": "[add your bot token in here]",
+    "client_secret": "[add your bot secret in here]"
+ }
+ ```
+ 6. Build, run, and enjoy!
 
  ### 📜 Some notes
  This project is currently support for who is in these cases:

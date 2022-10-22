@@ -46,27 +46,30 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!std::holds_alternative<std::string>(trgReason)) 
 		k_Reason = "No kick reason provided";
-
 	k_Reason = std::get<std::string>(trgReason);
 
-	client.on_button_click([&client, k_Reason, tgtGuild, tgtUser](const dpp::button_click_t& btnEvent)
+	client.on_button_click([&client, k_Reason, tgtGuild, tgtUser](const dpp::button_click_t& event)
 		{
-			if (btnEvent.custom_id == "kick_id")
+			std::string kContent   = fmt::format("<@{}> has been kicked!", tgtUser);
+			std::string cnlContent = "Cancelled request!";
+
+			if (event.custom_id == "k_Id")
 			{
 				client.set_audit_reason(k_Reason);
 				client.guild_member_kick(tgtGuild, tgtUser);
-				std::string kContent = fmt::format("<@{}> has been kicked!", tgtUser);
 
-				harshfeudal::ButtonMessageReply(
-					btnEvent, kContent, dpp::m_ephemeral, NO_MSG_TYPE, dpp::ir_update_message
+				event.reply(
+					dpp::interaction_response_type::ir_update_message,
+					dpp::message().set_flags(dpp::m_ephemeral)
+						          .set_content(kContent)
 				);
 			}
-			else if (btnEvent.custom_id == "cancel_id")
+			else if (event.custom_id == "cnl_Id")
 			{
-				std::string cnlContent("Cancelled request!");
-
-				harshfeudal::ButtonMessageReply(
-					btnEvent, cnlContent, dpp::m_ephemeral, NO_MSG_TYPE, dpp::ir_update_message
+				event.reply(
+					dpp::interaction_response_type::ir_update_message,
+					dpp::message().set_flags(dpp::m_ephemeral)
+						          .set_content(cnlContent)
 				);
 			}
 		});

@@ -8,7 +8,7 @@
 #include "ban.h"
 #include "userInfo.h"
 
-void SlashCommand(dpp::cluster& client);
+void SlashCommandCreate(dpp::cluster& client);
 
 std::map<std::string, commandDef> commands
 {
@@ -71,7 +71,7 @@ std::map<std::string, commandDef> commands
 	}
 };
 
-void SlashCommand(dpp::cluster& client)
+void SlashCommandCreate(dpp::cluster& client)
 {
 	if (dpp::run_once<struct bulk_register>())
 	{
