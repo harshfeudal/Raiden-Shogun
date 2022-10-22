@@ -7,6 +7,7 @@
 #include <dpp/dpp.h>
 
 #include "../commands/builder.h"
+#include "../commands/buttonHandler.h"
 
 using json = nlohmann::json;
 
