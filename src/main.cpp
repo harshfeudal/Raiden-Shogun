@@ -1,4 +1,5 @@
 #include <fstream>
+#include <chrono>
 #include <map>
 
 #include <spdlog/spdlog.h>
@@ -30,12 +31,13 @@ int main()
 	const std::string token = reader["token"];
 	dpp::cluster client(token, dpp::i_all_intents);
 
-	client.on_ready([&client](const dpp::ready_t& event) {
-		fmt::print("[Started]: {} is online!", client.me.username);
-		client.set_presence(dpp::presence(dpp::ps_dnd, dpp::at_game, "Genshin Impact"));
+	client.on_ready([&client](const dpp::ready_t& event) 
+		{
+			fmt::print("[STARTED]: {} is online!", client.me.username);
+			client.set_presence(dpp::presence(dpp::ps_dnd, dpp::at_game, "Genshin Impact"));
 
-		SlashCommand(client);
-	});
+			SlashCommand(client);
+		});
 
 	client.on_slashcommand([&client](const dpp::slashcommand_t& event)
 		{
