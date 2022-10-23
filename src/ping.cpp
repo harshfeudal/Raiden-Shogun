@@ -1,7 +1,7 @@
 #include <spdlog/spdlog.h>
 
+#include "../handler/handler.h"
 #include "../commands/ping.h"
-#include "../commands/handler.h"
 
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 {

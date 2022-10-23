@@ -6,8 +6,8 @@
 #include <dpp/nlohmann/json.hpp>
 #include <dpp/dpp.h>
 
-#include "../commands/builder.h"
-#include "../commands/buttonHandler.h"
+#include "../handler/builder.h"
+#include "../handler/btnHandler.h"
 
 using json = nlohmann::json;
 
@@ -57,7 +57,7 @@ int main()
 
 	client.on_button_click([](const dpp::button_click_t& event) 
 		{
-			Buttonhandle(event);
+			ButtonHandle(event);
 		});
 
 	client.start(false);
