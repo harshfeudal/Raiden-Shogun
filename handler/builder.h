@@ -21,7 +21,7 @@ std::map<std::string, commandDef> commands
 				"Raiden Shogun will kick a member you mentioned", kick,
 				{
 					dpp::command_option(
-						dpp::co_mentionable,
+						dpp::co_user,
 						"member",
 						"Mention a member to kick",
 						true
@@ -41,7 +41,7 @@ std::map<std::string, commandDef> commands
 				"Raiden Shogun will ban a member you mentioned", ban,
 				{
 					dpp::command_option(
-						dpp::co_mentionable,
+						dpp::co_user,
 						"member",
 						"Mention a member to ban",
 						true

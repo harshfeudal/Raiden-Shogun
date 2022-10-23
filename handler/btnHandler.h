@@ -91,12 +91,18 @@ inline void ButtonHandle(const dpp::button_click_t& event)
 	}
 	catch (std::out_of_range& e) 
 	{
-		event.reply(dpp::message("invalid component").set_flags(dpp::m_ephemeral));
+		event.reply(
+			dpp::message("Button not found or not binded!").set_flags(dpp::m_ephemeral)
+		);
+
 		return;
 	}
 	catch (std::invalid_argument& e) 
 	{
-		event.reply(dpp::message("invalid component").set_flags(dpp::m_ephemeral));
+		event.reply(
+			dpp::message("Button not found or not binded!").set_flags(dpp::m_ephemeral)
+		);
+
 		return;
 	}
 
