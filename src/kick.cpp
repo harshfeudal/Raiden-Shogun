@@ -66,9 +66,21 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 				std::string k_Reason = "No kick reason provided";
 			}
 
-			std::string k_Reason = std::get<std::string>(tgtReason);
-			client.set_audit_reason(k_Reason);
-			client.guild_member_kick_sync(tgtGuild, usr);
+			try 
+			{
+				std::string k_Reason = std::get<std::string>(tgtReason);
+
+				client.set_audit_reason(k_Reason)
+				      .guild_member_kick_sync(tgtGuild, usr);
+			}
+			catch (dpp::rest_exception& exception) 
+			{
+				event.reply(
+					dpp::interaction_response_type::ir_update_message,
+					dpp::message().set_flags(dpp::m_ephemeral)
+					              .set_content("User not found!")
+				);
+			}
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
