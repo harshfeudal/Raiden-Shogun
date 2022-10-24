@@ -7,10 +7,11 @@
 
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
-	auto tgtReason    = event.get_parameter("reason");
-	const auto gFind  = dpp::find_guild(event.command.guild_id);
-	auto usr          = std::get<dpp::snowflake>(event.get_parameter("member"));
-
+	auto usr           = std::get<dpp::snowflake>(event.get_parameter("member"));
+	auto tgtReason     = event.get_parameter("reason");
+	auto source        = event.command.usr.id;
+	auto gFind         = dpp::find_guild(event.command.guild_id);
+	auto tgtGuild      = event.command.guild_id;
 	const auto tgtUser = gFind->members.find(usr);
 
 	if (tgtUser == gFind->members.end())
@@ -51,20 +52,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		                                 .set_style(dpp::cos_secondary)
 		                                 .set_id("cnl_Id");
 
-	dpp::message k_Confirm(
-		fmt::format("Do you want to kick <@{}>? Press the button below to confirm", usr)
-	);
-
-	k_Confirm.add_component(
-		dpp::component().add_component(k_Component)
-		                .add_component(cnl_Component)
-	);
-
-	event.reply(
-		k_Confirm.set_flags(dpp::m_ephemeral)
-	);
-
-	ButtonBind(k_Component, [&client, tgtReason, usr, source = event.command.usr.id](const dpp::button_click_t& event)
+	ButtonBind(k_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
 			if (source != event.command.usr.id)
 			{
@@ -74,16 +62,24 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 			std::string kContent = fmt::format("<@{}> has been kicked!", usr);
 
 			if (!std::holds_alternative<std::string>(tgtReason))
+			{
 				std::string k_Reason = "No kick reason provided";
+			}
 
 			std::string k_Reason = std::get<std::string>(tgtReason);
 			client.set_audit_reason(k_Reason);
-			client.guild_member_kick(event.command.guild_id, usr);
+			client.guild_member_kick_sync(tgtGuild, usr);
+
+			event.reply(
+				dpp::interaction_response_type::ir_update_message,
+				dpp::message().set_flags(dpp::m_ephemeral)
+				              .set_content(kContent)
+			);
 
 			return true;
 		});
 	
-	ButtonBind(cnl_Component, [source = event.command.usr.id](const dpp::button_click_t& event) 
+	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event) 
 		{
 			std::string cnlContent = "Cancelled request!";
 
@@ -100,4 +96,18 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 			return true;
 		});
+
+	dpp::message k_Confirm(
+		fmt::format("Do you want to kick <@{}>? Press the button below to confirm", usr)
+	);
+
+	k_Confirm.add_component(
+		dpp::component().add_component(k_Component)
+		                .add_component(cnl_Component)
+	);
+
+	event.reply(
+		k_Confirm.set_flags(dpp::m_ephemeral)
+		.set_channel_id(event.command.channel_id)
+	);
 }

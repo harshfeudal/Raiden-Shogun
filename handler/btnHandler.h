@@ -60,11 +60,10 @@ inline void ButtonBind(dpp::component& component, const std::function<bool(const
 		customIdAlreadyExists = cachedSessions.find(customIdCounter) != cachedSessions.end();
 		if (!customIdAlreadyExists) 
 		{
-			component.custom_id = std::to_string(customIdCounter);
-
 			Session session;
 			session.function       = function;
 			session.cache_duration = cache_duration;
+			component.custom_id    = std::to_string(customIdCounter);
 
 			component.custom_id += ID_SPACING + std::to_string(static_cast<long int>(session.created_at));
 
