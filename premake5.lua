@@ -46,4 +46,7 @@ project "Raiden Shogun"
 	filter "configurations:Release"
 		runtime  "Release"
 		optimize "on"
+	
+	filter("toolset:msc")
+		linkoptions("/FORCE:MULTIPLE")
         

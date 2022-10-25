@@ -73,7 +73,7 @@ std::map<std::string, commandDef> commands
 
 void SlashCommandCreate(dpp::cluster& client)
 {
-	if (dpp::run_once<struct bulk_register>())
+	if (dpp::run_once<struct register_commands>())
 	{
 		std::vector<dpp::slashcommand> slashCmds;
 

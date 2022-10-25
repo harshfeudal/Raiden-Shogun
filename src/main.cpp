@@ -34,11 +34,11 @@ int main()
 
 	client.on_ready([&client](const dpp::ready_t& event) 
 		{
-			SlashCommandCreate(client);
-
 			client.set_presence(
 				dpp::presence(dpp::ps_dnd, dpp::at_game, "Genshin Impact")
 			);
+			
+			SlashCommandCreate(client);
 
 			fmt::print("[{} - STARTED]: {} is online!\n", dpp::utility::current_date_time(), client.me.username);
 			fmt::print("[{} - REGISTERED]: Successfully registered slash commands!\n", dpp::utility::current_date_time());
@@ -59,7 +59,7 @@ int main()
 		{
 			ButtonHandle(event);
 		});
-
+	
 	client.start(false);
 	return 0;
 }

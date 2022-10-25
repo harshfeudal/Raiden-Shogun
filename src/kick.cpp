@@ -6,12 +6,15 @@
 #include "../commands/kick.h"
 
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
-{
-	auto usr           = std::get<dpp::snowflake>(event.get_parameter("member"));
-	auto tgtReason     = event.get_parameter("reason");
-	auto source        = event.command.usr.id;
-	auto gFind         = dpp::find_guild(event.command.guild_id);
-	auto tgtGuild      = event.command.guild_id;
+{	
+	auto usr = std::get<dpp::snowflake>(event.get_parameter("member"));
+	auto tgtReason = event.get_parameter("reason");
+	
+	auto source = event.command.usr.id;
+	auto gFind = dpp::find_guild(event.command.guild_id);
+	auto tgtGuild = event.command.guild_id;
+	auto tgtChannel = event.command.channel_id;
+
 	const auto tgtUser = gFind->members.find(usr);
 
 	if (tgtUser == gFind->members.end())
@@ -23,7 +26,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	if (gFind == nullptr) 
+	if (gFind == nullptr)
 	{
 		harshfeudal::SlashMessageReply(
 			event, "Guild not found!", dpp::m_ephemeral, NO_MSG_TYPE
@@ -40,17 +43,16 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
-
-	// Working in progress ...
-	auto k_Component   = dpp::component().set_label("Kick")
-		                                 .set_type(dpp::cot_button)
-		                                 .set_style(dpp::cos_danger)
-		                                 .set_id("k_Id");
+	
+	auto k_Component = dpp::component().set_label("Kick")
+		                               .set_type(dpp::cot_button)
+		                               .set_style(dpp::cos_danger)
+		                               .set_id("k_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
 		                                 .set_type(dpp::cot_button)
 		                                 .set_style(dpp::cos_secondary)
-		                                 .set_id("cnl_Id");
+		                                 .set_id("k_cnl_Id");
 
 	ButtonBind(k_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
@@ -60,27 +62,19 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 			}
 
 			std::string kContent = fmt::format("<@{}> has been kicked!", usr);
-
-			if (!std::holds_alternative<std::string>(tgtReason))
-			{
-				std::string k_Reason = "No kick reason provided";
-			}
-
-			try 
+			
+			if (std::holds_alternative<std::string>(tgtReason))
 			{
 				std::string k_Reason = std::get<std::string>(tgtReason);
-
-				client.set_audit_reason(k_Reason)
-				      .guild_member_kick_sync(tgtGuild, usr);
+				client.set_audit_reason(k_Reason);
 			}
-			catch (dpp::rest_exception& exception) 
+			else
 			{
-				event.reply(
-					dpp::interaction_response_type::ir_update_message,
-					dpp::message().set_flags(dpp::m_ephemeral)
-					              .set_content("User not found!")
-				);
+				std::string k_Reason = "No reason provided";
+				client.set_audit_reason(k_Reason);
 			}
+			
+			client.guild_member_kick(tgtGuild, usr);
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
@@ -90,12 +84,12 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 			return true;
 		});
-	
-	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event) 
+
+	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event)
 		{
 			std::string cnlContent = "Cancelled request!";
 
-			if (source != event.command.usr.id) 
+			if (source != event.command.usr.id)
 			{
 				return false;
 			}
@@ -120,6 +114,6 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	event.reply(
 		k_Confirm.set_flags(dpp::m_ephemeral)
-		.set_channel_id(event.command.channel_id)
+		         .set_channel_id(tgtChannel)
 	);
 }
