@@ -19,34 +19,14 @@ project "Raiden Shogun"
 	targetdir ("%{wks.location}/x64/%{cfg.buildcfg}")
 	objdir    ("%{wks.location}/x64/%{cfg.buildcfg}")
 
-	includedirs
-	{
-		"include"
-	}
+	includedirs{ "include" }
+	libdirs    { "lib" }
+	links      { "dpp.lib" }
+	files      { "src/**.cpp", "commands/**.h" }
 
-	libdirs
-	{
-		"lib"
-	}
-
-	links
-	{
-		"dpp.lib"
-	}
-
-	files
-	{
-		"src/**.cpp",
-        "commands/**.h"
-	}
-
-	filter "system:windows"
+	filter { "system:windows", "toolset:msc" }
 		systemversion "latest"
 
 	filter "configurations:Release"
 		runtime  "Release"
 		optimize "on"
-	
-	filter("toolset:msc")
-		linkoptions("/FORCE:MULTIPLE")
-        

@@ -10,7 +10,7 @@
 
 void SlashCommandCreate(dpp::cluster& client);
 
-std::map<std::string, commandDef> commands
+inline std::map<std::string, commandDef> commands
 {
 	{
 		"ping", { "Check Raiden Shogun latecy", ping }
@@ -71,7 +71,7 @@ std::map<std::string, commandDef> commands
 	}
 };
 
-void SlashCommandCreate(dpp::cluster& client)
+inline void SlashCommandCreate(dpp::cluster& client)
 {
 	if (dpp::run_once<struct register_commands>())
 	{

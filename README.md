@@ -24,7 +24,7 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.2.386` (`Release`)
+- BETA version - `0.1.3.0` (`Release`)
 - Stable version - `Unknown`
 
 ### 🚨 Generate and use
@@ -57,10 +57,6 @@ Bot current version:
  - Visual Studio platform `x64`
  - C++ 17 `ISO/IEC 14882`
  - Please install `.dll` files on [dpp page](https://dpp.dev/) and put it near your `.exe` executable file so that it will run well
- - Issue may occur: [LNK2005](https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk2005?f1url=%3FappId%3DDev16IDEF1%26l%3DEN-US%26k%3Dk(LNK2005)%26rd%3Dtrue&view=msvc-170) from Visual Studio. To fix that, please follow these steps:
-    1. Open the project's **Property Pages** dialog box. For more information, see [Set compiler and build properties](https://learn.microsoft.com/en-us/cpp/build/working-with-project-properties?view=msvc-170).
-    2. Select the **Configuration Properties > Linker > General property page**.
-    3. Modify the **Force File Output** property and choose **/FORCE:MULTIPLE**. Choose **OK** or **Apply** to save your changes.
 
  Other cases may not compile or crash occurs.
 

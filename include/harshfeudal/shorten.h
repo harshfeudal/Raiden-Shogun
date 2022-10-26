@@ -1,7 +1,5 @@
 #pragma once
 
-#include <dpp/dpp.h>
-#include <spdlog/spdlog.h>
 #include <string>
 
 #define NO_MSG_TYPE dpp::mt_default

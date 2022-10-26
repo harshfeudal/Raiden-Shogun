@@ -18,9 +18,9 @@ struct Session
 	}
 };
 
-std::unordered_map<uint64_t, Session> cachedSessions;
-std::shared_mutex                     cachedSessionsMutex;
-uint64_t                              customIdCounter;
+inline std::unordered_map<uint64_t, Session> cachedSessions;
+inline std::shared_mutex                     cachedSessionsMutex;
+inline uint64_t                              customIdCounter;
 
 inline void ButtonClear() 
 {

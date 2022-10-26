@@ -1,5 +1,4 @@
 #include <spdlog/spdlog.h>
-#include <set>
 
 #include "../handler/handler.h"
 #include "../handler/btnHandler.h"
@@ -43,6 +42,17 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
+
+	/*
+	if (!dpp::permission().has(dpp::p_kick_members))
+	{
+		harshfeudal::SlashMessageReply(
+			event, "I have lack of permission to kick", dpp::m_ephemeral, NO_MSG_TYPE
+		);
+
+		return;
+	}
+	*/
 	
 	auto k_Component = dpp::component().set_label("Kick")
 		                               .set_type(dpp::cot_button)
