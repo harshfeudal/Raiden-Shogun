@@ -1,10 +1,6 @@
 workspace "Raiden Shogun"
 	architecture "x64"
-
-	configurations
-	{
-		"Release"
-	}
+	configurations { "Release" }
 
 project "Raiden Shogun"
 	kind          "ConsoleApp"
@@ -22,7 +18,7 @@ project "Raiden Shogun"
 	includedirs{ "include" }
 	libdirs    { "lib" }
 	links      { "dpp.lib" }
-	files      { "src/**.cpp", "commands/**.h" }
+	files      { "src/**.cpp", "commands/**.h", "Raiden Shogun.rc" }
 
 	filter { "system:windows", "toolset:msc" }
 		systemversion "latest"
