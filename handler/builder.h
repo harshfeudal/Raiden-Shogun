@@ -58,7 +58,7 @@ inline std::map<std::string, commandDef> commands
 	{
 		"userinfo",
 			{
-				"Raiden Shogun will show your info or someone info", userInfo,
+				"Raiden Shogun will show mentioned user info", userInfo,
 				{
 					dpp::command_option(
 						dpp::co_user,

@@ -6,13 +6,14 @@
 
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {	
-	auto usr = std::get<dpp::snowflake>(event.get_parameter("member"));
+	auto usr       = std::get<dpp::snowflake>(event.get_parameter("member"));
 	auto tgtReason = event.get_parameter("reason");
 	
-	auto source = event.command.usr.id;
-	auto gFind = dpp::find_guild(event.command.guild_id);
-	auto tgtGuild = event.command.guild_id;
-	auto tgtChannel = event.command.channel_id;
+	auto source           = event.command.usr.id;
+	auto gFind            = dpp::find_guild(event.command.guild_id);
+	auto tgtGuild         = event.command.guild_id;
+	auto tgtChannel       = event.command.channel_id;
+	auto clientPermission = event.command.app_permissions.has(dpp::p_kick_members);
 
 	const auto tgtUser = gFind->members.find(usr);
 
@@ -43,8 +44,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	/*
-	if (!dpp::permission().has(dpp::p_kick_members))
+	if (!clientPermission)
 	{
 		harshfeudal::SlashMessageReply(
 			event, "I have lack of permission to kick", dpp::m_ephemeral, NO_MSG_TYPE
@@ -52,7 +52,6 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
-	*/
 	
 	auto k_Component = dpp::component().set_label("Kick")
 		                               .set_type(dpp::cot_button)

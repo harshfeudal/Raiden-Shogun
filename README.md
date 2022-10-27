@@ -24,7 +24,7 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.3.0` (`Release`)
+- BETA version - `0.1.3.12` (`Release`)
 - Stable version - `Unknown`
 
 ### 🚨 Generate and use

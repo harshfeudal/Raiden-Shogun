@@ -9,10 +9,11 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto usr       = std::get<dpp::snowflake>(event.get_parameter("member"));
 	auto tgtReason = event.get_parameter("reason");
 
-	auto source     = event.command.usr.id;
-	auto gFind      = dpp::find_guild(event.command.guild_id);
-	auto tgtGuild   = event.command.guild_id;
-	auto tgtChannel = event.command.channel_id;
+	auto source           = event.command.usr.id;
+	auto gFind            = dpp::find_guild(event.command.guild_id);
+	auto tgtGuild         = event.command.guild_id;
+	auto tgtChannel       = event.command.channel_id;
+	auto clientPermission = event.command.app_permissions.has(dpp::p_ban_members);
 
 	const auto tgtUser = gFind->members.find(usr);
 
@@ -43,8 +44,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	/*
-	if (!dpp::permission().has(dpp::p_ban_members))
+	if (!clientPermission)
 	{
 		harshfeudal::SlashMessageReply(
 			event, "I have lack of permission to ban", dpp::m_ephemeral, NO_MSG_TYPE
@@ -52,7 +52,6 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
-	*/
 	
 	auto b_Component = dpp::component().set_label("Ban")
 		                               .set_type(dpp::cot_button)
