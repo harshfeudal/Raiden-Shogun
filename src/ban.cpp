@@ -72,7 +72,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 			std::string bContent = fmt::format("<@{}> has been banned!", usr);
 
-			if (std::holds_alternative<std::string>(tgtReason))
+			if (std::holds_alternative<std::string>(tgtReason) == true)
 			{
 				std::string b_Reason = std::get<std::string>(tgtReason);
 				client.set_audit_reason(b_Reason);

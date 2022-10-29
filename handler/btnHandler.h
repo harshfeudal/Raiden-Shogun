@@ -34,10 +34,7 @@ inline void ButtonClear()
 			assert(!cachedSessions.empty());
 			it = cachedSessions.erase(it);
 		}
-		else 
-		{
-			++it;
-		}
+		else ++it;
 	}
 }
 
@@ -80,8 +77,8 @@ inline void ButtonHandle(const dpp::button_click_t& event)
 
 	try 
 	{
-		std::string id = event.custom_id.substr(0, event.custom_id.find(ID_SPACING));
-		std::string creation = event.custom_id.substr(
+		const std::string id = event.custom_id.substr(0, event.custom_id.find(ID_SPACING));
+		const std::string creation = event.custom_id.substr(
 			event.custom_id.find(ID_SPACING) + std::strlen(ID_SPACING),
 			std::string::npos
 		);
@@ -90,23 +87,23 @@ inline void ButtonHandle(const dpp::button_click_t& event)
 	}
 	catch (std::out_of_range& e) 
 	{
-		event.reply(
-			dpp::message("Button not found or not binded!").set_flags(dpp::m_ephemeral)
+		harshfeudal::ButtonReply(
+			event, "Button not found!", dpp::m_ephemeral, NO_MSG_TYPE
 		);
 
 		return;
 	}
 	catch (std::invalid_argument& e) 
 	{
-		event.reply(
-			dpp::message("Button not found or not binded!").set_flags(dpp::m_ephemeral)
+		harshfeudal::ButtonReply(
+			event, "Button not found!", dpp::m_ephemeral, NO_MSG_TYPE
 		);
 
 		return;
 	}
 
 	std::unique_lock l(cachedSessionsMutex);
-	auto existing = cachedSessions.find(customId);
+	const auto existing = cachedSessions.find(customId);
 
 	if (existing != cachedSessions.end() && existing->second.created_at == creationTimestamp && !existing->second.isExpired()) 
 	{

@@ -72,7 +72,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 			std::string kContent = fmt::format("<@{}> has been kicked!", usr);
 			
-			if (std::holds_alternative<std::string>(tgtReason))
+			if (std::holds_alternative<std::string>(tgtReason) == true)
 			{
 				std::string k_Reason = std::get<std::string>(tgtReason);
 				client.set_audit_reason(k_Reason);

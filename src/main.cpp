@@ -39,7 +39,7 @@ int main()
 			
 			SlashCommandCreate(client);
 
-			fmt::print("[{} - STARTED]: {} is online!\n", dpp::utility::current_date_time(), client.me.username);
+			fmt::print("[{} - STARTED]: {} is online!\n", dpp::utility::current_date_time(), client.me.format_username());
 			fmt::print("[{} - REGISTERED]: Successfully registered slash commands!\n", dpp::utility::current_date_time());
 		});
 
@@ -54,11 +54,11 @@ int main()
 			}
 		});
 
-	client.on_button_click([](const dpp::button_click_t& event) 
+	client.on_button_click([](const dpp::button_click_t& event)
 		{
 			ButtonHandle(event);
 		});
 	
-	client.start(false);
+	client.start(dpp::st_wait);
 	return 0;
 }
