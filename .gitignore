@@ -415,4 +415,3 @@ x64/
 *.exe
 lib/**.cmake
 .vscode/
-*.ico
