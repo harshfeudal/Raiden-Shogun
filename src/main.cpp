@@ -4,6 +4,7 @@
 #include <spdlog/spdlog.h>
 #include <dpp/nlohmann/json.hpp>
 #include <dpp/dpp.h>
+#include <Windows.h>
 
 #include "../handler/builder.h"
 #include "../handler/btnHandler.h"
@@ -58,6 +59,8 @@ int main()
 		{
 			ButtonHandle(event);
 		});
+	
+	SetConsoleTitle(TEXT("[BETA] Raiden Shogun - The Harshfeudal Projects"));
 	
 	client.start(dpp::st_wait);
 	return 0;
