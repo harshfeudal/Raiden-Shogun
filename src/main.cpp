@@ -28,7 +28,7 @@ int main()
 		reading.close();
 	}
 
-	const std::string token = reader["token"];
+	const std::string token = harshfeudal::Base64::Decode(reader["token"]);
 	dpp::cluster client(token, dpp::i_all_intents);
 
 	client.on_ready([&client](const dpp::ready_t& event) 

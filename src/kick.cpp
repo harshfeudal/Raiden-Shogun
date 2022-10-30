@@ -52,6 +52,8 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
+
+	// Checking higher roles ...
 	
 	auto k_Component = dpp::component().set_label("Kick")
 		                               .set_type(dpp::cot_button)

@@ -3,6 +3,19 @@
 #include "../commands/userInfo.h"
 #include "../handler/handler.h"
 
+void EmbedBuild(dpp::embed& embed, std::string content, const dpp::user& tgtUser)
+{
+	embed = dpp::embed().set_color(0xAA7EEE)
+							.set_title("User Information")
+							.set_thumbnail(tgtUser.get_avatar_url())
+							.set_description(content)
+							.set_footer(dpp::embed_footer().set_text(tgtUser.username)
+														   .set_icon(tgtUser.get_avatar_url()))
+							.set_timestamp(time(nullptr));
+}
+
+// I will soon add more details
+
 void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	auto tgtUser = event.command.usr;
@@ -18,14 +31,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 			tgtId->id, tgtId->format_username(), round(tgtId->get_creation_time())
 		);
 
-		harshfeudal::SlashReplyEmbed(
-			embed, client, event,
-			"User Information",
-			BLANK_STRING, BLANK_STRING, BLANK_STRING,
-			tgtId->get_avatar_url(), content,
-			tgtUser.username, tgtUser.get_avatar_url(), 0xAA7EEE
-		);
-
+		EmbedBuild(embed, content, tgtUser);
 		event.reply(
 			dpp::message(event.command.channel_id, embed)
 		);
@@ -37,14 +43,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 			tgtUser.id, tgtUser.format_username(), round(tgtUser.get_creation_time())
 		);
 
-		harshfeudal::SlashReplyEmbed(
-			embed, client, event,
-			"User Information",
-			BLANK_STRING, BLANK_STRING, BLANK_STRING,
-			tgtUser.get_avatar_url(), content,
-			tgtUser.username, tgtUser.get_avatar_url(), 0xAA7EEE
-		);
-
+		EmbedBuild(embed, content, tgtUser);
 		event.reply(
 			dpp::message(event.command.channel_id, embed)
 		);

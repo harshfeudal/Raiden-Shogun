@@ -13,13 +13,15 @@ void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 	);
 
 	dpp::embed embed;
-	harshfeudal::SlashReplyEmbed(
-		embed, client, event, 
-		"Raiden Shogun latecy", 
-		client.me.username, BLANK_STRING, RaidenPfp, 
-		RaidenPfp, content, 
-		event.command.usr.username, event.command.usr.get_avatar_url(), 0xAA7EEE
-	);
+	embed = dpp::embed().set_color(0xAA7EEE)
+						.set_title("Raiden Shogun latecy")
+						.set_author(client.me.username, BLANK_STRING, RaidenPfp)
+						.set_thumbnail(RaidenPfp)
+						.set_description(content)
+						.set_footer(dpp::embed_footer().set_text(event.command.usr.username)
+													   .set_icon(event.command.usr.get_avatar_url()))
+						.set_timestamp(time(nullptr));
+
 	
 	event.reply(
 		dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
