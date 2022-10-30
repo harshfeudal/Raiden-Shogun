@@ -58,11 +58,13 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto k_Component = dpp::component().set_label("Kick")
 		                               .set_type(dpp::cot_button)
 		                               .set_style(dpp::cos_danger)
+									   //.set_emoji(u8"<:tick:1036206685779398677>") - Soon!
 		                               .set_id("k_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
 		                                 .set_type(dpp::cot_button)
 		                                 .set_style(dpp::cos_secondary)
+									     //.set_emoji(u8"<:cross:1036206712916553748>") - Soon!
 		                                 .set_id("k_cnl_Id");
 
 	ButtonBind(k_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)

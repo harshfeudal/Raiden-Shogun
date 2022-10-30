@@ -24,7 +24,7 @@ These are libraries that we're using in this project:
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 
 Bot current version: 
-- BETA version - `0.1.4.56` (`Release`)
+- BETA version - `0.1.4.102` (`Release`)
 - Stable version - `Unknown`
 
 ### 🚨 Generate and use
@@ -49,6 +49,7 @@ Bot current version:
     "client_secret": "[add your bot secret in here]"
  }
  ```
+ **New version note:** Please add your token after you encrypt into `Base64`. For encryption, you can use online Base64 converter or use my [library](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/include/harshfeudal/base64.h)!
  6. Build, run, and enjoy!
 
  ### 📜 Some notes

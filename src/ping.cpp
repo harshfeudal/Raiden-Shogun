@@ -15,7 +15,6 @@ void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 	dpp::embed embed;
 	embed = dpp::embed().set_color(0xAA7EEE)
 						.set_title("Raiden Shogun latecy")
-						.set_author(client.me.username, BLANK_STRING, RaidenPfp)
 						.set_thumbnail(RaidenPfp)
 						.set_description(content)
 						.set_footer(dpp::embed_footer().set_text(event.command.usr.username)

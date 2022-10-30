@@ -7,6 +7,7 @@
 #include "../commands/kick.h"
 #include "../commands/ban.h"
 #include "../commands/userInfo.h"
+#include "../commands/sha.h"
 
 void SlashCommandCreate(dpp::cluster& client);
 
@@ -65,6 +66,20 @@ inline std::map<std::string, commandDef> commands
 						"id",
 						"User ID you would like to know",
 						false
+					)
+				}
+			}
+	},
+	{
+		"sha",
+			{
+				"Raiden Shogun will convert into your text to SHA256", sha,
+				{
+					dpp::command_option(
+						dpp::co_string,
+						"input",
+						"Your message text to convert",
+						true
 					)
 				}
 			}
