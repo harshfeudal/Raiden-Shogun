@@ -49,8 +49,9 @@ Bot current version:
     "client_secret": "[add your bot secret in here]"
  }
  ```
- **New version note:** Please add your token after you encrypt into `Base64`. For encryption, you can use online Base64 converter or use my [library](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/include/harshfeudal/base64.h)!
  6. Build, run, and enjoy!
+
+ **New version note:** Please add your token after you encrypt into `Base64`. For encryption, you can use online Base64 converter or use my [library](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/include/harshfeudal/base64.h)!
 
  ### 📜 Some notes
  This project is currently support for who is in these cases:
