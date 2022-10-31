@@ -9,6 +9,7 @@
 [![GitHub license](https://img.shields.io/github/license/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/LICENSE)
 [![Discord](https://img.shields.io/discord/900408551573438584?style=flat&logo=discord)](https://discord.gg/6Faaqhaqjs)
 <br />
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/CODE_OF_CONDUCT.md)
 [![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/network)
 </div>
@@ -22,9 +23,11 @@
 These are libraries that we're using in this project:
 - [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.20` (latest)
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
+- [Base64](https://gist.github.com/tomykaira/f0fd86b6c73063283afe550bc5d77594)
+- [SHA256](https://github.com/okdshin/PicoSHA2/blob/master/picosha2.h)
 
 Bot current version: 
-- BETA version - `0.1.4.105` (`Release`)
+- BETA version - `0.1.4.124` (`Release`)
 - Stable version - `Unknown`
 
 ### 🚨 Generate and use

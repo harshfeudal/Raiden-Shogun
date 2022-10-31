@@ -53,7 +53,6 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	// Checking higher roles ...
 	if (usr == gFind->owner_id)
 	{
 		harshfeudal::SlashMessageReply(
@@ -80,7 +79,18 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
+
+	if (gFind->base_permissions(dpp::find_user(usr)).has(dpp::p_administrator))
+	{
+		harshfeudal::SlashMessageReply(
+			event, "I cannot kick the user with administration! Please do it by hand :(", dpp::m_ephemeral, NO_MSG_TYPE
+		);
+
+		return;
+	}
 	
+	// Checking higher roles ...
+
 	auto k_Component = dpp::component()
 						.set_label("Kick")
 						.set_type(dpp::cot_button)
