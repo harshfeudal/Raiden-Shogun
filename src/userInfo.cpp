@@ -29,7 +29,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		std::string avatar  = tgtId->get_avatar_url();
 		std::string usrID   = fmt::format("{}", tgtId->id);
 		std::string created = fmt::format("<t:{}:R>", round(tgtId->get_creation_time()));
-		std::string usrName = fmt::format("Username: {}", tgtId->format_username());
+		std::string usrName = fmt::format("{}", tgtId->format_username());
 
 		EmbedBuild(embed, avatar, usrName,usrID, created, tgtUser);
 		event.reply(
@@ -43,7 +43,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		std::string avatar  = tgtId.get_avatar_url();
 		std::string usrID   = fmt::format("{}", tgtId.id);
 		std::string created = fmt::format("<t:{}:R>", round(tgtId.get_creation_time()));
-		std::string usrName = fmt::format("Username: {}", tgtId.format_username());
+		std::string usrName = fmt::format("{}", tgtId.format_username());
 
 		EmbedBuild(embed, avatar, usrName, usrID, created, tgtUser);
 		event.reply(
