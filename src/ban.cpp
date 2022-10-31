@@ -52,18 +52,48 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
-	
-	auto b_Component = dpp::component().set_label("Ban")
-		                               .set_type(dpp::cot_button)
-		                               .set_style(dpp::cos_danger)
-									   .set_emoji("Rtick", 1036206685779398677)
-		                               .set_id("b_Id");
 
-	auto cnl_Component = dpp::component().set_label("Cancel")
-		                                 .set_type(dpp::cot_button)
-		                                 .set_style(dpp::cos_secondary)
-										 .set_emoji("Rcross", 1036206712916553748)
-		                                 .set_id("b_cnl_Id");
+	// Checking higher roles ...
+	if (usr == gFind->owner_id)
+	{
+		harshfeudal::SlashMessageReply(
+			event, "You cannot ban the owner!", dpp::m_ephemeral, NO_MSG_TYPE
+		);
+
+		return;
+	}
+	
+	if (usr == event.command.usr.id)
+	{
+		harshfeudal::SlashMessageReply(
+			event, "You cannot self-ban!", dpp::m_ephemeral, NO_MSG_TYPE
+		);
+
+		return;
+	}
+
+	if (usr == client.me.id)
+	{
+		harshfeudal::SlashMessageReply(
+			event, "You can not ban me :(", dpp::m_ephemeral, NO_MSG_TYPE
+		);
+
+		return;
+	}
+	
+	auto b_Component = dpp::component()
+						.set_label("Ban")
+						.set_type(dpp::cot_button)
+						.set_style(dpp::cos_danger)
+						.set_emoji("Rtick", 1036206685779398677)
+						.set_id("b_Id");
+
+	auto cnl_Component = dpp::component()
+						.set_label("Cancel")
+						.set_type(dpp::cot_button)
+						.set_style(dpp::cos_secondary)
+						.set_emoji("Rcross", 1036206712916553748)
+						.set_id("b_cnl_Id");
 
 	ButtonBind(b_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
