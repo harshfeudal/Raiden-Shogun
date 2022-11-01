@@ -287,8 +287,6 @@ void to_json(nlohmann::json& j, const command_option& opt);
  * @brief Response types when responding to an interaction within on_interaction_create.
  */
 enum interaction_response_type {
-	ir_default = 0,					// From Harshfeudal's shorten
-
 	ir_pong = 1,					//!< Acknowledge a Ping
 	ir_channel_message_with_source = 4,		//!< respond to an interaction with a message
 	ir_deferred_channel_message_with_source = 5,	//!< Acknowledge an interaction and edit a response later, the user sees a loading state
@@ -296,6 +294,8 @@ enum interaction_response_type {
 	ir_update_message = 7,				//!< for components, edit the message the component was attached to
 	ir_autocomplete_reply = 8,			//!< Reply to autocomplete interaction. Be sure to do this within 500ms of the interaction!
 	ir_modal_dialog = 9,				//!< A modal dialog box
+
+	ir_default = 0,					/// From Harshfeudal's shorten
 };
 
 /**
@@ -520,6 +520,14 @@ struct DPP_EXPORT command_data_option {
 	bool focused;                              //!< Optional: true if this option is the currently focused option for autocomplete
 
 	/**
+	 * @brief Check if the value variant holds std::monostate and options vector is empty (i.e. the option wasn't supplied) 
+	 * @return bool true, if value variant holds std::monostate and options vector is empty
+	 */
+	bool empty() {
+	    return std::holds_alternative<std::monostate>(value) && options.empty();
+	}
+
+	/**
 	 * @brief Get an option value by index
 	 * 
 	 * @tparam Type to get from the parameter
@@ -546,7 +554,7 @@ void from_json(const nlohmann::json& j, command_data_option& cdo);
 enum interaction_type {
 	it_ping = 1,			//!< ping
 	it_application_command = 2,	//!< application command (slash command)
-	it_component_button = 3,	//!< button click (component interaction)
+	it_component_button = 3,	//!< button click or select menu chosen (component interaction)
 	it_autocomplete = 4,		//!< Autocomplete interaction
 	it_modal_submit = 5,		//!< Modal form submission
 };
@@ -604,25 +612,11 @@ struct DPP_EXPORT command_interaction {
 void from_json(const nlohmann::json& j, command_interaction& ci);
 
 /**
- * @brief Component type, either button or select
- */
-enum component_type_t {
-	/**
-	 * @brief Button
-	 */
-	cotype_button = 2,
-	/**
-	 * @brief Option select list (drop-down)
-	 */
-	cotype_select = 3
-};
-
-/**
  * @brief A button click for a button component
  */
 struct DPP_EXPORT component_interaction {
 	/**
-	 * @brief Component type
+	 * @brief Component type (dpp::component_type)
 	 */
 	uint8_t component_type;
 	/**
@@ -689,7 +683,7 @@ class DPP_EXPORT interaction : public managed, public json_interface<interaction
 
 public:
 	snowflake application_id;                                   //!< id of the application this interaction is for
-	uint8_t	type;                                               //!< the type of interaction
+	uint8_t	type;                                               //!< the type of interaction (dpp::interaction_type)
 	std::variant<command_interaction, component_interaction, autocomplete_interaction> data; //!< Optional: the command data payload
 	snowflake guild_id;                                         //!< Optional: the guild it was sent from
 	snowflake channel_id;                                       //!< Optional: the channel it was sent from

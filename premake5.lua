@@ -8,8 +8,6 @@ project "Raiden Shogun"
 	cppdialect    "C++17"
 	staticruntime "off"
 
-    -- Working in progress --
-
 	outputdir = "%{cfg.buildcfg}"
 
 	targetdir ("%{wks.location}/x64/%{cfg.buildcfg}")
@@ -18,7 +16,15 @@ project "Raiden Shogun"
 	includedirs{ "include" }
 	libdirs    { "lib" }
 	links      { "dpp.lib" }
-	files      { "src/**.cpp", "commands/**.h", "Raiden Shogun.rc" }
+	files      { 
+		"src/**.cpp", 
+		"src/moderation/**.cpp", 
+		"src/utility/**.cpp",
+		"commands/**.h", 
+		"commands/moderation/**.h",
+		"commands/utility/**.h".
+		"Raiden Shogun.rc" 
+	}
 
 	filter { "system:windows", "toolset:msc" }
 		systemversion "latest"

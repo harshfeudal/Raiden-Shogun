@@ -1,7 +1,7 @@
 <div align="center"><img src="https://user-images.githubusercontent.com/87577447/194767433-b6e04d5e-f937-44e9-81a0-c8df37537a1e.jpg" width="200" height="200"/>
 <h1>Raiden Shogun Discord Bot</h1>
     <b>
-        <p>A new Genshin Impact Discord bot, using Dpp version 10.0.20</p>
+        <p>A new Genshin Impact Discord bot, using Dpp version 10.0.21</p>
     </b>
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harshfeudal-Projects/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
@@ -21,7 +21,7 @@
 
 ### 📚 Libraries and version
 These are libraries that we're using in this project:
-- [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.20` (latest)
+- [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.21` (latest)
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (latest)
 - [Base64](https://gist.github.com/tomykaira/f0fd86b6c73063283afe550bc5d77594)
 - [SHA256](https://github.com/okdshin/PicoSHA2/blob/master/picosha2.h)
