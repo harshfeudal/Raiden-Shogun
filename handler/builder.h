@@ -3,9 +3,12 @@
 #include <map>
 
 #include "handler.h"
-#include "../commands/utility/ping.h"
+
 #include "../commands/moderation/kick.h"
 #include "../commands/moderation/ban.h"
+#include "../commands/moderation/prune.h"
+
+#include "../commands/utility/ping.h"
 #include "../commands/utility/userInfo.h"
 #include "../commands/utility/sha.h"
 
@@ -14,12 +17,12 @@ void SlashCommandCreate(dpp::cluster& client);
 inline std::map<std::string, commandDef> commands
 {
 	{
-		"ping", { "Check Raiden Shogun latecy", ping }
+		"ping", { "Check bot latecy", ping }
 	},
 	{
 		"kick",
 			{
-				"Raiden Shogun will kick a member you mentioned", kick,
+				"Kick a member you mentioned", kick,
 				{
 					dpp::command_option(
 						dpp::co_user,
@@ -39,7 +42,7 @@ inline std::map<std::string, commandDef> commands
 	{
 		"ban",
 			{
-				"Raiden Shogun will ban a member you mentioned", ban,
+				"Ban a member you mentioned", ban,
 				{
 					dpp::command_option(
 						dpp::co_user,
@@ -59,7 +62,7 @@ inline std::map<std::string, commandDef> commands
 	{
 		"userinfo",
 			{
-				"Raiden Shogun will show mentioned user info", userInfo,
+				"Show mentioned user info", userInfo,
 				{
 					dpp::command_option(
 						dpp::co_user,
@@ -73,12 +76,26 @@ inline std::map<std::string, commandDef> commands
 	{
 		"sha",
 			{
-				"Raiden Shogun will convert into your text to SHA256", sha,
+				"Convert into your text to SHA256", sha,
 				{
 					dpp::command_option(
 						dpp::co_string,
 						"input",
-						"Your message text to convert",
+						"Your message to convert",
+						true
+					)
+				}
+			}
+	},
+	{
+		"prune",
+			{
+				"Prune message(s)", prune,
+				{
+					dpp::command_option(
+						dpp::co_integer,
+						"amount",
+						"Amount of message(s) to prune",
 						true
 					)
 				}

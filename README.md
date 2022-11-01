@@ -27,8 +27,8 @@ These are libraries that we're using in this project:
 - [SHA256](https://github.com/okdshin/PicoSHA2/blob/master/picosha2.h)
 
 Bot current version: 
-- BETA version - `0.1.4.124` (`Release`)
-- Stable version - `Unknown`
+- BETA version - `0.1.5.0` (`Release`)
+- Stable version - `Unknown` (Will be officially released on late December if possible, or at final BETA version - `v0.1.9.0`)
 
 ### 🚨 Generate and use
  This project was made by Visual Studio, so basically you cannot see my `.sln` file to open because I have ignored it. To use this project, you should generate it by using [Premake](https://premake.github.io/).
