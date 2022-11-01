@@ -3,11 +3,11 @@
 #include <map>
 
 #include "handler.h"
-#include "../commands/ping.h"
-#include "../commands/kick.h"
-#include "../commands/ban.h"
-#include "../commands/userInfo.h"
-#include "../commands/sha.h"
+#include "../commands/utility/ping.h"
+#include "../commands/moderation/kick.h"
+#include "../commands/moderation/ban.h"
+#include "../commands/utility/userInfo.h"
+#include "../commands/utility/sha.h"
 
 void SlashCommandCreate(dpp::cluster& client);
 

@@ -1,6 +1,6 @@
 #include <spdlog/spdlog.h>
 
-#include "../commands/ping.h"
+#include "../commands/utility/ping.h"
 
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 {

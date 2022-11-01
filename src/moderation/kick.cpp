@@ -2,7 +2,7 @@
 
 #include "../handler/handler.h"
 #include "../handler/btnHandler.h"
-#include "../commands/kick.h"
+#include "../commands/moderation/kick.h"
 
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {	
@@ -122,7 +122,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 				std::string k_Reason = "No reason provided";
 				client.set_audit_reason(k_Reason);
 			}
-			
+
 			client.guild_member_kick(tgtGuild, usr);
 
 			event.reply(

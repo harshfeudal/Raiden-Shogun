@@ -1,6 +1,6 @@
 #include <spdlog/spdlog.h>
 
-#include "../commands/userInfo.h"
+#include "../commands/utility/userInfo.h"
 #include "../handler/handler.h"
 
 void EmbedBuild(dpp::embed& embed, std::string avatar, std::string usrName, std::string usrID, std::string created, const dpp::user& tgtUser)
