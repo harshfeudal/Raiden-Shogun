@@ -62,7 +62,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	if (usr == event.command.usr.id)
+	if (usr == source)
 	{
 		harshfeudal::SlashMessageReply(
 			event, "You cannot self-kick!", dpp::m_ephemeral, NO_MSG_TYPE

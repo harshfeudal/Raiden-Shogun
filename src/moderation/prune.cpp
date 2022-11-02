@@ -51,7 +51,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	ButtonBind(p_Component, [&client](const dpp::button_click_t& event)
 		{
-			
+			const auto msgDel = std::get<int>(event.get_parameter("amount"));
 
 			return true;
 		});
