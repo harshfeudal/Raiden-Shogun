@@ -69,7 +69,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 		{
 			auto amount = std::get<dpp::co_integer>(event.get_parameter("amount"));
 
-			client.messages_get(event.command.channel_id, 0, 0, 0, amount, [&client, &event](const dpp::confirmation_callback_t& callback)
+			client.messages_get(event.command.channel_id, 0, 0, 0, amount, [&client, event](const dpp::confirmation_callback_t& callback)
 				{
 					std::vector<dpp::snowflake> msgIds;
 					const auto msgDelMap = std::get<dpp::message_map>(callback.value);
@@ -83,7 +83,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
 				dpp::message().set_flags(dpp::m_ephemeral)
-				.set_content("Prune completed!")
+				              .set_content("Prune completed!")
 			);
 
 			return true;
@@ -109,11 +109,11 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	p_Confirm.add_component(
 		dpp::component().add_component(p_Component)
-		.add_component(cnl_Component)
+		                .add_component(cnl_Component)
 	);
 
 	event.reply(
 		p_Confirm.set_flags(dpp::m_ephemeral)
-		.set_channel_id(tgtChannel)
+		         .set_channel_id(tgtChannel)
 	);
 }
