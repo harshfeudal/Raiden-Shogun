@@ -67,7 +67,24 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	ButtonBind(p_Component, [&client](const dpp::button_click_t& event)
 		{
-			const auto msgDel = std::get<int>(event.get_parameter("amount"));
+			auto amount = std::get<dpp::co_integer>(event.get_parameter("amount"));
+
+			client.messages_get(event.command.channel_id, 0, 0, 0, amount, [&client, &event](const dpp::confirmation_callback_t& callback)
+				{
+					std::vector<dpp::snowflake> msgIds;
+					const auto msgDelMap = std::get<dpp::message_map>(callback.value);
+
+					for (const auto& msgdel : msgDelMap) 
+						msgIds.emplace_back(msgdel.first);
+
+					client.message_delete_bulk(msgIds, event.command.channel_id);
+				});
+
+			event.reply(
+				dpp::interaction_response_type::ir_update_message,
+				dpp::message().set_flags(dpp::m_ephemeral)
+				.set_content("Prune completed!")
+			);
 
 			return true;
 		});
