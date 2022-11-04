@@ -17,7 +17,6 @@
 #pragma once
 
 #include <string>
-
 #include <dpp/dpp.h>
 
 #define NO_MSG_TYPE dpp::mt_default

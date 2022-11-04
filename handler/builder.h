@@ -106,12 +106,12 @@ inline std::map<std::string, commandDef> commands
 	{
 		"prune",
 			{
-				"Prune message(s)", prune,
+				"Prune messages", prune,
 				{
 					dpp::command_option(
 						dpp::co_integer,
 						"amount",
-						"Amount of message(s) to prune",
+						"Amount of messages to prune, from 2 up to 99",
 						true
 					)
 				}

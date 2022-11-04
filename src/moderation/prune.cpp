@@ -15,13 +15,28 @@
  */
 
 #include <spdlog/spdlog.h>
+#include <dpp/dpp.h>
 
 #include "../handler/handler.h"
 #include "../handler/btnHandler.h"
 #include "../commands/moderation/prune.h"
 
+void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
+{
+	embed = dpp::embed().set_color(col)
+                        .set_title(title)
+                        .add_field(fieldTitle, fieldDes)
+                        .set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
+                        .set_timestamp(time(nullptr));
+}
+
 void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
+	dpp::embed embed;
+
+	std::string errorTitle = "<:Rcross:1036206712916553748> Error";
+	std::string warnTitle  = "Warning message";
+
 	auto tgtChannel       = event.command.channel_id;
 	auto gFind            = dpp::find_guild(event.command.guild_id);
 	auto clientPermission = event.command.app_permissions.has(dpp::p_manage_messages);
@@ -29,8 +44,9 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (gFind == nullptr)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "Guild not found!", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Guild not found!", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -38,8 +54,9 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!gFind->base_permissions(event.command.member).has(dpp::p_manage_messages))
 	{
-		harshfeudal::SlashMessageReply(
-			event, "You have lack of permission to prune", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to prune", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -47,24 +64,25 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!clientPermission)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "I have lack of permission to prune", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to prune", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
 	}
 
 	auto p_Component = dpp::component().set_label("Prune")
-						.set_type(dpp::cot_button)
-						.set_style(dpp::cos_danger)
-						.set_emoji("Rtick", 1036206685779398677)
-						.set_id("p_Id");
+                                       .set_type(dpp::cot_button)
+                                       .set_style(dpp::cos_danger)
+                                       .set_emoji("Rtick", 1036206685779398677)
+                                       .set_id("p_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
-						.set_type(dpp::cot_button)
-						.set_style(dpp::cos_secondary)
-						.set_emoji("Rcross", 1036206712916553748)
-						.set_id("p_cnl_Id");
+                                         .set_type(dpp::cot_button)
+                                         .set_style(dpp::cos_success)
+                                         .set_emoji("Rcross", 1036206712916553748)
+                                         .set_id("p_cnl_Id");
 
 	ButtonBind(p_Component, [&client, amount](const dpp::button_click_t& event)
 		{
@@ -101,9 +119,28 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 			return true;
 		});
 
-	// working in progress ...
+	if (amount < 2)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle , warnTitle, "Cannot prune less than 2 messages!", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
+
+	if (amount > 99)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Cannot prune more than 99 messages!", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
+
 	dpp::message p_Confirm(
-		fmt::format("Do you want to prune {} message(s)? Press the button below to confirm", amount)	// Grammar check soon!
+		fmt::format("Do you want to prune {} messages? Press the button below to confirm", amount)
 	);
 
 	p_Confirm.add_component(

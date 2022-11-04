@@ -15,6 +15,7 @@
  */
 
 #include <spdlog/spdlog.h>
+#include <dpp/dpp.h>
 
 #include "../handler/handler.h"
 #include "../handler/btnHandler.h"
@@ -108,16 +109,16 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 	// Checking higher roles ...
 
 	auto k_Component = dpp::component().set_label("Kick")
-						.set_type(dpp::cot_button)
-						.set_style(dpp::cos_danger)
-						.set_emoji("Rtick", 1036206685779398677)
-						.set_id("k_Id");
+                                       .set_type(dpp::cot_button)
+                                       .set_style(dpp::cos_danger)
+                                       .set_emoji("Rtick", 1036206685779398677)
+                                       .set_id("k_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
-						.set_type(dpp::cot_button)
-						.set_style(dpp::cos_secondary)
-						.set_emoji("Rcross", 1036206712916553748)
-						.set_id("k_cnl_Id");
+                                         .set_type(dpp::cot_button)
+                                         .set_style(dpp::cos_success)
+                                         .set_emoji("Rcross", 1036206712916553748)
+                                         .set_id("k_cnl_Id");
 
 	ButtonBind(k_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
