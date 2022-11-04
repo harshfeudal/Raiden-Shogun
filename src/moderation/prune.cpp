@@ -25,7 +25,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto tgtChannel       = event.command.channel_id;
 	auto gFind            = dpp::find_guild(event.command.guild_id);
 	auto clientPermission = event.command.app_permissions.has(dpp::p_manage_messages);
-	auto amount           = std::get<dpp::co_integer>(event.get_parameter("amount"));
+	auto amount           = std::get<int64_t>(event.get_parameter("amount"));
 
 	if (gFind == nullptr)
 	{
