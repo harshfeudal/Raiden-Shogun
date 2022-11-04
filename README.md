@@ -29,6 +29,7 @@ These are libraries that we're using in this project:
 Bot current version: 
 - BETA version - `0.1.5.0` (`Release`)
 - Stable version - `Unknown` (Will be officially released on late December if possible, or at final BETA version - `v0.1.9.0`)
+
  For downloading **latest version**, please click [here](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases).
 
 ### 🚨 Generate and use
