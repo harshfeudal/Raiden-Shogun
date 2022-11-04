@@ -25,6 +25,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto tgtChannel       = event.command.channel_id;
 	auto gFind            = dpp::find_guild(event.command.guild_id);
 	auto clientPermission = event.command.app_permissions.has(dpp::p_manage_messages);
+	auto amount           = std::get<dpp::co_integer>(event.get_parameter("amount"));
 
 	if (gFind == nullptr)
 	{
@@ -65,10 +66,8 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 						.set_emoji("Rcross", 1036206712916553748)
 						.set_id("p_cnl_Id");
 
-	ButtonBind(p_Component, [&client](const dpp::button_click_t& event)
+	ButtonBind(p_Component, [&client, amount](const dpp::button_click_t& event)
 		{
-			auto amount = std::get<dpp::co_integer>(event.get_parameter("amount"));
-
 			client.messages_get(event.command.channel_id, 0, 0, 0, amount, [&client, event](const dpp::confirmation_callback_t& callback)
 				{
 					std::vector<dpp::snowflake> msgIds;
@@ -104,7 +103,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	// working in progress ...
 	dpp::message p_Confirm(
-		fmt::format("Do you want to prune {} message(s)? Press the button below to confirm")	// Grammar check soon!
+		fmt::format("Do you want to prune {} message(s)? Press the button below to confirm", amount)	// Grammar check soon!
 	);
 
 	p_Confirm.add_component(
