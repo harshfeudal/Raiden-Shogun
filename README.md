@@ -29,11 +29,12 @@ These are libraries that we're using in this project:
 Bot current version: 
 - BETA version - `0.1.5.0` (`Release`)
 - Stable version - `Unknown` (Will be officially released on late December if possible, or at final BETA version - `v0.1.9.0`)
+ For downloading **latest version**, please click [here](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases).
 
 ### 🚨 Generate and use
  This project was made by Visual Studio, so basically you cannot see my `.sln` file to open because I have ignored it. To use this project, you should generate it by using [Premake](https://premake.github.io/).
 
- So basically, I have written `premake5.lua` for generating it (still working with that file, I'll finish it ASAP). Here are these steps:
+ So basically, I have written `premake5.lua` for generating it. Here are these steps:
  1. Download `premake5.exe` from [their website](https://premake.github.io/)
  2. Open the correct folder that you've downloaded this project, put that `premake5.exe` file into this project (put that file where you can see the `Raiden Shogun.rc` located)
  3. On the navigation bar, for example `D:/Harshfeudal/Raiden Shogun/`, clear all and type `cmd` on that, then enter and the terminal will release
@@ -70,8 +71,8 @@ Bot current version:
 - Visual Studio Code
 
 ### 💎 Future plan
-- [x] Add `premake5.lua`
 - [ ] CMake support soon!
+- [x] Add `premake5.lua`
 - [x] Code works well (currently)
 
  ### 🤝 Support me
