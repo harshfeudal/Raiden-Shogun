@@ -21,8 +21,15 @@
 #include "../handler/btnHandler.h"
 #include "../commands/moderation/kick.h"
 
+inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser);
+
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
-{	
+{
+	dpp::embed embed;
+
+	std::string errorTitle = "<:failed:1036206712916553748> Error";
+	std::string warnTitle  = "Warning message";
+
 	auto usr       = std::get<dpp::snowflake>(event.get_parameter("member"));
 	auto tgtReason = event.get_parameter("reason");
 	
@@ -36,8 +43,9 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (tgtUser == gFind->members.end())
 	{
-		harshfeudal::SlashMessageReply(
-			event, "Member not found!", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Member not found!", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -45,8 +53,9 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (gFind == nullptr)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "Guild not found!", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Guild not found!", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -54,8 +63,9 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!gFind->base_permissions(event.command.member).has(dpp::p_kick_members))
 	{
-		harshfeudal::SlashMessageReply(
-			event, "You have lack of permission to kick", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to prune", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -63,8 +73,9 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!clientPermission)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "I have lack of permission to kick", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to prune", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -72,8 +83,9 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (usr == gFind->owner_id)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "You cannot kick the owner!", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot kick the owner", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -81,8 +93,9 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (usr == source)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "You cannot self-kick!", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot kick yourself", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
@@ -90,34 +103,24 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (usr == client.me.id)
 	{
-		harshfeudal::SlashMessageReply(
-			event, "You can not kick me :(", dpp::m_ephemeral, NO_MSG_TYPE
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Why do you kick me :(", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
 
 		return;
 	}
-
-	if (gFind->base_permissions(dpp::find_user(usr)).has(dpp::p_administrator))
-	{
-		harshfeudal::SlashMessageReply(
-			event, "I cannot kick the user with administration! Please do it by hand :(", dpp::m_ephemeral, NO_MSG_TYPE
-		);
-
-		return;
-	}
-	
-	// Checking higher roles ...
 
 	auto k_Component = dpp::component().set_label("Kick")
                                        .set_type(dpp::cot_button)
                                        .set_style(dpp::cos_danger)
-                                       .set_emoji("Rtick", 1036206685779398677)
+                                       .set_emoji("success", 1036206685779398677)
                                        .set_id("k_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
                                          .set_type(dpp::cot_button)
                                          .set_style(dpp::cos_success)
-                                         .set_emoji("Rcross", 1036206712916553748)
+                                         .set_emoji("failed", 1036206712916553748)
                                          .set_id("k_cnl_Id");
 
 	ButtonBind(k_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
@@ -182,4 +185,13 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		k_Confirm.set_flags(dpp::m_ephemeral)
 		         .set_channel_id(tgtChannel)
 	);
+}
+
+inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
+{
+	embed = dpp::embed().set_color(col)
+		.set_title(title)
+		.add_field(fieldTitle, fieldDes)
+		.set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
+		.set_timestamp(time(nullptr));
 }

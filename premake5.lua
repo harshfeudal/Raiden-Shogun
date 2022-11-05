@@ -22,7 +22,7 @@ project "Raiden Shogun"
 		"src/utility/**.cpp",
 		"commands/**.h", 
 		"commands/moderation/**.h",
-		"commands/utility/**.h".
+		"commands/utility/**.h",
 		"Raiden Shogun.rc" 
 	}
 

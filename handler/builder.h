@@ -23,6 +23,7 @@
 #include "../commands/moderation/kick.h"
 #include "../commands/moderation/ban.h"
 #include "../commands/moderation/prune.h"
+#include "../commands/moderation/timeout.h"
 
 #include "../commands/utility/ping.h"
 #include "../commands/utility/userInfo.h"
@@ -82,8 +83,8 @@ inline std::map<std::string, commandDef> commands
 				{
 					dpp::command_option(
 						dpp::co_user,
-						"id",
-						"User ID you would like to know",
+						"user",
+						"User you would like to know",
 						false
 					)
 				}
@@ -113,6 +114,38 @@ inline std::map<std::string, commandDef> commands
 						"amount",
 						"Amount of messages to prune, from 2 up to 99",
 						true
+					),
+					dpp::command_option(
+						dpp::co_string,
+						"reason",
+						"Pruning reason",
+						false
+					)
+				}
+			}
+	},
+	{
+		"timeout",
+			{
+				"Timeout member", prune,
+				{
+					dpp::command_option(
+						dpp::co_user,
+						"member",
+						"Mention a member to timeout",
+						true
+					),
+					dpp::command_option(
+						dpp::co_integer,
+						"duration",
+						"Timeout duration",
+						true
+					),
+					dpp::command_option(
+						dpp::co_string,
+						"reason",
+						"Reason why they got timeout",
+						false
 					)
 				}
 			}

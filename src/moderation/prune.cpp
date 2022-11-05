@@ -21,26 +21,20 @@
 #include "../handler/btnHandler.h"
 #include "../commands/moderation/prune.h"
 
-void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
-{
-	embed = dpp::embed().set_color(col)
-                        .set_title(title)
-                        .add_field(fieldTitle, fieldDes)
-                        .set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
-                        .set_timestamp(time(nullptr));
-}
+inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser);
 
 void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
 
-	std::string errorTitle = "<:Rcross:1036206712916553748> Error";
+	std::string errorTitle = "<:failed:1036206712916553748> Error";
 	std::string warnTitle  = "Warning message";
 
 	auto tgtChannel       = event.command.channel_id;
+	auto tgtReason        = event.get_parameter("reason");
 	auto gFind            = dpp::find_guild(event.command.guild_id);
-	auto clientPermission = event.command.app_permissions.has(dpp::p_manage_messages);
 	auto amount           = std::get<int64_t>(event.get_parameter("amount"));
+	auto clientPermission = event.command.app_permissions.has(dpp::p_manage_messages);
 
 	if (gFind == nullptr)
 	{
@@ -75,17 +69,28 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto p_Component = dpp::component().set_label("Prune")
                                        .set_type(dpp::cot_button)
                                        .set_style(dpp::cos_danger)
-                                       .set_emoji("Rtick", 1036206685779398677)
+                                       .set_emoji("success", 1036206685779398677)
                                        .set_id("p_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
                                          .set_type(dpp::cot_button)
                                          .set_style(dpp::cos_success)
-                                         .set_emoji("Rcross", 1036206712916553748)
+                                         .set_emoji("failed", 1036206712916553748)
                                          .set_id("p_cnl_Id");
 
-	ButtonBind(p_Component, [&client, amount](const dpp::button_click_t& event)
+	ButtonBind(p_Component, [&client, amount, tgtReason](const dpp::button_click_t& event)
 		{
+			if (std::holds_alternative<std::string>(tgtReason) == true)
+			{
+				std::string p_Reason = std::get<std::string>(tgtReason);
+				client.set_audit_reason(p_Reason);
+			}
+			else
+			{
+				std::string p_Reason = "No reason provided";
+				client.set_audit_reason(p_Reason);
+			}
+
 			client.messages_get(event.command.channel_id, 0, 0, 0, amount, [&client, event](const dpp::confirmation_callback_t& callback)
 				{
 					std::vector<dpp::snowflake> msgIds;
@@ -152,4 +157,13 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 		p_Confirm.set_flags(dpp::m_ephemeral)
 		         .set_channel_id(tgtChannel)
 	);
+}
+
+inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
+{
+	embed = dpp::embed().set_color(col)
+                        .set_title(title)
+                        .add_field(fieldTitle, fieldDes)
+                        .set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
+                        .set_timestamp(time(nullptr));
 }

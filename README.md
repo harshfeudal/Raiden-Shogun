@@ -27,7 +27,7 @@ These are libraries that we're using in this project:
 - [SHA256](https://github.com/okdshin/PicoSHA2/blob/master/picosha2.h)
 
 Bot current version: 
-- BETA version - `0.1.5.0` (`Release`)
+- BETA version - `0.1.5.1034` (`Release`)
 - Stable version - `Unknown` (Will be officially released on late December if possible, or at final BETA version - `v0.1.9.0`)
 
  For downloading **latest version**, please click [here](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases).
