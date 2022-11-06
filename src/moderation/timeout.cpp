@@ -27,16 +27,18 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
 
-	std::string errorTitle = "<:failed:1036206712916553748> Error";
-	std::string warnTitle  = "Warning message";
+	std::string errorTitle   = "<:failed:1036206712916553748> Error!";
+	std::string successTitle = "<:success:1036206685779398677> Success!";
+	std::string warnTitle    = "Warning message";
 	
 	auto usr       = std::get<dpp::snowflake>(event.get_parameter("member"));
 	auto tgtReason = event.get_parameter("reason");
 	
 	auto source           = event.command.usr.id;
-	auto gFind            = dpp::find_guild(event.command.guild_id);
 	auto tgtGuild         = event.command.guild_id;
 	auto tgtChannel       = event.command.channel_id;
+	auto gFind            = dpp::find_guild(event.command.guild_id);
+	auto const duration   = std::get<int64_t>(event.get_parameter("duration"));
 	auto clientPermission = event.command.app_permissions.has(dpp::p_moderate_members);
 
 	const auto tgtUser = gFind->members.find(usr);
@@ -112,10 +114,10 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 
 	auto tout_Component = dpp::component().set_label("Timeout")
-                                       .set_type(dpp::cot_button)
-                                       .set_style(dpp::cos_danger)
-                                       .set_emoji("success", 1036206685779398677)
-                                       .set_id("tout_Id");
+                                          .set_type(dpp::cot_button)
+                                          .set_style(dpp::cos_danger)
+                                          .set_emoji("success", 1036206685779398677)
+                                          .set_id("tout_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
                                          .set_type(dpp::cot_button)
@@ -123,14 +125,14 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
                                          .set_emoji("failed", 1036206712916553748)
                                          .set_id("tout_cnl_Id");
 
-	ButtonBind(tout_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
+	ButtonBind(tout_Component, [&client, tgtGuild, tgtReason, usr, source, duration](const dpp::button_click_t& event)
 		{
 			if (source != event.command.usr.id)
 			{
 				return false;
 			}
 
-			std::string toutContent = fmt::format("<@{}> has been timeout!", usr);
+			std::string toutContent = fmt::format("<@{}> has been timeout until <t:{}:f>!", usr, time(nullptr) + duration);
 			
 			if (std::holds_alternative<std::string>(tgtReason) == true)
 			{
@@ -143,8 +145,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 				client.set_audit_reason(tout_Reason);
 			}
 
-			auto duration = std::get<int64_t>(event.get_parameter("duration")); // will get timestamp soon!
-			client.guild_member_timeout(tgtGuild, usr, duration);
+			client.guild_member_timeout(tgtGuild, usr, time(nullptr) + duration);
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
@@ -174,7 +175,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 		});
 
 	dpp::message tout_Confirm(
-		fmt::format("Do you want to timeout <@{}>? Press the button below to confirm", usr)
+		fmt::format("Do you want to timeout <@{}> until <t:{}:f>? Press the button below to confirm", usr, time(nullptr) + duration)
 	);
 
 	tout_Confirm.add_component(
@@ -191,8 +192,8 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
 {
 	embed = dpp::embed().set_color(col)
-		.set_title(title)
-		.add_field(fieldTitle, fieldDes)
-		.set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
-		.set_timestamp(time(nullptr));
+                        .set_title(title)
+                        .add_field(fieldTitle, fieldDes)
+                        .set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
+                        .set_timestamp(time(nullptr));
 }

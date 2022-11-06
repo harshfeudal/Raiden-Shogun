@@ -127,7 +127,7 @@ inline std::map<std::string, commandDef> commands
 	{
 		"timeout",
 			{
-				"Timeout member", prune,
+				"Timeout member", timeout,
 				{
 					dpp::command_option(
 						dpp::co_user,
