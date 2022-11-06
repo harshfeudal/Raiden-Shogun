@@ -17,7 +17,7 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../commands/utility/ping.h"
+#include "../commands/information/ping.h"
 
 void ping(dpp::cluster& client, const dpp::slashcommand_t& event)
 {

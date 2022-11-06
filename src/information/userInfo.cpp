@@ -17,7 +17,7 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../commands/utility/userInfo.h"
+#include "../commands/information/userInfo.h"
 #include "../handler/handler.h"
 
 void EmbedBuild(dpp::embed& embed, std::string avatar, std::string usrName, std::string usrID, std::string created, const dpp::user& tgtUser);

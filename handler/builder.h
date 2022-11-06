@@ -22,12 +22,15 @@
 
 #include "../commands/moderation/kick.h"
 #include "../commands/moderation/ban.h"
+#include "../commands/moderation/unban.h"
 #include "../commands/moderation/prune.h"
 #include "../commands/moderation/timeout.h"
 
-#include "../commands/utility/ping.h"
-#include "../commands/utility/userInfo.h"
 #include "../commands/utility/sha.h"
+
+#include "../commands/information/ping.h"
+#include "../commands/information/userInfo.h"
+#include "../commands/information/help.h"
 
 void SlashCommandCreate(dpp::cluster& client);
 
@@ -71,6 +74,26 @@ inline std::map<std::string, commandDef> commands
 						dpp::co_string,
 						"reason",
 						"Reason why they got ban",
+						false
+					)
+				}
+			}
+	},
+	{
+		"unban",
+			{
+				"Ban a member you mentioned", unban,
+				{
+					dpp::command_option(
+						dpp::co_user,
+						"member",
+						"Mention a member to unban",
+						true
+					),
+					dpp::command_option(
+						dpp::co_string,
+						"reason",
+						"Reason why they remove ban",
 						false
 					)
 				}

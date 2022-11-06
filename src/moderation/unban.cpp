@@ -1,17 +1,17 @@
 /*
  * Copyright 2022 harshfeudal and The Harshfeudal Projects contributors
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License. 
+ * limitations under the License.
  */
 
 #include <spdlog/spdlog.h>
@@ -19,11 +19,11 @@
 
 #include "../handler/handler.h"
 #include "../handler/btnHandler.h"
-#include "../commands/moderation/ban.h"
+#include "../commands/moderation/unban.h"
 
 inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser);
 
-void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
+void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
 
@@ -39,17 +39,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto tgtChannel       = event.command.channel_id;
 	auto clientPermission = event.command.app_permissions.has(dpp::p_ban_members);
 
-	const auto tgtUser = gFind->members.find(usr);
-
-	if (tgtUser == gFind->members.end())
-	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Member not found!", event.command.usr);
-		event.reply(
-			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
-		);
-
-		return;
-	}
+	// Check ban list here ...
 
 	if (gFind == nullptr)
 	{
@@ -63,7 +53,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!gFind->base_permissions(event.command.member).has(dpp::p_ban_members))
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to ban", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to unban", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -73,7 +63,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!clientPermission)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to ban", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to unban", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -83,7 +73,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (usr == gFind->owner_id)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot ban the owner", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Owner never gain a ban", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -93,7 +83,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 	
 	if (usr == source)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot ban yourself", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You've not been banned before :>", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -103,7 +93,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (usr == client.me.id)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Why do you ban me :(", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Well ... have you banned me :(?", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -111,17 +101,17 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 	
-	auto b_Component = dpp::component().set_label("Ban")
+	auto b_Component = dpp::component().set_label("Unban")
                                        .set_type(dpp::cot_button)
                                        .set_style(dpp::cos_danger)
                                        .set_emoji("success", 1036206685779398677)
-                                       .set_id("b_Id");
+                                       .set_id("ub_Id");
 
 	auto cnl_Component = dpp::component().set_label("Cancel")
                                          .set_type(dpp::cot_button)
                                          .set_style(dpp::cos_success)
                                          .set_emoji("failed", 1036206712916553748)
-                                         .set_id("b_cnl_Id");
+                                         .set_id("ub_cnl_Id");
 
 	ButtonBind(b_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
@@ -130,20 +120,20 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 				return false;
 			}
 
-			std::string bContent = fmt::format("<@{}> has been banned!", usr);
+			std::string bContent = fmt::format("Banned removed from <@{}>", usr);
 
 			if (std::holds_alternative<std::string>(tgtReason) == true)
 			{
-				std::string b_Reason = std::get<std::string>(tgtReason);
-				client.set_audit_reason(b_Reason);
+				std::string ub_Reason = std::get<std::string>(tgtReason);
+				client.set_audit_reason(ub_Reason);
 			}
 			else
 			{
-				std::string b_Reason = "No reason provided";
-				client.set_audit_reason(b_Reason);
+				std::string ub_Reason = "No reason provided";
+				client.set_audit_reason(ub_Reason);
 			}
 
-			client.guild_ban_add(tgtGuild, usr);
+			client.guild_ban_delete(tgtGuild, usr);
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
@@ -173,7 +163,7 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 		});
 
 	dpp::message b_Confirm(
-		fmt::format("Do you want to ban <@{}>? Press the button below to confirm", usr)
+		fmt::format("Do you want to unban <@{}>? Press the button below to confirm", usr)
 	);
 
 	b_Confirm.add_component(
