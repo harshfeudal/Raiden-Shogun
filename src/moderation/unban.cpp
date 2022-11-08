@@ -39,8 +39,6 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto tgtChannel       = event.command.channel_id;
 	auto clientPermission = event.command.app_permissions.has(dpp::p_ban_members);
 
-	// Check ban list here ...
-
 	if (gFind == nullptr)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Guild not found!", event.command.usr);
@@ -133,7 +131,14 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 				client.set_audit_reason(ub_Reason);
 			}
 
-			client.guild_ban_delete(tgtGuild, usr);
+		/*	Making ban map ...
+		
+			client.guild_get_bans(event.command.guild_id, 0, 0, bansLimit, [&client, event](const dpp::confirmation_callback_t& callback)
+				{
+					// client.guild_ban_delete(); // it should be unbanned in this scope, since we need to unban for who has been banned!
+				});
+				
+		*/
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
