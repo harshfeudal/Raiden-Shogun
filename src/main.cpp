@@ -42,7 +42,6 @@ int main()
 		}
 		
 		reading >> reader;
-		reading.close();
 	}
 
 	const std::string token = harshfeudal::Base64::Decode(reader["token"]);
