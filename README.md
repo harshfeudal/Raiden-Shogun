@@ -12,6 +12,7 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/CODE_OF_CONDUCT.md)
 [![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/network)
+[![Release](https://img.shields.io/github/v/release/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases/latest)
 </div>
 
 ### :pencil: About this project
@@ -22,7 +23,7 @@
 ### 📚 Libraries and version
 These are libraries that we're using in this project:
 - [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.21` (latest)
-- [Spdlog](https://github.com/gabime/spdlog) - version `1.10.0` (Will update into version `1.11.0` soon)
+- [Spdlog](https://github.com/gabime/spdlog) - version `1.11.0` (latest)
 - [Base64](https://gist.github.com/tomykaira/f0fd86b6c73063283afe550bc5d77594)
 - [SHA256](https://github.com/okdshin/PicoSHA2/blob/master/picosha2.h)
 
