@@ -83,5 +83,5 @@ body:
       description: >
         Please check these additional steps:
       options:
-        - label: The bug also occurs if the latest version from the [`develop`](https://github.com/harshfeudal-projects/raiden-shogun/releases) branch is used.
+        - label: The bug also occurs if the latest version from the [`develop`](https://github.com/harshfeudal-projects/raiden-shogun/releases/latest) branch is used.
         - label: I have met all requirements about [your instructions](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/README.md) on `REAMDE.md`.
