@@ -21,8 +21,6 @@
 #include "../handler/btnHandler.h"
 #include "../commands/moderation/unban.h"
 
-inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser);
-
 void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
@@ -132,11 +130,15 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 			}
 
 		/*	Making ban map ...
+
+			client.guild_get_ban(); -> check bans
 		
 			client.guild_get_bans(event.command.guild_id, 0, 0, bansLimit, [&client, event](const dpp::confirmation_callback_t& callback)
 				{
 					// client.guild_ban_delete(); // it should be unbanned in this scope, since we need to unban for who has been banned!
 				});
+
+				-> check ban map
 				
 		*/
 

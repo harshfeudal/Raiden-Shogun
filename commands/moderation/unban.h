@@ -18,4 +18,5 @@
 
 #include <dpp/dpp.h>
 
+inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser);
 void unban(dpp::cluster& client, const dpp::slashcommand_t& event);
