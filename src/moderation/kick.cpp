@@ -19,9 +19,7 @@
 
 #include "../handler/handler.h"
 #include "../handler/btnHandler.h"
-#include "../commands/moderation/kick.h"
-
-inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser);
+#include "../commands/moderation/kick.h";
 
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
