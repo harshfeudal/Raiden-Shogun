@@ -17,7 +17,7 @@
 
 ### :pencil: About this project
 - This project is owned by [@harshfeudal](https://github.com/harshfeudal). You can join my Discord server [here](https://discord.gg/BAk2CXpRAT)!
-- This respiratory is under-construction! I'll update it as soon as possible.
+- This repository is under-construction! I'll update it as soon as possible.
 - I'm not highly recommended you to use C++ to code a Discord bot, instead of JavaScript or others library. To know how's this project works, you should learn some basics about C++ so that you can know what I am doing.
 
 ### 📚 Libraries and version
