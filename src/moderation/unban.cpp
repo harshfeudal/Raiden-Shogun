@@ -96,6 +96,26 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
+
+	/*	Making ban map ...
+
+			client.guild_get_ban(); -> check bans
+
+			client.guild_get_bans(event.command.guild_id, 0, 0, bansLimit, [&client, event](const dpp::confirmation_callback_t& callback)
+				{
+					// client.guild_ban_delete(); // it should be unbanned in this scope, since we need to unban for who has been banned!
+				});
+
+				-> check ban map
+
+	*/
+
+	client.guild_get_ban(event.command.guild_id, usr, [&client, usr](const dpp::confirmation_callback_t& callback)
+		{
+			const auto BanMap = std::get<dpp::ban_map>(callback.value);
+
+			// Working in progress ...
+		});
 	
 	auto b_Component = dpp::component().set_label("Unban")
                                        .set_type(dpp::cot_button)
@@ -129,23 +149,12 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 				client.set_audit_reason(ub_Reason);
 			}
 
-		/*	Making ban map ...
-
-			client.guild_get_ban(); -> check bans
-		
-			client.guild_get_bans(event.command.guild_id, 0, 0, bansLimit, [&client, event](const dpp::confirmation_callback_t& callback)
-				{
-					// client.guild_ban_delete(); // it should be unbanned in this scope, since we need to unban for who has been banned!
-				});
-
-				-> check ban map
-				
-		*/
+			client.guild_ban_delete(event.command.guild_id, usr);
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
 				dpp::message().set_flags(dpp::m_ephemeral)
-				              .set_content(bContent)
+				.set_content(bContent)
 			);
 
 			return true;
