@@ -108,14 +108,9 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 				-> check ban map
 
+			P/S: I'll soon continue to make this, since it is really hard
+
 	*/
-
-	client.guild_get_ban(event.command.guild_id, usr, [&client, usr](const dpp::confirmation_callback_t& callback)
-		{
-			const auto BanMap = std::get<dpp::ban_map>(callback.value);
-
-			// Working in progress ...
-		});
 	
 	auto b_Component = dpp::component().set_label("Unban")
                                        .set_type(dpp::cot_button)
