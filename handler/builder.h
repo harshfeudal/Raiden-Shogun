@@ -186,7 +186,7 @@ inline std::map<std::string, commandDef> commands
 						true
 					),
 					dpp::command_option(
-						dpp::co_integer,
+						dpp::co_string,
 						"nickname",
 						"Set their new nickname, blank to reset as normal",
 						false
