@@ -17,9 +17,9 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../handler/handler.h"
-#include "../handler/btnHandler.h"
-#include "../commands/moderation/prune.h"
+#include "../../handler/handler.h"
+#include "../../handler/btnHandler.h"
+#include "../../commands/moderation/prune.h"
 
 void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 {

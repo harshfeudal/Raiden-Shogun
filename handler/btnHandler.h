@@ -103,16 +103,18 @@ inline void ButtonHandle(const dpp::button_click_t& event)
 	}
 	catch (std::out_of_range& e) 
 	{
-		harshfeudal::ButtonReply(
-			event, "Button not found!", dpp::m_ephemeral, NO_MSG_TYPE
+		event.reply(
+			dpp::message().set_content("Button not found!")
+			              .set_flags(dpp::m_ephemeral)
 		);
 
 		return;
 	}
 	catch (std::invalid_argument& e) 
 	{
-		harshfeudal::ButtonReply(
-			event, "Button not found!", dpp::m_ephemeral, NO_MSG_TYPE
+		event.reply(
+			dpp::message().set_content("Button not found!")
+			              .set_flags(dpp::m_ephemeral)
 		);
 
 		return;

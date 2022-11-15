@@ -25,6 +25,7 @@
 #include "../commands/moderation/unban.h"
 #include "../commands/moderation/prune.h"
 #include "../commands/moderation/timeout.h"
+#include "../commands/moderation/nickname.h"
 
 #include "../commands/utility/sha.h"
 
@@ -168,6 +169,26 @@ inline std::map<std::string, commandDef> commands
 						dpp::co_string,
 						"reason",
 						"Reason why they got timeout",
+						false
+					)
+				}
+			}
+	},
+	{
+		"nickname",
+			{
+				"Change member nickname", nickname,
+				{
+					dpp::command_option(
+						dpp::co_user,
+						"target",
+						"Member needs to change",
+						true
+					),
+					dpp::command_option(
+						dpp::co_integer,
+						"nickname",
+						"Set their new nickname, blank to reset as normal",
 						false
 					)
 				}

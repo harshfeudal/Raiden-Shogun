@@ -17,7 +17,7 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../commands/utility/sha.h"
+#include "../../commands/utility/sha.h"
 
 void sha(dpp::cluster& client, const dpp::slashcommand_t& event)
 {

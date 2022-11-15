@@ -17,9 +17,9 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../handler/handler.h"
-#include "../handler/btnHandler.h"
-#include "../commands/moderation/timeout.h"
+#include "../../handler/handler.h"
+#include "../../handler/btnHandler.h"
+#include "../../commands/moderation/timeout.h"
 
 void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 {

@@ -17,9 +17,9 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../handler/handler.h"
-#include "../handler/btnHandler.h"
-#include "../commands/moderation/unban.h"
+#include "../../handler/handler.h"
+#include "../../handler/btnHandler.h"
+#include "../../commands/moderation/unban.h"
 
 void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
@@ -97,7 +97,7 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	/*	Making ban map ...
+	/*	Making ban map ... will continue to make this in the future!
 
 			client.guild_get_ban(); -> check bans
 

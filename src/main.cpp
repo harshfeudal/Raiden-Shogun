@@ -75,7 +75,7 @@ int main()
 			ButtonHandle(event);
 		});
 	
-	SetConsoleTitle(TEXT("[BETA] v0.1.5.1259 - Raiden Shogun Discord Bot - The Harshfeudal Projects"));
+	SetConsoleTitle(TEXT("[BETA] v0.1.6.0 - Raiden Shogun Discord Bot - The Harshfeudal Projects"));
 	
 	client.start(dpp::st_wait);
 	return 0;

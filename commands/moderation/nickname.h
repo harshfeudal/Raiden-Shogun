@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-#include <spdlog/spdlog.h>
+#pragma once
+
 #include <dpp/dpp.h>
 
-#include "../../commands/information/help.h"
-#include "../../handler/handler.h"
-
-void help(dpp::cluster& client, const dpp::slashcommand_t& event)
+inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
 {
-	// Working in progress ...
+	embed = dpp::embed().set_color(col)
+		.set_title(title)
+		.add_field(fieldTitle, fieldDes)
+		.set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
+		.set_timestamp(time(nullptr));
 }
+
+void nickname(dpp::cluster& client, const dpp::slashcommand_t& event);

@@ -17,8 +17,8 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../commands/information/userInfo.h"
-#include "../handler/handler.h"
+#include "../../commands/information/userInfo.h"
+#include "../../handler/handler.h"
 
 void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
