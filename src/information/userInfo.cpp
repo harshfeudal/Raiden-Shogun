@@ -35,7 +35,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		std::string created = fmt::format("<t:{}:R>", round(tgtId->get_creation_time()));
 		std::string usrName = fmt::format("{}", tgtId->format_username());
 
-		EmbedBuild(embed, avatar, usrName, usrID, created, tgtUser);
+		EmbedInfoBuild(embed, avatar, usrName, usrID, created, tgtUser);
 		event.reply(
 			dpp::message(event.command.channel_id, embed)
 		);
@@ -49,7 +49,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		std::string created = fmt::format("<t:{}:R>", round(tgtId.get_creation_time()));
 		std::string usrName = fmt::format("{}", tgtId.format_username());
 
-		EmbedBuild(embed, avatar, usrName, usrID, created, tgtUser);
+		EmbedInfoBuild(embed, avatar, usrName, usrID, created, tgtUser);
 		event.reply(
 			dpp::message(event.command.channel_id, embed)
 		);

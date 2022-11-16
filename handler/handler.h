@@ -28,3 +28,13 @@ struct commandDef
 	commandFunc function;
 	std::vector<dpp::command_option> param = {};
 };
+
+inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
+{
+	embed = dpp::embed().set_color(col)
+		.set_title(title)
+		.add_field(fieldTitle, fieldDes)
+		.set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
+		.set_timestamp(time(nullptr));
+}
+

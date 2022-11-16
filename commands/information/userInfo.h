@@ -18,7 +18,7 @@
 
 #include <dpp/dpp.h>
 
-inline void EmbedBuild(dpp::embed& embed, std::string avatar, std::string usrName, std::string usrID, std::string created, const dpp::user& tgtUser)
+inline void EmbedInfoBuild(dpp::embed& embed, std::string avatar, std::string usrName, std::string usrID, std::string created, const dpp::user& tgtUser)
 {
     embed = dpp::embed().set_color(0xAA7EEE)
         .set_title("User Information")
