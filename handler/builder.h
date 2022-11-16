@@ -175,7 +175,7 @@ inline std::map<std::string, commandDef> commands
 			}
 	},
 	{
-		"nickname",
+		"setnickname",
 			{
 				"Change member nickname", nickname,
 				{

@@ -29,7 +29,7 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 	std::string warnTitle = "Warning message";
 
 	auto usr              = std::get<dpp::snowflake>(event.get_parameter("target"));
-	auto nickname         = event.get_parameter("nickname");
+	auto setNickname      = event.get_parameter("nickname");
 	auto gFind            = dpp::find_guild(event.command.guild_id);
 	auto tgtGuild         = event.command.guild_id;
 	auto tgtChannel       = event.command.channel_id;
@@ -88,11 +88,12 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	auto getNicknameEditUsr = dpp::find_guild_member(event.command.guild_id, usr);
 
-	if (std::holds_alternative<std::string>(nickname) == true)
+	if (std::holds_alternative<std::string>(setNickname) == true)
 	{
-		getNicknameEditUsr.set_nickname(std::get<std::string>(nickname));
-		std::string announce = fmt::format("Nickname {} from <@{}>!", "changed", usr);
+		// client.guild_current_member_edit(event.command.guild_id, std::get<std::string>(setNickname));
+		getNicknameEditUsr.set_nickname(std::get<std::string>(setNickname));
 
+		std::string announce = fmt::format("Nickname {} from <@{}>!", "changed", usr);
 		event.reply(
 			dpp::message().set_content(announce)
 			              .set_flags(dpp::m_ephemeral)
@@ -100,9 +101,10 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 	else
 	{
+		// client.guild_current_member_edit(event.command.guild_id, "");
 		getNicknameEditUsr.set_nickname("");
-		std::string announce = fmt::format("Nickname {} from <@{}>!", "cleared", usr);
 
+		std::string announce = fmt::format("Nickname {} from <@{}>!", "cleared", usr);
 		event.reply(
 			dpp::message().set_content(announce)
 			              .set_flags(dpp::m_ephemeral)
