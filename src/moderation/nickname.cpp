@@ -90,8 +90,9 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (std::holds_alternative<std::string>(setNickname) == true)
 	{
-		// client.guild_current_member_edit(event.command.guild_id, std::get<std::string>(setNickname));
-		getNicknameEditUsr.set_nickname(std::get<std::string>(setNickname));
+		client.guild_edit_member(
+			getNicknameEditUsr.set_nickname(std::get<std::string>(setNickname))
+		);
 
 		std::string announce = fmt::format("Nickname {} from <@{}>!", "changed", usr);
 		event.reply(
@@ -101,8 +102,9 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 	else
 	{
-		// client.guild_current_member_edit(event.command.guild_id, "");
-		getNicknameEditUsr.set_nickname("");
+		client.guild_edit_member(
+			getNicknameEditUsr.set_nickname("")
+		);
 
 		std::string announce = fmt::format("Nickname {} from <@{}>!", "cleared", usr);
 		event.reply(
