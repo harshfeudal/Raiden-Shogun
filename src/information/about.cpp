@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-#pragma once
-
+#include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-void help(dpp::cluster& client, const dpp::slashcommand_t& event);
+#include "../../commands/information/about.h"
+#include "../../handler/handler.h"
+
+void about(dpp::cluster& client, const dpp::slashcommand_t& event)
+{
+	// Working in progress ...
+}

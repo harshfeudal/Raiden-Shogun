@@ -103,7 +103,7 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 	else
 	{
 		client.guild_edit_member(
-			getNicknameEditUsr.set_nickname("")
+			getNicknameEditUsr.set_nickname(dpp::find_user(usr)->username)
 		);
 
 		std::string announce = fmt::format("Nickname {} from <@{}>!", "cleared", usr);

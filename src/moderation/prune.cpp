@@ -33,6 +33,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto gFind            = dpp::find_guild(event.command.guild_id);
 	auto amount           = std::get<int64_t>(event.get_parameter("amount"));
 	auto clientPermission = event.command.app_permissions.has(dpp::p_manage_messages);
+	auto clientViewPerm   = event.command.app_permissions.has(dpp::p_read_message_history);
 
 	if (gFind == nullptr)
 	{
@@ -46,7 +47,7 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	if (!gFind->base_permissions(event.command.member).has(dpp::p_manage_messages))
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to prune", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to delete messages", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -54,9 +55,29 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	if (!clientPermission)
+	if (!clientPermission && clientViewPerm)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to prune", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to delete messages", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
+
+	if (!clientViewPerm && clientPermission)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to see message history", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
+
+	if (!clientPermission && !clientViewPerm)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to delete messages and see message history", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);

@@ -31,7 +31,7 @@
 
 #include "../commands/information/ping.h"
 #include "../commands/information/userInfo.h"
-#include "../commands/information/help.h"
+#include "../commands/information/about.h"
 
 void SlashCommandCreate(dpp::cluster& client);
 
@@ -177,12 +177,12 @@ inline std::map<std::string, commandDef> commands
 	{
 		"setnickname",
 			{
-				"Change member nickname", nickname,
+				"Change member nickname or reset to their original username", nickname,
 				{
 					dpp::command_option(
 						dpp::co_user,
 						"target",
-						"Member needs to change",
+						"Member needs to change nickname",
 						true
 					),
 					dpp::command_option(
