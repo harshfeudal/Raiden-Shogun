@@ -28,11 +28,11 @@ void sha(dpp::cluster& client, const dpp::slashcommand_t& event)
 	dpp::embed embed;
 	
 	embed = dpp::embed().set_color(0xAA7EEE)
-    .set_title("SHA256 convert result")
-    .add_field("Input text", inputStr, true)
-    .add_field("Output result", content, true)
-    .set_footer(dpp::embed_footer().set_text(event.command.usr.username).set_icon(event.command.usr.get_avatar_url()))
-    .set_timestamp(time(nullptr));
+	.set_title("SHA256 convert result")
+	.add_field("Input text", inputStr, true)
+	.add_field("Output result", content, true)
+	.set_footer(dpp::embed_footer().set_text(event.command.usr.username).set_icon(event.command.usr.get_avatar_url()))
+	.set_timestamp(time(nullptr));
 
 	event.reply(
 		dpp::message(event.command.channel_id, embed)
