@@ -35,6 +35,7 @@
 
 void SlashCommandCreate(dpp::cluster& client);
 
+// Slash coomand builder
 inline std::map<std::string, commandDef> commands
 {
 	{
@@ -206,14 +207,18 @@ inline void SlashCommandCreate(dpp::cluster& client)
 		{
 			dpp::slashcommand cmd;
 
+			// Create slash command template
 			cmd.set_name(def.first)
-				.set_description(def.second.description)
-				.set_application_id(client.me.id);
+			.set_description(def.second.description)
+			.set_application_id(client.me.id);
 
 			cmd.options = def.second.param;
+
+			// Pushing all commands
 			slashCmds.push_back(cmd);
 		}
 
+		// Create a global slash commands
 		client.global_bulk_command_create(slashCmds);
 	}
 }
