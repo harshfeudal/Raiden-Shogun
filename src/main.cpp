@@ -73,7 +73,7 @@ int main()
 
 	client.on_slashcommand([&client](const dpp::slashcommand_t& event)
 		{
-			dpp::command_interaction        commandData = event.command.get_command_interaction();
+			dpp::command_interaction      commandData   = event.command.get_command_interaction();
 			auto                          commandFilter = commands.find(commandData.name);
 
 			// Check commands
