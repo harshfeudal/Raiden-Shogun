@@ -21,9 +21,9 @@
 
 void sha(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
-	const auto        inputStr       = std::get<std::string>(event.get_parameter("input"));
-	const auto        encryptStr     = harshfeudal::hash256_hex_string(inputStr);
-	const std::string content        = fmt::format("`{}`", encryptStr);
+	const auto inputStr       = std::get<std::string>(event.get_parameter("input"));
+	const auto encryptStr     = harshfeudal::hash256_hex_string(inputStr);
+	const auto content        = fmt::format("`{}`", encryptStr);
 
 	dpp::embed embed;
 	
