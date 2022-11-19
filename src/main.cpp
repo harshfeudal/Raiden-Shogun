@@ -54,9 +54,6 @@ int main()
 	// Client variable builder
 	dpp::cluster client(token, dpp::i_all_intents);
 
-	// Starting the bot
-	client.start(dpp::st_wait);
-
 	client.on_ready([&client](const dpp::ready_t& event) 
 		{
 			// Set presence for the bot
@@ -90,6 +87,9 @@ int main()
 	
 	// Console log prettier
 	SetConsoleTitle(TEXT("[BETA] v0.1.6.0 - Raiden Shogun Discord Bot - The Harshfeudal Projects"));
+	
+	// Starting the bot
+	client.start(dpp::st_wait);
 	
 	return 0;
 }
