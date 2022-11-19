@@ -27,7 +27,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 	const auto tgtUser = event.command.usr;
 
 	// If the command user is trying to get another people information
-	if (std::holds_alternative<dpp::snowflake>(event.get_parameter("id")) == true)
+	if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
 	{
 		const auto usr_id  = event.get_parameter("user");
 		const auto tgtId   = dpp::find_user(std::get<dpp::snowflake>(usr_id));
