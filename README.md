@@ -88,6 +88,6 @@ Bot current version:
   - My bot avatar artist (Please contact me if you're the owner of that avatar so that I can link your resource).
   - Genshin Impact game for character name (Raiden Shogun)
   - My companions on D++ Discord server!
-  - My friends
-  - And you too, for staring this project and encourage me to do it!
   - [Diego Hautamäki](https://github.com/VeryHolyCheeeese) for fixing the grammar
+  - My friends
+  - And you too, for staring this project and encouraging me to do this!
