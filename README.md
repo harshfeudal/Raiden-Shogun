@@ -90,4 +90,4 @@ Bot current version:
   - My companions on D++ Discord server!
   - My friends
   - And you too, for staring this project and encourage me to do it!
-  - [DarkCheese_](https://github.com/VeryHolyCheeeese) for fixing the grammar
+  - [Diego Hautamäki](https://github.com/VeryHolyCheeeese) for fixing the grammar
