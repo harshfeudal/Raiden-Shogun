@@ -25,21 +25,21 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
 
-	std::string errorTitle   = "<:failed:1036206712916553748> Error!";
-	std::string successTitle = "<:success:1036206685779398677> Success!";
-	std::string warnTitle    = "Warning message";
+	const auto errorTitle       = "<:failed:1036206712916553748> Error!";
+	const auto successTitle     = "<:success:1036206685779398677> Success!";
+	const auto warnTitle        = "Warning message";
 	
-	auto usr       = std::get<dpp::snowflake>(event.get_parameter("member"));
-	auto tgtReason = event.get_parameter("reason");
-	
-	auto source           = event.command.usr.id;
-	auto tgtGuild         = event.command.guild_id;
-	auto tgtChannel       = event.command.channel_id;
-	auto gFind            = dpp::find_guild(event.command.guild_id);
-	auto const duration   = std::get<int64_t>(event.get_parameter("duration"));
-	auto clientPermission = event.command.app_permissions.has(dpp::p_moderate_members);
+	const auto duration         = std::get<int64_t>(event.get_parameter("duration"));
+	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("member"));
+	const auto tgtReason        = event.get_parameter("reason");
 
-	const auto tgtUser = gFind->members.find(usr);
+	const auto source           = event.command.usr.id;
+	const auto tgtGuild         = event.command.guild_id;
+	const auto tgtChannel       = event.command.channel_id;
+	const auto clientPermission = event.command.app_permissions.has(dpp::p_moderate_members);
+
+	const auto gFind            = dpp::find_guild(event.command.guild_id);
+	const auto tgtUser          = gFind->members.find(usr);
 
 	if (tgtUser == gFind->members.end())
 	{
@@ -111,38 +111,34 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	auto tout_Component = dpp::component().set_label("Timeout")
-                                          .set_type(dpp::cot_button)
-                                          .set_style(dpp::cos_danger)
-                                          .set_emoji("success", 1036206685779398677)
-                                          .set_id("tout_Id");
+	auto tout_Component = dpp::component();
+	auto cnl_Component  = dpp::component();
 
-	auto cnl_Component = dpp::component().set_label("Cancel")
-                                         .set_type(dpp::cot_button)
-                                         .set_style(dpp::cos_success)
-                                         .set_emoji("failed", 1036206712916553748)
-                                         .set_id("tout_cnl_Id");
+	tout_Component.set_label("Timeout").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("tout_Id");
+	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("tout_cnl_Id");
 
+	// Button for muting user (timeout)
 	ButtonBind(tout_Component, [&client, tgtGuild, tgtReason, usr, source, duration](const dpp::button_click_t& event)
 		{
+			// If not the user who request that interaction
 			if (source != event.command.usr.id)
-			{
 				return false;
-			}
 
-			std::string toutContent = fmt::format("<@{}> has been timeout until <t:{}:f>!", usr, time(nullptr) + duration);
+			const auto toutContent = fmt::format("<@{}> has been timeout until <t:{}:f>!", usr, time(nullptr) + duration);
 			
+			// If reason is provided
 			if (std::holds_alternative<std::string>(tgtReason) == true)
 			{
-				std::string tout_Reason = std::get<std::string>(tgtReason);
+				const auto tout_Reason = std::get<std::string>(tgtReason);
 				client.set_audit_reason(tout_Reason);
 			}
 			else
 			{
-				std::string tout_Reason = "No reason provided";
+				const auto tout_Reason = "No reason provided";
 				client.set_audit_reason(tout_Reason);
 			}
 
+			// Timeout the user
 			client.guild_member_timeout(tgtGuild, usr, time(nullptr) + duration);
 
 			event.reply(
@@ -154,14 +150,14 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 			return true;
 		});
 
+	// Button for cancelling
 	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event)
 		{
-			std::string cnlContent = "Cancelled request!";
-
+			// If not the user who request that interaction
 			if (source != event.command.usr.id)
-			{
 				return false;
-			}
+
+			const auto cnlContent = "Cancelled request!";
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,

@@ -22,34 +22,38 @@
 
 void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
-	auto tgtUser = event.command.usr;
 	dpp::embed embed;
+	
+	const auto tgtUser = event.command.usr;
 
+	// If the command user is trying to get another people information
 	if (std::holds_alternative<dpp::snowflake>(event.get_parameter("id")) == true)
 	{
-		auto usr_id = event.get_parameter("user");
-		auto tgtId  = dpp::find_user(std::get<dpp::snowflake>(usr_id));
+		const auto usr_id  = event.get_parameter("user");
+		const auto tgtId   = dpp::find_user(std::get<dpp::snowflake>(usr_id));
 
-		std::string avatar  = tgtId->get_avatar_url();
-		std::string usrID   = fmt::format("{}", tgtId->id);
-		std::string created = fmt::format("<t:{}:R>", round(tgtId->get_creation_time()));
-		std::string usrName = fmt::format("{}", tgtId->format_username());
+		const auto avatar  = tgtId->get_avatar_url();
+		const auto usrID   = fmt::format("{}", tgtId->id);
+		const auto created = fmt::format("<t:{}:R>", round(tgtId->get_creation_time()));
+		const auto usrName = fmt::format("{}", tgtId->format_username());
 
 		EmbedInfoBuild(embed, avatar, usrName, usrID, created, tgtUser);
+
 		event.reply(
 			dpp::message(event.command.channel_id, embed)
 		);
 	}
 	else
 	{
-		auto tgtId = event.command.usr;
+		const auto tgtId   = event.command.usr;
 
-		std::string avatar  = tgtId.get_avatar_url();
-		std::string usrID   = fmt::format("{}", tgtId.id);
-		std::string created = fmt::format("<t:{}:R>", round(tgtId.get_creation_time()));
-		std::string usrName = fmt::format("{}", tgtId.format_username());
+		const auto avatar  = tgtId.get_avatar_url();
+		const auto usrID   = fmt::format("{}", tgtId.id);
+		const auto created = fmt::format("<t:{}:R>", round(tgtId.get_creation_time()));
+		const auto usrName = fmt::format("{}", tgtId.format_username());
 
 		EmbedInfoBuild(embed, avatar, usrName, usrID, created, tgtUser);
+
 		event.reply(
 			dpp::message(event.command.channel_id, embed)
 		);

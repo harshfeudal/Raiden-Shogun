@@ -15,7 +15,6 @@
  */
 
 #include <spdlog/spdlog.h>
-#include <dpp/dpp.h>
 
 #include "../../handler/handler.h"
 #include "../../handler/btnHandler.h"
@@ -25,20 +24,21 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
 
-	std::string errorTitle = "<:failed:1036206712916553748> Error";
-	std::string warnTitle  = "Warning message";
+	const auto errorTitle       = "<:failed:1036206712916553748> Error";
+	const auto warnTitle        = "Warning message";
 
-	auto usr       = std::get<dpp::snowflake>(event.get_parameter("member"));
-	auto tgtReason = event.get_parameter("reason");
-	
-	auto source           = event.command.usr.id;
-	auto gFind            = dpp::find_guild(event.command.guild_id);
-	auto tgtGuild         = event.command.guild_id;
-	auto tgtChannel       = event.command.channel_id;
-	auto clientPermission = event.command.app_permissions.has(dpp::p_kick_members);
+	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("member"));
+	const auto gFind            = dpp::find_guild(event.command.guild_id);
 
-	const auto tgtUser = gFind->members.find(usr);
+	const auto tgtReason        = event.get_parameter("reason");
+	const auto source           = event.command.usr.id;
+	const auto tgtGuild         = event.command.guild_id;
+	const auto tgtChannel       = event.command.channel_id;
+	const auto clientPermission = event.command.app_permissions.has(dpp::p_kick_members);
 
+	const auto tgtUser          = gFind->members.find(usr);
+
+	// If cannot find that member in the server
 	if (tgtUser == gFind->members.end())
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Member not found!", event.command.usr);
@@ -49,6 +49,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+	// If cannot find the guild to action
 	if (gFind == nullptr)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Guild not found!", event.command.usr);
@@ -59,6 +60,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+	// If the command user doesn't have any permission
 	if (!gFind->base_permissions(event.command.member).has(dpp::p_kick_members))
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to prune", event.command.usr);
@@ -69,6 +71,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+	// If the bot doesn't have any permission
 	if (!clientPermission)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to prune", event.command.usr);
@@ -79,6 +82,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+	// If they try to kick a guild owner
 	if (usr == gFind->owner_id)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot kick the owner", event.command.usr);
@@ -89,6 +93,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+	// If they kick theirselves
 	if (usr == source)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot kick yourself", event.command.usr);
@@ -99,6 +104,7 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+	// If they try to kick the bot
 	if (usr == client.me.id)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Why do you kick me :(", event.command.usr);
@@ -109,38 +115,34 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	auto k_Component = dpp::component().set_label("Kick")
-                                       .set_type(dpp::cot_button)
-                                       .set_style(dpp::cos_danger)
-                                       .set_emoji("success", 1036206685779398677)
-                                       .set_id("k_Id");
+	auto k_Component   = dpp::component();
+	auto cnl_Component = dpp::component();
 
-	auto cnl_Component = dpp::component().set_label("Cancel")
-                                         .set_type(dpp::cot_button)
-                                         .set_style(dpp::cos_success)
-                                         .set_emoji("failed", 1036206712916553748)
-                                         .set_id("k_cnl_Id");
+	k_Component.set_label("Kick").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("k_Id");
+	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("k_cnl_Id");
 
+	// Button for kicking
 	ButtonBind(k_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
+			// If not the user who request that interaction
 			if (source != event.command.usr.id)
-			{
 				return false;
-			}
 
-			std::string kContent = fmt::format("<@{}> has been kicked!", usr);
+			const auto kContent = fmt::format("<@{}> has been kicked!", usr);
 			
+			// If reason is provided
 			if (std::holds_alternative<std::string>(tgtReason) == true)
 			{
-				std::string k_Reason = std::get<std::string>(tgtReason);
+				const auto k_Reason = std::get<std::string>(tgtReason);
 				client.set_audit_reason(k_Reason);
 			}
 			else
 			{
-				std::string k_Reason = "No reason provided";
+				const auto k_Reason = "No reason provided";
 				client.set_audit_reason(k_Reason);
 			}
 
+			// Kick the target user in that guild
 			client.guild_member_kick(tgtGuild, usr);
 
 			event.reply(
@@ -152,14 +154,14 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 			return true;
 		});
 
+	// Button for cancelling
 	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event)
 		{
-			std::string cnlContent = "Cancelled request!";
-
+			// If not the user who request that interaction
 			if (source != event.command.usr.id)
-			{
 				return false;
-			}
+			
+			const auto cnlContent = "Cancelled request!";
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,

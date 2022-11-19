@@ -48,9 +48,10 @@ int main()
 		reading >> reader;
 	}
 
-	const std::string token = harshfeudal::Base64::Decode(reader["token"]);
+	// Encrypt the token - Base64
+	const auto token = harshfeudal::Base64::Decode(reader["token"]);
 
-	// Client variable
+	// Client variable builder
 	dpp::cluster client(token, dpp::i_all_intents);
 
 	// Starting the bot
@@ -73,8 +74,8 @@ int main()
 
 	client.on_slashcommand([&client](const dpp::slashcommand_t& event)
 		{
-			dpp::command_interaction      commandData   = event.command.get_command_interaction();
-			auto                          commandFilter = commands.find(commandData.name);
+			dpp::command_interaction commandData   = event.command.get_command_interaction();
+			auto                     commandFilter = commands.find(commandData.name);
 
 			// Check commands
 			if (commandFilter != commands.end())

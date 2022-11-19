@@ -22,6 +22,7 @@
 using  commandFunc = std::function<void(dpp::cluster&, const dpp::slashcommand_t&)>;
 struct commandDef;
 
+// Build the embed template
 inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::string fieldTitle, std::string fieldDes, const dpp::user& tgtUser)
 {
 	embed = dpp::embed()
@@ -32,6 +33,7 @@ inline void EmbedBuild(dpp::embed& embed, uint32_t col, std::string title, std::
 	.set_timestamp(time(nullptr));
 }
 
+// Build command definition and function
 struct commandDef
 {
 	std::string                      description;

@@ -25,17 +25,18 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
 
-	std::string errorTitle = "<:failed:1036206712916553748> Error";
-	std::string warnTitle  = "Warning message";
+	const auto errorTitle       = "<:failed:1036206712916553748> Error";
+	const auto warnTitle        = "Warning message";
 
-	auto usr       = std::get<dpp::snowflake>(event.get_parameter("member"));
-	auto tgtReason = event.get_parameter("reason");
+	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("member"));
 
-	auto source           = event.command.usr.id;
-	auto gFind            = dpp::find_guild(event.command.guild_id);
-	auto tgtGuild         = event.command.guild_id;
-	auto tgtChannel       = event.command.channel_id;
-	auto clientPermission = event.command.app_permissions.has(dpp::p_ban_members);
+	const auto tgtReason        = event.get_parameter("reason");
+	const auto source           = event.command.usr.id;
+	const auto tgtGuild         = event.command.guild_id;
+	const auto tgtChannel       = event.command.channel_id;
+	const auto clientPermission = event.command.app_permissions.has(dpp::p_ban_members);
+
+	const auto gFind            = dpp::find_guild(event.command.guild_id);
 
 	if (gFind == nullptr)
 	{
@@ -112,38 +113,34 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	*/
 	
-	auto b_Component = dpp::component().set_label("Unban")
-                                       .set_type(dpp::cot_button)
-                                       .set_style(dpp::cos_danger)
-                                       .set_emoji("success", 1036206685779398677)
-                                       .set_id("ub_Id");
+	auto b_Component   = dpp::component();
+	auto cnl_Component = dpp::component();
 
-	auto cnl_Component = dpp::component().set_label("Cancel")
-                                         .set_type(dpp::cot_button)
-                                         .set_style(dpp::cos_success)
-                                         .set_emoji("failed", 1036206712916553748)
-                                         .set_id("ub_cnl_Id");
+	b_Component.set_label("Unban").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("ub_Id");
+	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("ub_cnl_Id");
 
+	// Button for un-banning
 	ButtonBind(b_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
+			// If not the user who request that interaction
 			if (source != event.command.usr.id)
-			{
 				return false;
-			}
 
-			std::string bContent = fmt::format("Banned removed from <@{}>", usr);
+			const auto bContent = fmt::format("Banned removed from <@{}>", usr);
 
+			// If reason is provided
 			if (std::holds_alternative<std::string>(tgtReason) == true)
 			{
-				std::string ub_Reason = std::get<std::string>(tgtReason);
+				const auto ub_Reason = std::get<std::string>(tgtReason);
 				client.set_audit_reason(ub_Reason);
 			}
 			else
 			{
-				std::string ub_Reason = "No reason provided";
+				const auto ub_Reason = "No reason provided";
 				client.set_audit_reason(ub_Reason);
 			}
 
+			// Unban the user from that guild
 			client.guild_ban_delete(event.command.guild_id, usr);
 
 			event.reply(
@@ -155,14 +152,14 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 			return true;
 		});
 
+	// Button for cancelling
 	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event)
 		{
-			std::string cnlContent = "Cancelled request!";
-
+			// If not the user who request that interaction
 			if (source != event.command.usr.id)
-			{
 				return false;
-			}
+
+			const auto cnlContent = "Cancelled request!";
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
