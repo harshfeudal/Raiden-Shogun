@@ -20,7 +20,21 @@
 
 #define ID_SPACING "###"
 
-struct Session;
+struct Session
+{
+    time_t   created_at;
+    uint16_t cache_duration;
+
+    std::function<bool(const dpp::button_click_t&)> function;
+
+    Session() : created_at(time(nullptr)), cache_duration(10) {}
+
+    // If expired
+    bool isExpired() const
+    {
+        return difftime(time(nullptr), created_at) > cache_duration * 60;
+    }
+};
 
 inline std::unordered_map<uint64_t, Session> cachedSessions;
 inline std::shared_mutex                     cachedSessionsMutex;
@@ -48,8 +62,8 @@ inline void ButtonBind(dpp::component& component, const std::function<bool(const
 {
 	ButtonClear();
 	
-	bool              customIdAlreadyExists;
 	std::unique_lock l(cachedSessionsMutex);
+	bool              customIdAlreadyExists;
 
 	do 
 	{
@@ -63,12 +77,13 @@ inline void ButtonBind(dpp::component& component, const std::function<bool(const
 		// Checking if existence
 		if (!customIdAlreadyExists) 
 		{
-			Session session;
+			component.custom_id    = std::to_string(customIdCounter);
+
+            Session session;
 
 			session.function       = function;
 			session.cache_duration = cache_duration;
 
-			component.custom_id    = std::to_string(customIdCounter);
 			component.custom_id    += ID_SPACING + std::to_string(static_cast<long int>(session.created_at));
 
 			cachedSessions[customIdCounter] = session;
@@ -124,19 +139,3 @@ inline void ButtonHandle(const dpp::button_click_t& event)
 		}
 	}
 }
-
-struct Session 
-{
-	time_t   created_at;
-	uint16_t cache_duration;
-
-	std::function<bool(const dpp::button_click_t&)> function;
-
-	Session() : created_at(time(nullptr)), cache_duration(10) {}
-
-	// If expired
-	bool isExpired() const 
-	{ 
-		return difftime(time(nullptr), created_at) > cache_duration * 60; 
-	}
-};
