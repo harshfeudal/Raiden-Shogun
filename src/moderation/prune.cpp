@@ -33,7 +33,6 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	const auto source           = event.command.usr.id;
 	const auto tgtChannel       = event.command.channel_id;
-	const auto tgtReason        = event.get_parameter("reason");
 	const auto clientPermission = event.command.app_permissions.has(dpp::p_manage_messages);
 	const auto clientViewPerm   = event.command.app_permissions.has(dpp::p_read_message_history);
 
@@ -95,23 +94,11 @@ void prune(dpp::cluster& client, const dpp::slashcommand_t& event)
 	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("p_cnl_Id");
 
 	// Button for deleting messages
-	ButtonBind(p_Component, [&client, amount, tgtReason, source](const dpp::button_click_t& event)
+	ButtonBind(p_Component, [&client, amount, source](const dpp::button_click_t& event)
 		{
 			// If not the user who request that interaction
 			if (source != event.command.usr.id)
 				return false;
-
-			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason) == true)
-			{
-				const auto p_Reason = std::get<std::string>(tgtReason);
-				client.set_audit_reason(p_Reason);
-			}
-			else
-			{
-				const auto p_Reason = "No reason provided";
-				client.set_audit_reason(p_Reason);
-			}
 
 			// Deleting message action
 			client.messages_get(event.command.channel_id, 0, 0, 0, amount, [&client, event](const dpp::confirmation_callback_t& callback)

@@ -18,38 +18,7 @@
 
 #include <dpp/dpp.h>
 
-/* - Discord Badges in order
-
-    DiscordStaffBadge,
-    PartneredServerOwner,
-    DiscordCertifiedModerator,
-
-    HypesquadEvent,
-    HypesquadBravery,
-    HypesquadBalance,
-    HypesquadBrilliance,
-
-    DiscordBugHunterGreen,
-    DiscordBugHunterGold,
-
-    ActiveDeveloper,
-    EarlyVerifiedBotDev,
-    EarlySupporter,
-    NitroSubscriber,
-
-    NitroBoost_1Month,
-    NitroBoost_2Months,
-    NitroBoost_3Months,
-    NitroBoost_6Months,
-    NitroBoost_9Months,
-    NitroBoost_12Months,
-    NitroBoost_15Months,
-    NitroBoost_18Months,
-    NitroBoost_24Months,
-
- */
-
-inline void EmbedInfoBuild(dpp::embed& embed, std::string avatar, std::string usrName, std::string usrID, std::string created, const dpp::user& tgtUser)
+inline void EmbedInfoBuild(dpp::embed& embed, std::string avatar, std::string usrName, std::string usrID, std::string created, std::string BadgeShow, const dpp::user& tgtUser)
 {
     embed = dpp::embed();
 
@@ -57,6 +26,7 @@ inline void EmbedInfoBuild(dpp::embed& embed, std::string avatar, std::string us
          .set_title("User Information")
          .set_thumbnail(avatar)
          .add_field("Username", usrName, true).add_field("User ID", usrID, true).add_field("Created", created, true)
+         .add_field("Badges", BadgeShow, false)
          .set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
          .set_timestamp(time(nullptr));
 }

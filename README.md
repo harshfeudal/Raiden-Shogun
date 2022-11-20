@@ -25,7 +25,6 @@ These are libraries that we're using in this project:
 - [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.21` (latest)
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.11.0` (latest)
 - [Base64](https://gist.github.com/tomykaira/f0fd86b6c73063283afe550bc5d77594)
-- [SHA256](https://github.com/okdshin/PicoSHA2/blob/master/picosha2.h)
 
 Bot current version: 
 - BETA version - `0.1.6.0` (`x64` Release)

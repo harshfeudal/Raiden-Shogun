@@ -27,8 +27,6 @@
 #include "../commands/moderation/timeout.h"
 #include "../commands/moderation/nickname.h"
 
-#include "../commands/utility/sha.h"
-
 #include "../commands/information/ping.h"
 #include "../commands/information/userInfo.h"
 #include "../commands/information/about.h"
@@ -116,20 +114,6 @@ inline std::map<std::string, commandDef> commands
 			}
 	},
 	{
-		"sha",
-			{
-				"Convert into your text to SHA256", sha,
-				{
-					dpp::command_option(
-						dpp::co_string,
-						"input",
-						"Your message to convert",
-						true
-					)
-				}
-			}
-	},
-	{
 		"prune",
 			{
 				"Prune messages", prune,
@@ -139,12 +123,6 @@ inline std::map<std::string, commandDef> commands
 						"amount",
 						"Amount of messages to prune, from 2 up to 99",
 						true
-					),
-					dpp::command_option(
-						dpp::co_string,
-						"reason",
-						"Pruning reason",
-						false
 					)
 				}
 			}
