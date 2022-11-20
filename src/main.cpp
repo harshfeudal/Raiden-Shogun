@@ -87,7 +87,7 @@ int main()
 	
 	// Console log prettier
 	SetConsoleTitle(TEXT("[BETA] v0.1.6.0 - Raiden Shogun Discord Bot - The Harshfeudal Projects"));
-	
+
 	// Starting the bot
 	client.start(dpp::st_wait);
 	
