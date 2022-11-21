@@ -27,6 +27,9 @@
 void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {   
 	dpp::embed embed;
+
+    const auto errorTitle            = "<:failed:1036206712916553748> Error";
+	const auto warnTitle             = "Warning message";
 	
 	const auto cmdUser               = event.command.usr;
     auto       usrId                 = cmdUser.id;
@@ -66,6 +69,17 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
         usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
 
     const auto tgtId                 = dpp::find_user(usrId);
+
+    // If cannot find the user
+	if (tgtId == nullptr)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "User not found!", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
 
     if (tgtId->is_discord_employee() == true)
         hasStaffBadge = StaffBadge;
