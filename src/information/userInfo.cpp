@@ -24,8 +24,8 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {   
 	dpp::embed embed;
 	
-	const auto cmdUser = event.command.usr;
-    auto       tgtId   = dpp::find_user(event.command.usr.id);
+	const auto cmdUser               = event.command.usr;
+    auto       usrId                 = cmdUser.id;
 
     const auto StaffBadge            = "<:BadgeStaff:1043810278564970568>";
     const auto PartnerBadge          = "<:BadgePartner:1043810326862381078>";
@@ -59,7 +59,9 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     // If the command user is trying to get another people information
     if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
-        tgtId = dpp::find_user(std::get<dpp::snowflake>(event.get_parameter("user")));
+        usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
+
+    const auto tgtId                 = dpp::find_user(usrId);
 
     if (tgtId->is_discord_employee() == true)
         hasStaffBadge = StaffBadge;
