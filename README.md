@@ -74,7 +74,6 @@ Bot current version:
 ### 💎 Future plan
 - [ ] CMake support soon!
 - [x] Add `premake5.lua`
-- [x] Code works well (currently)
 
  ### 🤝 Support me
  - Please leave me a star if you like it. Thank you very much!

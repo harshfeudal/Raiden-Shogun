@@ -20,6 +20,10 @@
 #include "../../commands/information/userInfo.h"
 #include "../../handler/handler.h"
 
+// TO DO
+// 1. Try hard to fix the pointer, since it is getting error
+// 2. Make the code "shorter" if possible
+
 void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {   
 	dpp::embed embed;
@@ -100,6 +104,8 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto usrID     = fmt::format("{}", tgtId->id);
     const auto created   = fmt::format("<t:{}:R>", round(tgtId->get_creation_time()));
     const auto usrName   = fmt::format("{}", tgtId->format_username());
+    
+    // The badge cannot show now because the pointer is error ... will fix it ASAP
     const auto BadgeShow = fmt::format("{}{}{}{}{}{}{}{}{}{}",
         hasStaffBadge,     hasPartnerBadge,  hasModBadge,      hasEventBadge, hasHouseBadge,
         hasBugHunterBadge, hasBotDevBadge,   hasEarlySupBadge, hasNitroBadge, hasBoostBadge
