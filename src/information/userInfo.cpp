@@ -68,56 +68,56 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
         usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
 
-    const auto tgtId                 = dpp::get_user_cache()->find(usrId);
+    const auto tgtId                 = client.user_get_sync(usrId);
 
     // If cannot find the user
-	if (tgtId == nullptr)
-	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "User not found!", event.command.usr);
-		event.reply(
-			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
-		);
-    
-		return;
-	}
+	// if (!tgtId)
+	// {
+	// 	EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "User not found!", event.command.usr);
+	// 	event.reply(
+	// 		dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+	// 	);
+    // 
+	// 	return;
+	// }
 
-    if (tgtId->is_discord_employee())
+    if (tgtId.is_discord_employee())
         hasStaffBadge = StaffBadge;
     
-    if (tgtId->is_partnered_owner())
+    if (tgtId.is_partnered_owner())
         hasPartnerBadge = PartnerBadge;
     
-    if (tgtId->is_certified_moderator())
+    if (tgtId.is_certified_moderator())
         hasModBadge = CertifiedMod;
     
-    if (tgtId->has_hypesquad_events())
+    if (tgtId.has_hypesquad_events())
         hasEventBadge = EventBadge;
     
-    if (tgtId->is_house_balance())
+    if (tgtId.is_house_balance())
         hasHouseBadge = HypesquadBalance;
-    else if (tgtId->is_house_brilliance())
+    else if (tgtId.is_house_brilliance())
         hasHouseBadge = HypesquadBrilliance;
-    else if (tgtId->is_house_bravery())
+    else if (tgtId.is_house_bravery())
         hasHouseBadge = HypesquadBravery;
     
-    if (tgtId->is_bughunter_1())
+    if (tgtId.is_bughunter_1())
         hasBugHunterBadge = DiscordBugHunterGreen;
-    else if (tgtId->is_bughunter_2())
+    else if (tgtId.is_bughunter_2())
         hasBugHunterBadge = DiscordBugHunterGold;
     
-    if (tgtId->is_verified_bot_dev())
+    if (tgtId.is_verified_bot_dev())
         hasBotDevBadge = EarlyVerifiedBotDev;
     
-    if (tgtId->is_early_supporter())
+    if (tgtId.is_early_supporter())
         hasEarlySupBadge = EarlySupporter;
 
-    if (tgtId->has_nitro_basic() || tgtId->has_nitro_classic() || tgtId->has_nitro_full())
+    if (tgtId.has_nitro_basic() || tgtId.has_nitro_classic() || tgtId.has_nitro_full())
         hasNitroBadge = NitroSubscriber;
 
-    const auto avatar    = tgtId->get_avatar_url();
-    const auto usrID     = fmt::format("{}", tgtId->id);
-    const auto created   = fmt::format("<t:{}:R>", round(tgtId->get_creation_time()));
-    const auto usrName   = fmt::format("{}", tgtId->format_username());
+    const auto avatar    = tgtId.get_avatar_url();
+    const auto usrID     = fmt::format("{}", tgtId.id);
+    const auto created   = fmt::format("<t:{}:R>", round(tgtId.get_creation_time()));
+    const auto usrName   = fmt::format("{}", tgtId.format_username());
     
     // The badge cannot show now because the pointer is error ... will fix it ASAP
     const auto BadgeShow = fmt::format("{}{}{}{}{}{}{}{}{}{}",
