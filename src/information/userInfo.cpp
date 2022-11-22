@@ -68,7 +68,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
         usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
 
-    const auto tgtId                 = dpp::find_user(usrId);
+    const auto tgtId                 = dpp::get_user_cache()->find(usrId);
 
     // If cannot find the user
 	if (tgtId == nullptr)
@@ -77,41 +77,41 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
-
+    
 		return;
 	}
 
-    if (tgtId->is_discord_employee() == true)
+    if (tgtId->is_discord_employee())
         hasStaffBadge = StaffBadge;
-
-    if (tgtId->is_partnered_owner() == true)
+    
+    if (tgtId->is_partnered_owner())
         hasPartnerBadge = PartnerBadge;
-
-    if (tgtId->is_certified_moderator() == true)
+    
+    if (tgtId->is_certified_moderator())
         hasModBadge = CertifiedMod;
-
-    if (tgtId->has_hypesquad_events() == true)
+    
+    if (tgtId->has_hypesquad_events())
         hasEventBadge = EventBadge;
-
-    if (tgtId->is_house_balance() == true)
+    
+    if (tgtId->is_house_balance())
         hasHouseBadge = HypesquadBalance;
-    else if (tgtId->is_house_brilliance() == true)
+    else if (tgtId->is_house_brilliance())
         hasHouseBadge = HypesquadBrilliance;
-    else if (tgtId->is_house_bravery() == true)
+    else if (tgtId->is_house_bravery())
         hasHouseBadge = HypesquadBravery;
-
-    if (tgtId->is_bughunter_1() == true)
+    
+    if (tgtId->is_bughunter_1())
         hasBugHunterBadge = DiscordBugHunterGreen;
-    else if (tgtId->is_bughunter_2() == true)
+    else if (tgtId->is_bughunter_2())
         hasBugHunterBadge = DiscordBugHunterGold;
-
-    if (tgtId->is_verified_bot_dev() == true)
+    
+    if (tgtId->is_verified_bot_dev())
         hasBotDevBadge = EarlyVerifiedBotDev;
-
-    if (tgtId->is_early_supporter() == true)
+    
+    if (tgtId->is_early_supporter())
         hasEarlySupBadge = EarlySupporter;
 
-    if (tgtId->has_nitro_basic() == true || tgtId->has_nitro_classic() == true || tgtId->has_nitro_full() == true)
+    if (tgtId->has_nitro_basic() || tgtId->has_nitro_classic() || tgtId->has_nitro_full())
         hasNitroBadge = NitroSubscriber;
 
     const auto avatar    = tgtId->get_avatar_url();

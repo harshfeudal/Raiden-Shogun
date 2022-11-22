@@ -26,7 +26,7 @@ inline void EmbedInfoBuild(dpp::embed& embed, std::string avatar, std::string us
          .set_title("User Information")
          .set_thumbnail(avatar)
          .add_field("Username", usrName, true).add_field("User ID", usrID, true).add_field("Created", created, true)
-         .add_field("Badges", BadgeShow, false)
+         .add_field("Badges", BadgeShow)
          .set_footer(dpp::embed_footer().set_text(tgtUser.username).set_icon(tgtUser.get_avatar_url()))
          .set_timestamp(time(nullptr));
 }
