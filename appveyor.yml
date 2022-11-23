@@ -15,7 +15,11 @@ environment:
 build_script:
   - cmd: >-
       set
+
       mkdir build
+
       cd build
+
       cmake -G %GENERATOR% ..
+      
       cmake --build .
