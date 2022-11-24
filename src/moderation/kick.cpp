@@ -18,7 +18,7 @@
 
 #include "../../handler/handler.h"
 #include "../../handler/btnHandler.h"
-#include "../../commands/moderation/kick.h";
+#include "../../commands/moderation/kick.h"
 
 void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 {

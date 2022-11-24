@@ -144,6 +144,7 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 				client.set_audit_reason(d_Reason);
 			}
 
+            // Working in progres ...
 			// client.on_voice_client_disconnect();
 
 			event.reply(

@@ -13,6 +13,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/network)
 [![Release](https://img.shields.io/github/v/release/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases/latest)
+[![Build status](https://ci.appveyor.com/api/projects/status/rw24l1muco30hkqx?svg=true)](https://ci.appveyor.com/project/harshfeudal/raiden-shogun)
 </div>
 
 ### :pencil: About this project
@@ -71,9 +72,9 @@ Bot current version:
 - Visual Studio Enterprise 2022
 - Visual Studio Code
 
-### 💎 Future plan
-- [ ] CMake support soon!
-- [x] Add `premake5.lua`
+### 💎 Build support
+- [x] CMake support for Visual Studio Code
+- [x] `premake5.lua` for better Visual Studio setup
 
  ### 🤝 Support me
  - Please leave me a star if you like it. Thank you very much!
