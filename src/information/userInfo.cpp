@@ -17,7 +17,7 @@
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
 
-#include "../../commands/information/userInfo.h"
+#include "../../commands/information/userinfo.h"
 #include "../../handler/handler.h"
 
 // TO DO
@@ -81,6 +81,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+    // This is under-investigation [Library bug]
     if (tgtId->is_discord_employee())
         hasStaffBadge = StaffBadge;
     
@@ -92,7 +93,8 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     
     if (tgtId->has_hypesquad_events())
         hasEventBadge = EventBadge;
-    
+
+    // Only HypeSquad works
     if (tgtId->is_house_balance())
         hasHouseBadge = HypesquadBalance;
     else if (tgtId->is_house_brilliance())
@@ -133,11 +135,15 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     auto       linkComponent = dpp::component();
     const auto profileURL    = fmt::format("discord://-/users/{}", tgtId->id);
 
-    linkComponent.set_label("View profile").set_type(dpp::cot_button).set_emoji(":link:").set_style(dpp::cos_link).set_url(profileURL);
+    linkComponent.set_label("View profile")
+                 .set_type(dpp::cot_button)
+                 .set_emoji("MessageLink", 1045584835420368896)
+                 .set_style(dpp::cos_link)
+                 .set_url(profileURL);
 
     EmbedInfoBuild(embed, avatar, usrName, usrID, created, BadgeShow, cmdUser);
 
     event.reply(
-        dpp::message().add_embed(embed).add_component(linkComponent)
+        dpp::message().add_embed(embed).add_component(dpp::component().add_component(linkComponent))
     );
 }

@@ -36,7 +36,7 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 	const auto source           = event.command.usr.id;
 	const auto tgtGuild         = event.command.guild_id;
 	const auto tgtChannel       = event.command.channel_id;
-	const auto clientPermission = event.command.app_permissions.has(dpp::p_mute_members);
+	const auto clientPermission = event.command.app_permissions.has(dpp::p_move_members);
 
 	const auto tgtUser          = gFind->members.find(usr);
 
@@ -63,7 +63,7 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 
 	// If the command user doesn't have any permission
-	if (!gFind->base_permissions(event.command.member).has(dpp::p_mute_members))
+	if (!gFind->base_permissions(event.command.member).has(dpp::p_move_members))
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to disconnect member", event.command.usr);
 		event.reply(
@@ -144,8 +144,7 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 				client.set_audit_reason(d_Reason);
 			}
 
-            // Working in progres ...
-			// client.on_voice_client_disconnect();
+            // client.co_guild_member_move()
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,

@@ -28,7 +28,7 @@
 #include "../commands/moderation/nickname.h"
 
 #include "../commands/information/ping.h"
-#include "../commands/information/userInfo.h"
+#include "../commands/information/userinfo.h"
 #include "../commands/information/about.h"
 
 void SlashCommandCreate(dpp::cluster& client);
