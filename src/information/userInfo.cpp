@@ -133,11 +133,11 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     auto       linkComponent = dpp::component();
     const auto profileURL    = fmt::format("discord://-/users/{}", tgtId->id);
 
-    linkComponent.set_label("View profile").set_type(dpp::cot_button).set_style(dpp::cos_link).set_emoji(":link:").set_url(profileURL);
+    linkComponent.set_label("View profile").set_type(dpp::cot_button).set_emoji(":link:").set_style(dpp::cos_link).set_url(profileURL);
 
     EmbedInfoBuild(embed, avatar, usrName, usrID, created, BadgeShow, cmdUser);
 
     event.reply(
-        dpp::message(event.command.channel_id, embed)
+        dpp::message().add_embed(embed).add_component(linkComponent)
     );
 }
