@@ -26,10 +26,10 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	dpp::embed embed;
 
-	const auto errorTitle = "<:failed:1036206712916553748> Error";
-	const auto warnTitle  = "Warning message";
+	const auto errorTitle       = "<:failed:1036206712916553748> Error";
+	const auto warnTitle        = "Warning message";
 
-	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("member"));
+	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("user"));
 	const auto gFind            = dpp::find_guild(event.command.guild_id);
 
 	const auto tgtReason        = event.get_parameter("reason");
@@ -84,7 +84,7 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	// If they try to ban a guild owner
+	// If they try to disconnect a guild owner
 	if (usr == gFind->owner_id)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot disconnect the owner", event.command.usr);
@@ -130,21 +130,17 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto dContent = fmt::format("<@{}> has been disconnected!", usr);
+			const auto  dContent = fmt::format("<@{}> has been disconnected!", usr);
+            std::string d_Reason = "No reason provided";
 
 			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason) == true)
-			{
-				const auto d_Reason = std::get<std::string>(tgtReason);
-				client.set_audit_reason(d_Reason);
-			}
-			else
-			{
-				const auto d_Reason = "No reason provided";
-				client.set_audit_reason(d_Reason);
-			}
+			if (std::holds_alternative<std::string>(tgtReason))
+                d_Reason = std::get<std::string>(tgtReason);
+			
+			client.set_audit_reason(d_Reason);
 
-            // client.co_guild_member_move()
+            // Disconnect the target user
+            client.guild_member_move(0, tgtGuild, usr);
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,

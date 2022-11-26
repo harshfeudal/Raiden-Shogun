@@ -26,6 +26,7 @@
 #include "../commands/moderation/prune.h"
 #include "../commands/moderation/timeout.h"
 #include "../commands/moderation/nickname.h"
+#include "../commands/moderation/disconnect.h"
 
 #include "../commands/information/ping.h"
 #include "../commands/information/userinfo.h"
@@ -44,18 +45,8 @@ inline std::map<std::string, commandDef> commands
 			{
 				"Kick a member you mentioned", kick,
 				{
-					dpp::command_option(
-						dpp::co_user,
-						"member",
-						"Mention a member to kick",
-						true
-					),
-					dpp::command_option(
-						dpp::co_string,
-						"reason",
-						"Reason why they got kick",
-						false
-					)
+					dpp::command_option(dpp::co_user,   "member", "Mention a member to kick", true),
+					dpp::command_option(dpp::co_string, "reason", "Reason why they got kick", false)
 				}
 			}
 	},
@@ -64,18 +55,8 @@ inline std::map<std::string, commandDef> commands
 			{
 				"Ban a member you mentioned", ban,
 				{
-					dpp::command_option(
-						dpp::co_user,
-						"member",
-						"Mention a member to ban",
-						true
-					),
-					dpp::command_option(
-						dpp::co_string,
-						"reason",
-						"Reason why they got ban",
-						false
-					)
+					dpp::command_option(dpp::co_user,   "member", "Mention a member to ban", true),
+					dpp::command_option(dpp::co_string, "reason", "Reason why they got ban", false)
 				}
 			}
 	},
@@ -84,18 +65,8 @@ inline std::map<std::string, commandDef> commands
 			{
 				"Ban a member you mentioned", unban,
 				{
-					dpp::command_option(
-						dpp::co_user,
-						"member",
-						"Mention a member to unban",
-						true
-					),
-					dpp::command_option(
-						dpp::co_string,
-						"reason",
-						"Reason why they remove ban",
-						false
-					)
+					dpp::command_option(dpp::co_user,   "member", "Mention a member to unban",  true),
+					dpp::command_option(dpp::co_string, "reason", "Reason why they remove ban", false)
 				}
 			}
 	},
@@ -104,12 +75,7 @@ inline std::map<std::string, commandDef> commands
 			{
 				"Show mentioned user info", userInfo,
 				{
-					dpp::command_option(
-						dpp::co_user,
-						"user",
-						"User you would like to know",
-						false
-					)
+					dpp::command_option(dpp::co_user, "user", "User you would like to know", false)
 				}
 			}
 	},
@@ -118,12 +84,7 @@ inline std::map<std::string, commandDef> commands
 			{
 				"Prune messages", prune,
 				{
-					dpp::command_option(
-						dpp::co_integer,
-						"amount",
-						"Amount of messages to prune, from 2 up to 99",
-						true
-					)
+					dpp::command_option(dpp::co_integer, "amount", "Amount of messages to prune, from 2 up to 99", true)
 				}
 			}
 	},
@@ -132,44 +93,29 @@ inline std::map<std::string, commandDef> commands
 			{
 				"Timeout member", timeout,
 				{
-					dpp::command_option(
-						dpp::co_user,
-						"member",
-						"Mention a member to timeout",
-						true
-					),
-					dpp::command_option(
-						dpp::co_integer,
-						"duration",
-						"Timeout duration",
-						true
-					),
-					dpp::command_option(
-						dpp::co_string,
-						"reason",
-						"Reason why they got timeout",
-						false
-					)
+					dpp::command_option(dpp::co_user,    "member",   "Mention a member to timeout", true),
+					dpp::command_option(dpp::co_integer, "duration", "Timeout duration",            true),
+					dpp::command_option(dpp::co_string,  "reason",   "Reason why they got timeout", false)
 				}
 			}
 	},
+    {
+        "disconnect",
+            {
+                "Disconnect a user in the voice call", disconnect,
+                {
+                    dpp::command_option(dpp::co_user,  "user",   "User that you want to disconnect",  true),
+                    dpp::command_option(dpp::co_string,"reason", "Reason why they gain a disconnect", false)
+                }
+            }
+    },
 	{
 		"setnickname",
 			{
 				"Change member nickname or reset to their original username", nickname,
 				{
-					dpp::command_option(
-						dpp::co_user,
-						"target",
-						"Member needs to change nickname",
-						true
-					),
-					dpp::command_option(
-						dpp::co_string,
-						"nickname",
-						"Set their new nickname, blank to reset as normal",
-						false
-					)
+					dpp::command_option(dpp::co_user,   "target",   "Member needs to change nickname",                  true),
+					dpp::command_option(dpp::co_string, "nickname", "Set their new nickname, blank to reset as normal", false)
 				}
 			}
 	}

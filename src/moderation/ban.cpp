@@ -14,6 +14,8 @@
  * limitations under the License. 
  */
 
+#pragma once
+
 #include <spdlog/spdlog.h>
 
 #include "../../handler/handler.h"
@@ -128,19 +130,14 @@ void ban(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto bContent = fmt::format("<@{}> has been banned!", usr);
+			const auto  bContent = fmt::format("<@{}> has been banned!", usr);
+			std::string b_Reason = "No reason provided";
 
 			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason) == true)
-			{
-				const auto b_Reason = std::get<std::string>(tgtReason);
-				client.set_audit_reason(b_Reason);
-			}
-			else
-			{
-				const auto b_Reason = "No reason provided";
-				client.set_audit_reason(b_Reason);
-			}
+			if (std::holds_alternative<std::string>(tgtReason))
+                b_Reason = std::get<std::string>(tgtReason);
+
+			client.set_audit_reason(b_Reason);
 
 			// Ban the target user in that guild
 			client.guild_ban_add(tgtGuild, usr);
