@@ -126,19 +126,14 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto bContent = fmt::format("Banned removed from <@{}>", usr);
+			const auto  ubContent = fmt::format("Banned removed from <@{}>", usr);
+            std::string ub_Reason = "No reason provided";
 
 			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason) == true)
-			{
-				const auto ub_Reason = std::get<std::string>(tgtReason);
-				client.set_audit_reason(ub_Reason);
-			}
-			else
-			{
-				const auto ub_Reason = "No reason provided";
-				client.set_audit_reason(ub_Reason);
-			}
+			if (std::holds_alternative<std::string>(tgtReason))
+				ub_Reason = std::get<std::string>(tgtReason);
+
+            client.set_audit_reason(ub_Reason);
 
 			// Unban the user from that guild
 			client.guild_ban_delete(event.command.guild_id, usr);
@@ -146,7 +141,7 @@ void unban(dpp::cluster& client, const dpp::slashcommand_t& event)
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
 				dpp::message().set_flags(dpp::m_ephemeral)
-				.set_content(bContent)
+				.set_content(ubContent)
 			);
 
 			return true;

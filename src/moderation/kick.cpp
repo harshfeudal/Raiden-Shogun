@@ -128,19 +128,14 @@ void kick(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto kContent = fmt::format("<@{}> has been kicked!", usr);
+			const auto  kContent = fmt::format("<@{}> has been kicked!", usr);
+            std::string k_Reason = "No reason provided";
 			
 			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason) == true)
-			{
-				const auto k_Reason = std::get<std::string>(tgtReason);
-				client.set_audit_reason(k_Reason);
-			}
-			else
-			{
-				const auto k_Reason = "No reason provided";
-				client.set_audit_reason(k_Reason);
-			}
+			if (std::holds_alternative<std::string>(tgtReason))
+				k_Reason = std::get<std::string>(tgtReason);
+
+            client.set_audit_reason(k_Reason);
 
 			// Kick the target user in that guild
 			client.guild_member_kick(tgtGuild, usr);

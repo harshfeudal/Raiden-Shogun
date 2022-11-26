@@ -134,7 +134,8 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 			// If reason is provided
 			if (std::holds_alternative<std::string>(tgtReason))
                 d_Reason = std::get<std::string>(tgtReason);
-			
+
+            // This audit log will be reported as a bug
 			client.set_audit_reason(d_Reason);
 
             // Disconnect the target user
