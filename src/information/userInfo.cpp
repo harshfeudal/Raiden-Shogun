@@ -26,49 +26,49 @@
 
 void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {   
-	dpp::embed embed;
+	dpp::embed              embed;
 
-    const auto errorTitle            = "<:failed:1036206712916553748> Error";
-	const auto warnTitle             = "Warning message";
+    const       std::string errorTitle            = "<:failed:1036206712916553748> Error";
+	const       std::string warnTitle             = "Warning message";
 	
-	const auto cmdUser               = event.command.usr;
-    auto       usrId                 = cmdUser.id;
+	const       auto        cmdUser               = event.command.usr;
+    auto                    usrId                 = cmdUser.id;
 
-    const auto StaffBadge            = "<:BadgeStaff:1043810278564970568>";
-    const auto PartnerBadge          = "<:BadgePartner:1043810326862381078>";
-    const auto CertifiedMod          = "<:BadgeCertifiedMod:1043811850925658162>";
+    const       std::string StaffBadge            = "<:BadgeStaff:1043810278564970568>";
+    const       std::string PartnerBadge          = "<:BadgePartner:1043810326862381078>";
+    const       std::string CertifiedMod          = "<:BadgeCertifiedMod:1043811850925658162>";
     
-    const auto EventBadge            = "<:BadgeHypeSquadEvents:1043817210499584050>";
-    const auto EarlyVerifiedBotDev   = "<:BadgeEarlyVerifiedBotDeveloper:1043820046318846062>";
-    const auto EarlySupporter        = "<:BadgeEarlySupporter:1043820083186778162>";
+    const       std::string EventBadge            = "<:BadgeHypeSquadEvents:1043817210499584050>";
+    const       std::string EarlyVerifiedBotDev   = "<:BadgeEarlyVerifiedBotDeveloper:1043820046318846062>";
+    const       std::string EarlySupporter        = "<:BadgeEarlySupporter:1043820083186778162>";
     
-    const auto NitroSubscriber       = "<:BadgeNitro:1043797639050834060>";
-    const auto DiscordBugHunterGreen = "<:BadgeBugHunter:1043820183581638686>";
-    const auto DiscordBugHunterGold  = "<:BadgeBugHunterLvl2:1043820241517563956>";
+    const       std::string NitroSubscriber       = "<:BadgeNitro:1043797639050834060>";
+    const       std::string DiscordBugHunterGreen = "<:BadgeBugHunter:1043820183581638686>";
+    const       std::string DiscordBugHunterGold  = "<:BadgeBugHunterLvl2:1043820241517563956>";
     
-    const auto HypesquadBravery      = "<:BadgeBravery:1043798197908291645>";
-    const auto HypesquadBalance      = "<:BadgeBalance:1043797533060767835>";
-    const auto HypesquadBrilliance   = "<:BadgeBrilliance:1043798261137408060>";
+    const       std::string HypesquadBravery      = "<:BadgeBravery:1043798197908291645>";
+    const       std::string HypesquadBalance      = "<:BadgeBalance:1043797533060767835>";
+    const       std::string HypesquadBrilliance   = "<:BadgeBrilliance:1043798261137408060>";
     
-    auto       hasStaffBadge         = "";
-    auto       hasPartnerBadge       = "";
-    auto       hasModBadge           = "";
+    std::string             hasStaffBadge         = "";
+    std::string             hasPartnerBadge       = "";
+    std::string             hasModBadge           = "";
                
-    auto       hasEventBadge         = "";
-    auto       hasHouseBadge         = "";
-    auto       hasBugHunterBadge     = "";
+    std::string             hasEventBadge         = "";
+    std::string             hasHouseBadge         = "";
+    std::string             hasBugHunterBadge     = "";
                
-    auto       hasBotDevBadge        = "";
-    auto       hasEarlySupBadge      = "";
-    auto       hasNitroBadge         = "";
+    std::string             hasBotDevBadge        = "";
+    std::string             hasEarlySupBadge      = "";
+    std::string             hasNitroBadge         = "";
                
-    auto       hasBoostBadge         = "";
+    std::string             hasBoostBadge         = "";
 
     // If the command user is trying to get another people information
-    if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
+    if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")))
         usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
 
-    const auto tgtId                 = dpp::find_user(usrId);
+    /*const auto tgtId                 = dpp::find_user(usrId);
 
     // If cannot find the user
 	if (!tgtId)
@@ -79,10 +79,24 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		);
     
 		return;
-	}
+	}*/
+
+    client.user_get(usrId, [](const dpp::confirmation_callback_t &event) 
+        {
+            auto u = std::get<dpp::user_identified>(event.value);
+            
+            switch (u.is_discord_employee())
+            {
+            case 1:
+                break;
+            default:
+                break;
+            }
+
+        });
 
     // This is under-investigation [Library bug]
-    if (tgtId->is_discord_employee())
+    /*if (tgtId->is_discord_employee())
         hasStaffBadge = StaffBadge;
 
     if (tgtId->is_partnered_owner())
@@ -145,5 +159,5 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     event.reply(
         dpp::message().add_embed(embed).add_component(dpp::component().add_component(linkComponent))
-    );
+    );*/
 }

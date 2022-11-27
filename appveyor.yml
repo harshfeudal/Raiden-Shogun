@@ -22,4 +22,4 @@ build_script:
 
       cmake -G %GENERATOR% ..
       
-      cmake --build .
+      cmake --build . --config %BUILD_TYPE%
