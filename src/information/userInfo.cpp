@@ -16,7 +16,6 @@
 
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
-
 #include "../../commands/information/userinfo.h"
 #include "../../handler/handler.h"
 
@@ -26,52 +25,52 @@
 
 void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 {   
-	dpp::embed              embed;
+	dpp::embed embed;
 
-    const       std::string errorTitle            = "<:failed:1036206712916553748> Error";
-	const       std::string warnTitle             = "Warning message";
+    const auto errorTitle            = "<:failed:1036206712916553748> Error";
+	const auto warnTitle             = "Warning message";
 	
-	const       auto        cmdUser               = event.command.usr;
-    auto                    usrId                 = cmdUser.id;
-
-    const       std::string StaffBadge            = "<:BadgeStaff:1043810278564970568>";
-    const       std::string PartnerBadge          = "<:BadgePartner:1043810326862381078>";
-    const       std::string CertifiedMod          = "<:BadgeCertifiedMod:1043811850925658162>";
+	const auto cmdUser               = event.command.usr;
+    auto       usrId                 = cmdUser.id;
     
-    const       std::string EventBadge            = "<:BadgeHypeSquadEvents:1043817210499584050>";
-    const       std::string EarlyVerifiedBotDev   = "<:BadgeEarlyVerifiedBotDeveloper:1043820046318846062>";
-    const       std::string EarlySupporter        = "<:BadgeEarlySupporter:1043820083186778162>";
+    const auto StaffBadge            = "<:BadgeStaff:1043810278564970568>";
+    const auto PartnerBadge          = "<:BadgePartner:1043810326862381078>";
+    const auto CertifiedMod          = "<:BadgeCertifiedMod:1043811850925658162>";
     
-    const       std::string NitroSubscriber       = "<:BadgeNitro:1043797639050834060>";
-    const       std::string DiscordBugHunterGreen = "<:BadgeBugHunter:1043820183581638686>";
-    const       std::string DiscordBugHunterGold  = "<:BadgeBugHunterLvl2:1043820241517563956>";
+    const auto EventBadge            = "<:BadgeHypeSquadEvents:1043817210499584050>";
+    const auto EarlyVerifiedBotDev   = "<:BadgeEarlyVerifiedBotDeveloper:1043820046318846062>";
+    const auto EarlySupporter        = "<:BadgeEarlySupporter:1043820083186778162>";
     
-    const       std::string HypesquadBravery      = "<:BadgeBravery:1043798197908291645>";
-    const       std::string HypesquadBalance      = "<:BadgeBalance:1043797533060767835>";
-    const       std::string HypesquadBrilliance   = "<:BadgeBrilliance:1043798261137408060>";
+    const auto NitroSubscriber       = "<:BadgeNitro:1043797639050834060>";
+    const auto DiscordBugHunterGreen = "<:BadgeBugHunter:1043820183581638686>";
+    const auto DiscordBugHunterGold  = "<:BadgeBugHunterLvl2:1043820241517563956>";
     
-    std::string             hasStaffBadge         = "";
-    std::string             hasPartnerBadge       = "";
-    std::string             hasModBadge           = "";
+    const auto HypesquadBravery      = "<:BadgeBravery:1043798197908291645>";
+    const auto HypesquadBalance      = "<:BadgeBalance:1043797533060767835>";
+    const auto HypesquadBrilliance   = "<:BadgeBrilliance:1043798261137408060>";
+    
+    auto       hasStaffBadge         = "";
+    auto       hasPartnerBadge       = "";
+    auto       hasModBadge           = "";
                
-    std::string             hasEventBadge         = "";
-    std::string             hasHouseBadge         = "";
-    std::string             hasBugHunterBadge     = "";
+    auto       hasEventBadge         = "";
+    auto       hasHouseBadge         = "";
+    auto       hasBugHunterBadge     = "";
                
-    std::string             hasBotDevBadge        = "";
-    std::string             hasEarlySupBadge      = "";
-    std::string             hasNitroBadge         = "";
+    auto       hasBotDevBadge        = "";
+    auto       hasEarlySupBadge      = "";
+    auto       hasNitroBadge         = "";
                
-    std::string             hasBoostBadge         = "";
+    auto       hasBoostBadge         = "";
 
     // If the command user is trying to get another people information
-    if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")))
+    if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
         usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
 
-    /*const auto tgtId                 = dpp::find_user(usrId);
+    const auto tgtId                 = client.user_get_sync(usrId);
 
     // If cannot find the user
-	if (!tgtId)
+	if (!dpp::find_user(usrId))
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "User not found!", event.command.usr);
 		event.reply(
@@ -79,61 +78,47 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 		);
     
 		return;
-	}*/
-
-    client.user_get(usrId, [](const dpp::confirmation_callback_t &event) 
-        {
-            auto u = std::get<dpp::user_identified>(event.value);
-            
-            switch (u.is_discord_employee())
-            {
-            case 1:
-                break;
-            default:
-                break;
-            }
-
-        });
+	}
 
     // This is under-investigation [Library bug]
-    /*if (tgtId->is_discord_employee())
+    if (tgtId.is_discord_employee())
         hasStaffBadge = StaffBadge;
 
-    if (tgtId->is_partnered_owner())
+    if (tgtId.is_partnered_owner())
         hasPartnerBadge = PartnerBadge;
 
-    if (tgtId->is_certified_moderator())
+    if (tgtId.is_certified_moderator())
         hasModBadge = CertifiedMod;
 
-    if (tgtId->has_hypesquad_events())
+    if (tgtId.has_hypesquad_events())
         hasEventBadge = EventBadge;
 
     // Only HypeSquad works
-    if (tgtId->is_house_balance())
+    if (tgtId.is_house_balance())
         hasHouseBadge = HypesquadBalance;
-    else if (tgtId->is_house_brilliance())
+    else if (tgtId.is_house_brilliance())
         hasHouseBadge = HypesquadBrilliance;
-    else if (tgtId->is_house_bravery())
+    else if (tgtId.is_house_bravery())
         hasHouseBadge = HypesquadBravery;
 
-    if (tgtId->is_bughunter_1())
+    if (tgtId.is_bughunter_1())
         hasBugHunterBadge = DiscordBugHunterGreen;
-    else if (tgtId->is_bughunter_2())
+    else if (tgtId.is_bughunter_2())
         hasBugHunterBadge = DiscordBugHunterGold;
 
-    if (tgtId->is_verified_bot_dev())
+    if (tgtId.is_verified_bot_dev())
         hasBotDevBadge = EarlyVerifiedBotDev;
 
-    if (tgtId->is_early_supporter())
+    if (tgtId.is_early_supporter())
         hasEarlySupBadge = EarlySupporter;
 
-    if (tgtId->has_nitro_basic() || tgtId->has_nitro_classic() || tgtId->has_nitro_full())
+    if (tgtId.has_nitro_basic() || tgtId.has_nitro_classic() || tgtId.has_nitro_full())
         hasNitroBadge = NitroSubscriber;
 
-    const auto avatar    = tgtId->get_avatar_url();
-    const auto usrID     = fmt::format("{}", tgtId->id);
-    const auto created   = fmt::format("<t:{}:R>", round(tgtId->get_creation_time()));
-    const auto usrName   = fmt::format("{}", tgtId->format_username());
+    const auto avatar    = tgtId.get_avatar_url();
+    const auto usrID     = fmt::format("{}", tgtId.id);
+    const auto created   = fmt::format("<t:{}:R>", round(tgtId.get_creation_time()));
+    const auto usrName   = fmt::format("{}", tgtId.format_username());
     
     // The badge cannot show now because the pointer is error ... will fix it ASAP
     auto       BadgeShow = fmt::format("{}{}{}{}{}{}{}{}{}{}",
@@ -147,7 +132,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     // Add view profile linking button
     auto       linkComponent = dpp::component();
-    const auto profileURL    = fmt::format("discord://-/users/{}", tgtId->id);
+    const auto profileURL    = fmt::format("discord://-/users/{}", tgtId.id);
 
     linkComponent.set_label("View profile")
                  .set_type(dpp::cot_button)
@@ -159,5 +144,5 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     event.reply(
         dpp::message().add_embed(embed).add_component(dpp::component().add_component(linkComponent))
-    );*/
+    );
 }

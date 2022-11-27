@@ -22,22 +22,23 @@
 
 void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
-	dpp::embed embed;
+	const auto  errorTitle       = "<:failed:1036206712916553748> Error";
+	const auto  warnTitle        = "Warning message";
 
-	const auto errorTitle       = "<:failed:1036206712916553748> Error";
-	const auto warnTitle        = "Warning message";
+	const auto  usr              = std::get<dpp::snowflake>(event.get_parameter("user"));
+    const auto  NewChannel       = std::get<dpp::snowflake>(event.get_parameter("channel"));
+	const auto  gFind            = dpp::find_guild(event.command.guild_id);
 
-	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("user"));
-    const auto NewChannel       = std::get<dpp::snowflake>(event.get_parameter("channel"));
-	const auto gFind            = dpp::find_guild(event.command.guild_id);
+	const auto  tgtReason        = event.get_parameter("reason");
+	const auto  source           = event.command.usr.id;
+	const auto  tgtGuild         = event.command.guild_id;
+	const auto  tgtChannel       = event.command.channel_id;
+	const auto  clientPermission = event.command.app_permissions.has(dpp::p_move_members);
 
-	const auto tgtReason        = event.get_parameter("reason");
-	const auto source           = event.command.usr.id;
-	const auto tgtGuild         = event.command.guild_id;
-	const auto tgtChannel       = event.command.channel_id;
-	const auto clientPermission = event.command.app_permissions.has(dpp::p_move_members);
-
-	const auto tgtUser          = gFind->members.find(usr);
+	const auto  tgtUser          = gFind->members.find(usr);
+	
+	dpp::embed  embed;
+	dpp::guild* Guild           = dpp::find_guild(tgtGuild);
 
 	// If cannot find that member in the server
 	if (tgtUser == gFind->members.end())
@@ -116,8 +117,16 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-    // If the user already in that channel
-    // Working in progress ...
+    // If the user not in the voice channel
+	if (!Guild->connect_member_voice(usr))
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "User is not in the voice channel!", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
 
 	auto d_Component   = dpp::component();
 	auto cnl_Component = dpp::component();
