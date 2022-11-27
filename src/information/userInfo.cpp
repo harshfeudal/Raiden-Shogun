@@ -84,13 +84,13 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     // This is under-investigation [Library bug]
     if (tgtId->is_discord_employee())
         hasStaffBadge = StaffBadge;
-    
+
     if (tgtId->is_partnered_owner())
         hasPartnerBadge = PartnerBadge;
-    
+
     if (tgtId->is_certified_moderator())
         hasModBadge = CertifiedMod;
-    
+
     if (tgtId->has_hypesquad_events())
         hasEventBadge = EventBadge;
 
@@ -101,15 +101,15 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
         hasHouseBadge = HypesquadBrilliance;
     else if (tgtId->is_house_bravery())
         hasHouseBadge = HypesquadBravery;
-    
+
     if (tgtId->is_bughunter_1())
         hasBugHunterBadge = DiscordBugHunterGreen;
     else if (tgtId->is_bughunter_2())
         hasBugHunterBadge = DiscordBugHunterGold;
-    
+
     if (tgtId->is_verified_bot_dev())
         hasBotDevBadge = EarlyVerifiedBotDev;
-    
+
     if (tgtId->is_early_supporter())
         hasEarlySupBadge = EarlySupporter;
 
