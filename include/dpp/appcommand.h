@@ -294,8 +294,6 @@ enum interaction_response_type {
 	ir_update_message = 7,				//!< for components, edit the message the component was attached to
 	ir_autocomplete_reply = 8,			//!< Reply to autocomplete interaction. Be sure to do this within 500ms of the interaction!
 	ir_modal_dialog = 9,				//!< A modal dialog box
-
-	ir_default = 0,					/// From Harshfeudal's shorten
 };
 
 /**

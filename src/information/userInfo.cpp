@@ -67,10 +67,8 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
         usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
 
-    dpp::user_identified tgtId       = client.user_get_sync(usrId);
-
     // If cannot find the user
-	if (!dpp::find_user(usrId))
+	if (dpp::find_user(usrId) == false)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "User not found!", event.command.usr);
 		event.reply(
@@ -79,6 +77,8 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     
 		return;
 	}
+
+    dpp::user_identified tgtId       = client.user_get_sync(usrId);
 
     // This is under-investigation [Library bug]
     if (tgtId.is_discord_employee())
@@ -114,6 +114,22 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     if (tgtId.has_nitro_basic() || tgtId.has_nitro_classic() || tgtId.has_nitro_full())
         hasNitroBadge = NitroSubscriber;
+
+    std::cout << "member object: " << std::endl;
+    std::cout << "id " << tgtId.id << std::endl;
+    std::cout << "username " << tgtId.username << std::endl;
+    std::cout << "flags " << tgtId.flags << std::endl;
+    std::cout << "bravery " << tgtId.is_house_bravery() << std::endl;
+    std::cout << "brilliance " << tgtId.is_house_brilliance() << std::endl;
+    std::cout << "balance " << tgtId.is_house_balance() << std::endl;
+    std::cout << "is_bot " << tgtId.is_bot() << std::endl;
+    std::cout << "is_active_developer " << tgtId.is_active_developer() << std::endl;
+    std::cout << "has_nitro_basic " << tgtId.has_nitro_basic() << std::endl;
+    std::cout << "has_nitro_classic " << tgtId.has_nitro_classic() << std::endl;
+    std::cout << "has_nitro_full " << tgtId.has_nitro_full() << std::endl;
+    std::cout << "is_verified_bot_dev " << tgtId.is_verified_bot_dev() << std::endl;
+    std::cout << "is_bughunter_1 " << tgtId.is_bughunter_1() << std::endl;
+    std::cout << "is_bughunter_2 " << tgtId.is_bughunter_2() << std::endl;
 
     const auto avatar    = tgtId.get_avatar_url();
     const auto usrID     = fmt::format("{}", tgtId.id);
