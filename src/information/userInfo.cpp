@@ -67,7 +67,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
         usrId = std::get<dpp::snowflake>(event.get_parameter("user"));
 
-    const auto tgtId                 = client.user_get_sync(usrId);
+    dpp::user_identified tgtId       = client.user_get_sync(usrId);
 
     // If cannot find the user
 	if (!dpp::find_user(usrId))
