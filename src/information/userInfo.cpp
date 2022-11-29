@@ -48,6 +48,8 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto HypesquadBravery      = "<:BadgeBravery:1043798197908291645>";
     const auto HypesquadBalance      = "<:BadgeBalance:1043797533060767835>";
     const auto HypesquadBrilliance   = "<:BadgeBrilliance:1043798261137408060>";
+
+    const auto ActiveDeveloper       = "<:BadgeActiveDeveloper:1043797591487426600>";
     
     auto       hasStaffBadge         = "";
     auto       hasPartnerBadge       = "";
@@ -62,6 +64,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     auto       hasNitroBadge         = "";
                
     auto       hasBoostBadge         = "";
+    auto       hasActiveDev          = "";
 
     // If the command user is trying to get another people information
     if (std::holds_alternative<dpp::snowflake>(event.get_parameter("user")) == true)
@@ -69,18 +72,6 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     dpp::user_identified tgtId       = client.user_get_sync(usrId);
 
-    // If cannot find the user
-	if (!dpp::find_user(usrId))
-	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "User not found!", event.command.usr);
-		event.reply(
-			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
-		);
-    
-		return;
-	}
-
-    // This is under-investigation [Library bug]
     if (tgtId.is_discord_employee())
         hasStaffBadge = StaffBadge;
 
@@ -93,7 +84,6 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     if (tgtId.has_hypesquad_events())
         hasEventBadge = EventBadge;
 
-    // Only HypeSquad works
     if (tgtId.is_house_balance())
         hasHouseBadge = HypesquadBalance;
     else if (tgtId.is_house_brilliance())
@@ -111,9 +101,12 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     if (tgtId.is_early_supporter())
         hasEarlySupBadge = EarlySupporter;
+    
+    if (tgtId.is_active_developer())
+        hasActiveDev = ActiveDeveloper;
 
-    if (tgtId.has_nitro_basic() || tgtId.has_nitro_classic() || tgtId.has_nitro_full())
-        hasNitroBadge = NitroSubscriber;
+    // Cannot get nitro badge, probably, I read doc again
+    // Working with another way
 
     const auto avatar    = tgtId.get_avatar_url();
     const auto usrID     = fmt::format("{}", tgtId.id);
@@ -121,9 +114,10 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto usrName   = fmt::format("{}", tgtId.format_username());
     
     // The badge cannot show now because the pointer is error ... will fix it ASAP
-    auto       BadgeShow = fmt::format("{}{}{}{}{}{}{}{}{}{}",
-        hasStaffBadge,     hasPartnerBadge,  hasModBadge,      hasEventBadge, hasHouseBadge,
-        hasBugHunterBadge, hasBotDevBadge,   hasEarlySupBadge, hasNitroBadge, hasBoostBadge
+    auto       BadgeShow = fmt::format("{}{}{}{}{}{}{}{}{}{}{}",
+        hasStaffBadge,     hasPartnerBadge,  hasModBadge,      hasEventBadge,    hasHouseBadge,
+        hasBugHunterBadge, hasActiveDev,     hasBotDevBadge,   hasEarlySupBadge, hasNitroBadge, 
+        hasBoostBadge
     );
 
     // Check if the user doesn't have any badge

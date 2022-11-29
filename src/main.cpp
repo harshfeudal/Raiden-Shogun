@@ -18,6 +18,7 @@
 #include <map>
 #include <spdlog/spdlog.h>
 #include <dpp/nlohmann/json.hpp>
+#include <harshfeudal/harshfeudal.h>
 #include <dpp/dpp.h>
 #include <Windows.h>
 

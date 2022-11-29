@@ -23,7 +23,7 @@
 
 ### 📚 Libraries and version
 These are libraries that we're using in this project:
-- [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.21` (latest)
+- [Dpp](https://github.com/brainboxdotcc/DPP) - version `10.0.22` (BETA)
 - [Spdlog](https://github.com/gabime/spdlog) - version `1.11.0` (latest)
 - [Base64](https://gist.github.com/tomykaira/f0fd86b6c73063283afe550bc5d77594)
 
