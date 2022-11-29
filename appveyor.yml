@@ -10,7 +10,7 @@ environment:
       WCHAR_FILES: 'ON'
       BUILD_EXAMPLE: 'OFF'
       USE_STD_FORMAT: 'ON'
-      CXX_STANDARD: 20
+      CXX_STANDARD: 17
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
 build_script:
   - cmd: >-
