@@ -133,6 +133,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	bool isHour        = false;
 	bool isMinute      = false;
 	bool isSecond      = false;
+	bool time_format_e = false;
 
     for (char i : FormatTime) 
 	{
@@ -147,7 +148,20 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 
         if (i == 's' || i == 'S')
             isSecond = true;
+
+		if (!isalpha(i) || !isdigit(i))
+			time_format_e = true;
     }
+
+	if (time_format_e)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Wrong input time format", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
 	
     if (isDay) 
 	{
