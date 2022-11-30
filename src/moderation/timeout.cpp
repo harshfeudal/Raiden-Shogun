@@ -148,17 +148,6 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
         if (i == 's' || i == 'S')
             isSecond = true;
     }
-
-	for (char i : FormatTime) 
-		{
-            count ++;
-
-            if (isdigit(FormatTime[i])) 
-			{
-                int Minute = FormatTime[i] - '0';
-                MinuteVector.push_back(Minute);
-            }
-        }
 	
     if (isDay) 
 	{
