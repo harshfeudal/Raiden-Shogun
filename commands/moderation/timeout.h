@@ -18,4 +18,10 @@
 
 #include <dpp/dpp.h>
 
+inline std::string delSpaces(std::string &str)
+{
+    	str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    	return str;
+}
+
 void timeout(dpp::cluster& cluster, const dpp::slashcommand_t& event);

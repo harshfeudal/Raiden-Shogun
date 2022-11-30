@@ -18,7 +18,6 @@
 #include <dpp/dpp.h>
 
 #include "../../handler/handler.h"
-#include "../../handler/btnHandler.h"
 #include "../../commands/moderation/timeout.h"
 
 void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
@@ -29,7 +28,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	const auto successTitle     = "<:success:1036206685779398677> Success!";
 	const auto warnTitle        = "Warning message";
 	
-	const auto duration         = std::get<int64_t>(event.get_parameter("duration"));
+	const auto duration         = std::get<std::string>(event.get_parameter("duration"));
 	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("member"));
 	const auto tgtReason        = event.get_parameter("reason");
 
@@ -111,69 +110,152 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	auto tout_Component = dpp::component();
-	auto cnl_Component  = dpp::component();
+	// Time format engine
+	std::string      InitTime       = duration;
+    std::string      FormatTime;
+	
+    std::vector<int> DayVector;
+    std::vector<int> HourVector;
+    std::vector<int> MinuteVector;
+    std::vector<int> SecondVector;
 
-	tout_Component.set_label("Timeout").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("tout_Id");
-	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("tout_cnl_Id");
+    FormatTime = delSpaces(InitTime);
 
-	// Button for muting user (timeout)
-	ButtonBind(tout_Component, [&client, tgtGuild, tgtReason, usr, source, duration](const dpp::button_click_t& event)
+    std::cout << FormatTime << std::endl;
+
+    int DayFormat      = 0;
+	int HourFormat     = 0;
+	int MinuteFormat   = 0;
+	int SecondFormat   = 0;
+    int count          = 0;
+
+    bool isDay         = false;
+	bool isHour        = false;
+	bool isMinute      = false;
+	bool isSecond      = false;
+
+    for (char i : FormatTime) 
+	{
+        if (i == 'd' || i == 'D')
+            isDay = true;
+
+        if (i == 'h'|| i == 'H')
+            isHour = true;
+
+        if (i == 'm' || i == 'M')
+            isMinute = true;
+
+        if (i == 's' || i == 'S')
+            isSecond = true;
+    }
+
+	for (char i : FormatTime) 
 		{
-			// If not the user who request that interaction
-			if (source != event.command.usr.id)
-				return false;
+            count ++;
 
-			const auto  toutContent = fmt::format("<@{}> has been timeout until <t:{}:f>!", usr, time(nullptr) + duration);
-            std::string tout_Reason = "No reason provided";
-
-			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason))
-				tout_Reason = std::get<std::string>(tgtReason);
-
-            client.set_audit_reason(tout_Reason);
-
-			// Timeout the user
-			client.guild_member_timeout(tgtGuild, usr, time(nullptr) + duration);
-
-			event.reply(
-				dpp::interaction_response_type::ir_update_message,
-				dpp::message().set_flags(dpp::m_ephemeral)
-				              .set_content(toutContent)
-			);
-
-			return true;
-		});
-
-	// Button for cancelling
-	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event)
+            if (isdigit(FormatTime[i])) 
+			{
+                int Minute = FormatTime[i] - '0';
+                MinuteVector.push_back(Minute);
+            }
+        }
+	
+    if (isDay) 
+	{
+        for (char i : FormatTime) 
 		{
-			// If not the user who request that interaction
-			if (source != event.command.usr.id)
-				return false;
+            count ++;
 
-			const auto cnlContent = "Cancelled request!";
+            if (isdigit(i)) 
+			{
+                int Day = i - '0';
+                DayVector.push_back(Day);
+            }
+            
+			if (i == 'd' || i == 'D') 
+                break;
+        }
+    }
 
-			event.reply(
-				dpp::interaction_response_type::ir_update_message,
-				dpp::message().set_flags(dpp::m_ephemeral)
-				              .set_content(cnlContent)
-			);
+    if (isHour) 
+	{
+        for (char i : FormatTime) 
+		{
+            count ++;
 
-			return true;
-		});
+            if (isdigit(FormatTime[i])) 
+			{
+                int Hour = FormatTime[i] - '0';
+                HourVector.push_back(Hour);
+            }
+			
+			if (FormatTime[i] == 'h' || FormatTime[i] == 'H') 
+                break;
+        }
+    }
 
-	dpp::message tout_Confirm(
-		fmt::format("Do you want to timeout <@{}> until <t:{}:f>? Press the button below to confirm", usr, time(nullptr) + duration)
-	);
+    if (isMinute) 
+	{
+        for (char i : FormatTime) 
+		{
+            count ++;
 
-	tout_Confirm.add_component(
-		dpp::component().add_component(tout_Component)
-		                .add_component(cnl_Component)
-	);
+            if (isdigit(FormatTime[i])) 
+			{
+                int Minute = FormatTime[i] - '0';
+                MinuteVector.push_back(Minute);
+            }
+            
+			if (FormatTime[i] == 'm' || FormatTime[i] == 'M') 
+                break;
+        }
+    }
+
+    if (isSecond) 
+	{
+        for (char i : FormatTime) 
+		{
+            count ++;
+
+            if (isdigit(FormatTime[i])) 
+			{
+                int Second = FormatTime[i] - '0';
+                SecondVector.push_back(Second);
+            }
+        }
+    }
+
+    for (int i = 0; i < DayVector.size(); i++)
+        DayFormat += DayVector[i] * pow(10, DayVector.size() - i - 1);
+
+    for (int i = 0; i < HourVector.size(); i++) 
+        HourFormat += HourVector[i] * pow(10, HourVector.size() - i - 1);
+    
+    for (int i = 0; i < MinuteVector.size(); i++) 
+        MinuteFormat += MinuteVector[i] * pow(10, MinuteVector.size() - i - 1);
+    
+    for (int i = 0; i < SecondVector.size(); i++) 
+        SecondFormat += SecondVector[i] * pow(10, SecondVector.size() - i - 1);
+    
+    int         TimeFormat  = DayFormat * 86400 + HourFormat * 3600 + MinuteFormat * 60 + SecondFormat;
+
+	// Test
+	std::cout << TimeFormat << std::endl;
+
+	const auto  toutContent = fmt::format("<@{}> has been timeout until <t:{}:f>!", usr, time(nullptr) + TimeFormat);
+    std::string tout_Reason = "No reason provided";
+
+	// If reason is provided
+	if (std::holds_alternative<std::string>(tgtReason))
+		tout_Reason = std::get<std::string>(tgtReason);
+
+    client.set_audit_reason(tout_Reason);
+
+	// Timeout the user
+	client.guild_member_timeout(tgtGuild, usr, time(nullptr) + TimeFormat);
 
 	event.reply(
-		tout_Confirm.set_flags(dpp::m_ephemeral)
-		            .set_channel_id(tgtChannel)
+		dpp::message().set_flags(dpp::m_ephemeral)
+		              .set_content(toutContent)
 	);
 }
