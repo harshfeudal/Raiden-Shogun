@@ -139,23 +139,25 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	{
         if (i == 'd' || i == 'D')
             isDay = true;
-
-        if (i == 'h'|| i == 'H')
+        else if (i == 'h'|| i == 'H')
             isHour = true;
-
-        if (i == 'm' || i == 'M')
+        else if (i == 'm' || i == 'M')
             isMinute = true;
-
-        if (i == 's' || i == 'S')
+        else if (i == 's' || i == 'S')
             isSecond = true;
 
 		if (!isalpha(i) || !isdigit(i))
 			time_format_e = true;
     }
 
+	// Working in progress ...
+
+	// Making a function to input number string and automatically output as minute
+	// And also check if they put only word but no day format, e.g input: `days` not `2 days`
+
 	if (time_format_e)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Wrong input time format", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Wrong time format", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
