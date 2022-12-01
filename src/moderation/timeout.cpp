@@ -111,6 +111,8 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 
 	// Time format engine
+	// Working in progress ...
+	
 	std::string      InitTime       = duration;
     std::string      FormatTime;
 	
@@ -121,12 +123,11 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     FormatTime = delSpaces(InitTime);
 
-    std::cout << FormatTime << std::endl;
-
     int DayFormat      = 0;
 	int HourFormat     = 0;
 	int MinuteFormat   = 0;
 	int SecondFormat   = 0;
+
     int count          = 0;
 
     bool isDay         = false;
@@ -134,26 +135,33 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	bool isMinute      = false;
 	bool isSecond      = false;
 	bool time_format_e = false;
+	bool auto_convert  = false;
 
     for (char i : FormatTime) 
 	{
         if (i == 'd' || i == 'D')
             isDay = true;
-        else if (i == 'h'|| i == 'H')
+        else if (i == 'h' || i == 'H')
             isHour = true;
         else if (i == 'm' || i == 'M')
             isMinute = true;
         else if (i == 's' || i == 'S')
             isSecond = true;
 
-		if (!isalpha(i) || !isdigit(i))
-			time_format_e = true;
+		if (!isalpha(i))
+			if (isdigit(i))
+				auto_convert = true;
+			else
+				time_format_e = true;
     }
 
 	// Working in progress ...
 
 	// Making a function to input number string and automatically output as minute
-	// And also check if they put only word but no day format, e.g input: `days` not `2 days`
+
+	//  **BUG FOUND**
+	// input: 2d -> output: 172800 (correct)
+	// input: 1m -> output: 0 (wrong! It should print 60 for 60 seconds)
 
 	if (time_format_e)
 	{
@@ -230,16 +238,16 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
         }
     }
 
-    for (int i = 0; i < DayVector.size(); i++)
-        DayFormat += DayVector[i] * pow(10, DayVector.size() - i - 1);
+    for (int i : DayVector)
+        DayFormat    += DayVector[i]    * pow(10, DayVector.size() - i - 1);
 
-    for (int i = 0; i < HourVector.size(); i++) 
-        HourFormat += HourVector[i] * pow(10, HourVector.size() - i - 1);
+    for (int i : HourVector) 
+        HourFormat   += HourVector[i]   * pow(10, HourVector.size() - i - 1);
     
-    for (int i = 0; i < MinuteVector.size(); i++) 
+    for (int i : MinuteVector) 
         MinuteFormat += MinuteVector[i] * pow(10, MinuteVector.size() - i - 1);
     
-    for (int i = 0; i < SecondVector.size(); i++) 
+    for (int i : SecondVector) 
         SecondFormat += SecondVector[i] * pow(10, SecondVector.size() - i - 1);
     
     int         TimeFormat  = DayFormat * 86400 + HourFormat * 3600 + MinuteFormat * 60 + SecondFormat;
@@ -247,7 +255,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	// Test
 	std::cout << TimeFormat << std::endl;
 
-	const auto  toutContent = fmt::format("<@{}> has been timeout until <t:{}:f>!", usr, time(nullptr) + TimeFormat);
+	const auto  toutContent = fmt::format("<@{}> has been timeout until <t:{}:F>!", usr, time(nullptr) + TimeFormat);
     std::string tout_Reason = "No reason provided";
 
 	// If reason is provided
