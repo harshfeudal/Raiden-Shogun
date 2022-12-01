@@ -148,11 +148,11 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
         else if (i == 's' || i == 'S')
             isSecond = true;
 
-		if (!isalpha(i))
-			if (isdigit(i))
-				auto_convert = true;
-			else
-				time_format_e = true;
+		if (isalpha(i) && !isdigit(i))
+			time_format_e = true;
+			
+		if (isdigit(i) && !isalpha(i))
+			auto_convert = true;
     }
 
 	// Working in progress ...
@@ -207,7 +207,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
         }
     }
 
-    if (isMinute) 
+    if (isMinute || auto_convert) 
 	{
         for (char i : FormatTime) 
 		{
