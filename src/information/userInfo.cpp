@@ -49,7 +49,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto HypesquadBalance      = "<:BadgeBalance:1043797533060767835>";
     const auto HypesquadBrilliance   = "<:BadgeBrilliance:1043798261137408060>";
 
-    const auto ActiveDeveloper       = "<:BadgeActiveDeveloper:1043797591487426600>";
+    const auto ActiveDeveloper       = "<:BadgeActiveDeveloper:1047528637013962792>";
     
     auto       hasStaffBadge         = "";
     auto       hasPartnerBadge       = "";

@@ -94,7 +94,7 @@ inline std::map<std::string, commandDef> commands
 				"Timeout member", timeout,
 				{
 					dpp::command_option(dpp::co_user,    "member",   "Mention a member to timeout", true),
-					dpp::command_option(dpp::co_integer, "duration", "Timeout duration",            true),
+					dpp::command_option(dpp::co_string,  "duration", "Timeout duration",            true),
 					dpp::command_option(dpp::co_string,  "reason",   "Reason why they got timeout", false)
 				}
 			}

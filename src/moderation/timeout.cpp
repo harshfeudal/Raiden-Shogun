@@ -18,7 +18,6 @@
 #include <dpp/dpp.h>
 
 #include "../../handler/handler.h"
-#include "../../handler/btnHandler.h"
 #include "../../commands/moderation/timeout.h"
 
 void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
@@ -29,7 +28,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	const auto successTitle     = "<:success:1036206685779398677> Success!";
 	const auto warnTitle        = "Warning message";
 	
-	const auto duration         = std::get<int64_t>(event.get_parameter("duration"));
+	const auto duration         = std::get<std::string>(event.get_parameter("duration"));
 	const auto usr              = std::get<dpp::snowflake>(event.get_parameter("member"));
 	const auto tgtReason        = event.get_parameter("reason");
 
@@ -111,69 +110,95 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	auto tout_Component = dpp::component();
-	auto cnl_Component  = dpp::component();
+	// Time format engine
+	// Working in progress ...
 
-	tout_Component.set_label("Timeout").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("tout_Id");
-	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("tout_cnl_Id");
+	// Making a function to input number string and automatically output as minute
 
-	// Button for muting user (timeout)
-	ButtonBind(tout_Component, [&client, tgtGuild, tgtReason, usr, source, duration](const dpp::button_click_t& event)
-		{
-			// If not the user who request that interaction
-			if (source != event.command.usr.id)
-				return false;
+	std::string   input   = duration;
 
-			const auto  toutContent = fmt::format("<@{}> has been timeout until <t:{}:f>!", usr, time(nullptr) + duration);
-            std::string tout_Reason = "No reason provided";
+    uint64_t sec     = 0;
+    uint64_t temp    = 0;
 
-			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason))
-				tout_Reason = std::get<std::string>(tgtReason);
+    bool     bSyntax = 0;
+	bool     error   = 0;
 
-            client.set_audit_reason(tout_Reason);
+	// Automatically convert if no day format
+	if (isNumber(input))
+	{
+		sec += temp * 60;
+        temp = 0;
+        bSyntax = 0;
+	}
 
-			// Timeout the user
-			client.guild_member_timeout(tgtGuild, usr, time(nullptr) + duration);
+    for(int a : input)
+    {
+        a = tolower(a);
 
-			event.reply(
-				dpp::interaction_response_type::ir_update_message,
-				dpp::message().set_flags(dpp::m_ephemeral)
-				              .set_content(toutContent)
-			);
+        if('0' <= a && a <= '9')
+        {
+            temp = temp * 10 + (a - '0');
+            bSyntax = 1;
+        }
+        else if(a == 'd' && bSyntax)
+        {
+            sec += temp * 86400;
+            temp = 0;
+            bSyntax = 0;
+        }
+        else if(a == 'h' && bSyntax)
+        {
+            sec += temp * 3600;
+            temp = 0;
+            bSyntax = 0;
+        }
+        else if(a == 'm' && bSyntax)
+        {
+            sec += temp * 60;
+            temp = 0;
+            bSyntax = 0;
+        }
+        else if(a == 's' && bSyntax)
+        {
+            sec += temp;
+            temp = 0;
+            bSyntax = 0;
+        }
+		else
+			error = true;
+    }
 
-			return true;
-		});
+	// Check all error cases occur
+	if (std::isdigit(input[input.size() - 1]))
+		error = true;
 
-	// Button for cancelling
-	ButtonBind(cnl_Component, [source](const dpp::button_click_t& event)
-		{
-			// If not the user who request that interaction
-			if (source != event.command.usr.id)
-				return false;
+	if (error)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Wrong time format", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
 
-			const auto cnlContent = "Cancelled request!";
+		return;
+	}
 
-			event.reply(
-				dpp::interaction_response_type::ir_update_message,
-				dpp::message().set_flags(dpp::m_ephemeral)
-				              .set_content(cnlContent)
-			);
+	auto        toutContent = fmt::format("<@{}> has been timeouted until <t:{}:F>!", usr, time(nullptr) + sec);
+    std::string tout_Reason = "No reason provided";
 
-			return true;
-		});
+	if (sec == 0)
+		toutContent = fmt::format("<@{}> has been un-timeouted!", usr);
 
-	dpp::message tout_Confirm(
-		fmt::format("Do you want to timeout <@{}> until <t:{}:f>? Press the button below to confirm", usr, time(nullptr) + duration)
-	);
+	// If reason is provided
+	if (std::holds_alternative<std::string>(tgtReason))
+		tout_Reason = std::get<std::string>(tgtReason);
 
-	tout_Confirm.add_component(
-		dpp::component().add_component(tout_Component)
-		                .add_component(cnl_Component)
-	);
+    client.set_audit_reason(tout_Reason);
+
+	// Timeout the user
+	client.guild_member_timeout(tgtGuild, usr, time(nullptr) + sec);
 
 	event.reply(
-		tout_Confirm.set_flags(dpp::m_ephemeral)
-		            .set_channel_id(tgtChannel)
+		dpp::message().set_flags(dpp::m_ephemeral)
+		              .set_content(toutContent)
 	);
 }
