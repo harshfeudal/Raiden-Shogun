@@ -18,10 +18,13 @@
 
 #include <dpp/dpp.h>
 
-inline std::string delSpaces(std::string &str)
+inline bool isNumber(const std::string& s)
 {
-    	str.erase(remove(str.begin(), str.end(), ' '), str.end());
-    	return str;
+    for (char const &ch : s) {
+        if (std::isdigit(ch) == 0)
+            return false;
+    }
+    return true;
 }
 
 void timeout(dpp::cluster& cluster, const dpp::slashcommand_t& event);

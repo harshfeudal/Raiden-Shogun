@@ -148,8 +148,8 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (std::holds_alternative<std::string>(tgtReason))
                 m_Reason = std::get<std::string>(tgtReason);
 
-            // This audit log will be reported as a bug
-			client.set_audit_reason(m_Reason);
+            // Note: this is Discord Bug!
+			// client.set_audit_reason(m_Reason);
 
             // Move the target user
             client.guild_member_move(NewChannel, tgtGuild, usr);

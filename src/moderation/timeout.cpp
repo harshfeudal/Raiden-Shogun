@@ -112,58 +112,67 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	// Time format engine
 	// Working in progress ...
-	
-	std::string      InitTime       = duration;
-    std::string      FormatTime;
-	
-    std::vector<int> DayVector;
-    std::vector<int> HourVector;
-    std::vector<int> MinuteVector;
-    std::vector<int> SecondVector;
-
-    FormatTime = delSpaces(InitTime);
-
-    int DayFormat      = 0;
-	int HourFormat     = 0;
-	int MinuteFormat   = 0;
-	int SecondFormat   = 0;
-
-    int count          = 0;
-
-    bool isDay         = false;
-	bool isHour        = false;
-	bool isMinute      = false;
-	bool isSecond      = false;
-	bool time_format_e = false;
-	bool auto_convert  = false;
-
-    for (char i : FormatTime) 
-	{
-        if (i == 'd' || i == 'D')
-            isDay = true;
-        else if (i == 'h' || i == 'H')
-            isHour = true;
-        else if (i == 'm' || i == 'M')
-            isMinute = true;
-        else if (i == 's' || i == 'S')
-            isSecond = true;
-
-		if (isalpha(i) && !isdigit(i))
-			time_format_e = true;
-			
-		if (isdigit(i) && !isalpha(i))
-			auto_convert = true;
-    }
-
-	// Working in progress ...
 
 	// Making a function to input number string and automatically output as minute
 
-	//  **BUG FOUND**
-	// input: 2d -> output: 172800 (correct)
-	// input: 1m -> output: 0 (wrong! It should print 60 for 60 seconds)
+	std::string   input   = duration;
 
-	if (time_format_e)
+    uint64_t sec     = 0;
+    uint64_t temp    = 0;
+
+    bool     bSyntax = 0;
+	bool     error   = 0;
+
+	// Automatically convert if no day format
+	if (isNumber(input))
+	{
+		sec += temp * 60;
+        temp = 0;
+        bSyntax = 0;
+	}
+
+    for(int a : input)
+    {
+        a = tolower(a);
+
+        if('0' <= a && a <= '9')
+        {
+            temp = temp * 10 + (a - '0');
+            bSyntax = 1;
+        }
+        else if(a == 'd' && bSyntax)
+        {
+            sec += temp * 86400;
+            temp = 0;
+            bSyntax = 0;
+        }
+        else if(a == 'h' && bSyntax)
+        {
+            sec += temp * 3600;
+            temp = 0;
+            bSyntax = 0;
+        }
+        else if(a == 'm' && bSyntax)
+        {
+            sec += temp * 60;
+            temp = 0;
+            bSyntax = 0;
+        }
+        else if(a == 's' && bSyntax)
+        {
+            sec += temp;
+            temp = 0;
+            bSyntax = 0;
+        }
+		else
+			error = true;
+    }
+
+	// Check all error cases occur
+	if (std::isdigit(input[input.size() - 1]))
+		error = true;
+
+	if (error)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Wrong time format", event.command.usr);
 		event.reply(
@@ -172,91 +181,12 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		return;
 	}
-	
-    if (isDay) 
-	{
-        for (char i : FormatTime) 
-		{
-            count ++;
 
-            if (isdigit(i)) 
-			{
-                int Day = i - '0';
-                DayVector.push_back(Day);
-            }
-            
-			if (i == 'd' || i == 'D') 
-                break;
-        }
-    }
-
-    if (isHour) 
-	{
-        for (char i : FormatTime) 
-		{
-            count ++;
-
-            if (isdigit(FormatTime[i])) 
-			{
-                int Hour = FormatTime[i] - '0';
-                HourVector.push_back(Hour);
-            }
-			
-			if (FormatTime[i] == 'h' || FormatTime[i] == 'H') 
-                break;
-        }
-    }
-
-    if (isMinute || auto_convert) 
-	{
-        for (char i : FormatTime) 
-		{
-            count ++;
-
-            if (isdigit(FormatTime[i])) 
-			{
-                int Minute = FormatTime[i] - '0';
-                MinuteVector.push_back(Minute);
-            }
-            
-			if (FormatTime[i] == 'm' || FormatTime[i] == 'M') 
-                break;
-        }
-    }
-
-    if (isSecond) 
-	{
-        for (char i : FormatTime) 
-		{
-            count ++;
-
-            if (isdigit(FormatTime[i])) 
-			{
-                int Second = FormatTime[i] - '0';
-                SecondVector.push_back(Second);
-            }
-        }
-    }
-
-    for (int i : DayVector)
-        DayFormat    += DayVector[i]    * pow(10, DayVector.size() - i - 1);
-
-    for (int i : HourVector) 
-        HourFormat   += HourVector[i]   * pow(10, HourVector.size() - i - 1);
-    
-    for (int i : MinuteVector) 
-        MinuteFormat += MinuteVector[i] * pow(10, MinuteVector.size() - i - 1);
-    
-    for (int i : SecondVector) 
-        SecondFormat += SecondVector[i] * pow(10, SecondVector.size() - i - 1);
-    
-    int         TimeFormat  = DayFormat * 86400 + HourFormat * 3600 + MinuteFormat * 60 + SecondFormat;
-
-	// Test
-	std::cout << TimeFormat << std::endl;
-
-	const auto  toutContent = fmt::format("<@{}> has been timeout until <t:{}:F>!", usr, time(nullptr) + TimeFormat);
+	auto        toutContent = fmt::format("<@{}> has been timeouted until <t:{}:F>!", usr, time(nullptr) + sec);
     std::string tout_Reason = "No reason provided";
+
+	if (sec == 0)
+		toutContent = fmt::format("<@{}> has been un-timeouted!", usr);
 
 	// If reason is provided
 	if (std::holds_alternative<std::string>(tgtReason))
@@ -265,7 +195,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
     client.set_audit_reason(tout_Reason);
 
 	// Timeout the user
-	client.guild_member_timeout(tgtGuild, usr, time(nullptr) + TimeFormat);
+	client.guild_member_timeout(tgtGuild, usr, time(nullptr) + sec);
 
 	event.reply(
 		dpp::message().set_flags(dpp::m_ephemeral)
