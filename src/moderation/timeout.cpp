@@ -117,11 +117,16 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	std::string   input   = duration;
 
-    uint64_t sec     = 0;
-    uint64_t temp    = 0;
+    uint64_t sec          = 0;
+    uint64_t temp         = 0;
 
-    bool     bSyntax = 0;
-	bool     error   = 0;
+    bool     bSyntax      = 0;
+	bool     error        = 0;
+
+	int DayCount          = 0;
+	int HourCount         = 0;
+	int MinuteCount       = 0;
+	int SecondCount       = 0;
 
 	// Automatically convert if no day format
 	if (isNumber(input))
@@ -168,13 +173,46 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 			error = true;
     }
 
+	for (int i = 0; i < input.size(); i++)
+	{
+		if (isdigit(input[i]))
+			if (input[i + 1] == 'd')
+				DayCount++;
+			else if (input[i + 1] == 'h')
+				HourCount++;
+			else if (input[i + 1] == 'm')
+				MinuteCount++;
+			else if (input[i + 1] == 's')
+				SecondCount++;
+			else
+				break;
+	}
+
+	std::cout << DayCount << std::endl;
+	std::cout << HourCount << std::endl;
+	std::cout << MinuteCount << std::endl;
+	std::cout << SecondCount << std::endl;
+
 	// Check all error cases occur
-	if (std::isdigit(input[input.size() - 1]))
+	if (std::isdigit(input[input.size() - 1]) && sec > 0)
+		error = true;
+
+	if (DayCount > 1 || HourCount > 1 || MinuteCount > 1 || SecondCount > 1)
 		error = true;
 
 	if (error)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Wrong time format", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
+
+	if (sec > 2419200)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Cannot timeout user over 28 days!", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);

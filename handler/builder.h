@@ -29,7 +29,7 @@
 #include "../commands/moderation/disconnect.h"
 
 #include "../commands/information/ping.h"
-#include "../commands/information/userinfo.h"
+#include "../commands/information/infouser.h"
 #include "../commands/information/about.h"
 
 void SlashCommandCreate(dpp::cluster& client);
@@ -71,9 +71,9 @@ inline std::map<std::string, commandDef> commands
 			}
 	},
 	{
-		"userinfo",
+		"infouser",
 			{
-				"Show mentioned user info", userInfo,
+				"Show mentioned user info", infouser,
 				{
 					dpp::command_option(dpp::co_user, "user", "User you would like to know", false)
 				}

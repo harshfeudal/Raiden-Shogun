@@ -16,14 +16,14 @@
 
 #include <spdlog/spdlog.h>
 #include <dpp/dpp.h>
-#include "../../commands/information/userinfo.h"
+#include "../../commands/information/infouser.h"
 #include "../../handler/handler.h"
 
 // TO DO
 // 1. Try hard to fix the pointer, since it is getting error
 // 2. Make the code "shorter" if possible
 
-void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
+void infouser(dpp::cluster& client, const dpp::slashcommand_t& event)
 {   
 	dpp::embed embed;
 
@@ -35,7 +35,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     
     const auto StaffBadge            = "<:BadgeStaff:1043810278564970568>";
     const auto PartnerBadge          = "<:BadgePartner:1043810326862381078>";
-    const auto CertifiedMod          = "<:BadgeCertifiedMod:1043811850925658162>";
+    const auto CertifiedMod          = "<:ModProgramsAlu:1048550817608761384>";
     
     const auto EventBadge            = "<:BadgeHypeSquadEvents:1043817210499584050>";
     const auto EarlyVerifiedBotDev   = "<:BadgeEarlyVerifiedBotDeveloper:1043820046318846062>";
@@ -49,7 +49,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto HypesquadBalance      = "<:BadgeBalance:1043797533060767835>";
     const auto HypesquadBrilliance   = "<:BadgeBrilliance:1043798261137408060>";
 
-    const auto ActiveDeveloper       = "<:BadgeActiveDeveloper:1047528637013962792>";
+    const auto ActiveDeveloper       = "<:BadgeActiveDeveloper:1048550931966468106>";
     
     auto       hasStaffBadge         = "";
     auto       hasPartnerBadge       = "";
@@ -107,6 +107,7 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
 
     // Cannot get nitro badge, probably, I read doc again
     // Working with another way
+    // Nitro and boost badge will be soon added when I know some methods!
 
     const auto avatar    = tgtId.get_avatar_url();
     const auto usrID     = fmt::format("{}", tgtId.id);
@@ -114,14 +115,18 @@ void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event)
     const auto usrName   = fmt::format("{}", tgtId.format_username());
     
     // The badge cannot show now because the pointer is error ... will fix it ASAP
-    auto       BadgeShow = fmt::format("{}{}{}{}{}{}{}{}{}{}{}",
+    auto       BadgeShow = fmt::format("{} {} {} {} {} {} {} {} {} {} {}",
         hasStaffBadge,     hasPartnerBadge,  hasModBadge,      hasEventBadge,    hasHouseBadge,
         hasBugHunterBadge, hasActiveDev,     hasBotDevBadge,   hasEarlySupBadge, hasNitroBadge, 
         hasBoostBadge
     );
 
+    // Create a copy memory
+    auto       CopyBadgeShow  = BadgeShow;
+    const auto CheckFormatter = StringFormatter(CopyBadgeShow);
+
     // Check if the user doesn't have any badge
-    if (BadgeShow == "")
+    if (CheckFormatter == "")
         BadgeShow = "No badge found!";
 
     // Add view profile linking button

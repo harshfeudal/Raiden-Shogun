@@ -31,4 +31,11 @@ inline void EmbedInfoBuild(dpp::embed& embed, std::string avatar, std::string us
          .set_timestamp(time(nullptr));
 }
 
-void userInfo(dpp::cluster& client, const dpp::slashcommand_t& event);
+
+inline std::string StringFormatter(std::string &str)
+{
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    return str;
+}
+
+void infouser(dpp::cluster& client, const dpp::slashcommand_t& event);
