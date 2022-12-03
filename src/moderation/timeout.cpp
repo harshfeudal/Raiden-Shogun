@@ -188,11 +188,6 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 				break;
 	}
 
-	std::cout << DayCount << std::endl;
-	std::cout << HourCount << std::endl;
-	std::cout << MinuteCount << std::endl;
-	std::cout << SecondCount << std::endl;
-
 	// Check all error cases occur
 	if (std::isdigit(input[input.size() - 1]) && sec > 0)
 		error = true;
