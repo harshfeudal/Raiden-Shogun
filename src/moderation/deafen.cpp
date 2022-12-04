@@ -143,8 +143,10 @@ void deafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 			const auto  mContent   = fmt::format("<@{}> has been deafened!", usr);
             auto        DeafenUser = dpp::find_guild_member(tgtGuild, usr);
 
-            // Deafen the target user - Working in progress ...
-			// DeafenUser.set_deaf(true);
+			auto GuildMember = dpp::find_guild_member(tgtGuild, usr);
+
+            // Deafen the target user
+			client.guild_edit_member(GuildMember.set_deaf(true));
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
