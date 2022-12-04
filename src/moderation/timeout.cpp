@@ -115,18 +115,18 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 	// Making a function to input number string and automatically output as minute
 
-	std::string   input   = duration;
+	std::string   input        = duration;
 
-    uint64_t sec          = 0;
-    uint64_t temp         = 0;
+    uint64_t      sec          = 0;
+    uint64_t      temp         = 0;
 
-    bool     bSyntax      = 0;
-	bool     error        = 0;
+    bool          bSyntax      = 0;
+	bool          error        = 0;
 
-	int DayCount          = 0;
-	int HourCount         = 0;
-	int MinuteCount       = 0;
-	int SecondCount       = 0;
+	int           DayCount     = 0;
+	int           HourCount    = 0;
+	int           MinuteCount  = 0;
+	int           SecondCount  = 0;
 
 	// Automatically convert if no day format
 	if (isNumber(input))

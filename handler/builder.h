@@ -27,6 +27,8 @@
 #include "../commands/moderation/timeout.h"
 #include "../commands/moderation/nickname.h"
 #include "../commands/moderation/disconnect.h"
+#include "../commands/moderation/move.h"
+#include "../commands/moderation/deafen.h"
 
 #include "../commands/information/ping.h"
 #include "../commands/information/infouser.h"
@@ -104,8 +106,28 @@ inline std::map<std::string, commandDef> commands
             {
                 "Disconnect a user in the voice call", disconnect,
                 {
-                    dpp::command_option(dpp::co_user,  "user",   "User that you want to disconnect",  true),
-                    dpp::command_option(dpp::co_string,"reason", "Reason why they gain a disconnect", false)
+                    dpp::command_option(dpp::co_user,   "user",   "User that you want to disconnect",  true),
+                    dpp::command_option(dpp::co_string, "reason", "Reason why they gain a disconnect", false)
+                }
+            }
+    },
+	{
+        "move",
+            {
+                "Move a user to another voice call", move,
+                {
+                    dpp::command_option(dpp::co_user,    "user",    "User that you want to move",  true),
+                    dpp::command_option(dpp::co_channel, "channel", "New voice channel",           true),
+                    dpp::command_option(dpp::co_string,  "reason",  "Reason why they gain a move", false)
+                }
+            }
+    },
+	{
+        "deafen",
+            {
+                "Deafen a user in the voice call", deafen,
+                {
+                    dpp::command_option(dpp::co_user,  "user",   "User that you want to disconnect",  true)
                 }
             }
     },

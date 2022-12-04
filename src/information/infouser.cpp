@@ -32,6 +32,15 @@ void infouser(dpp::cluster& client, const dpp::slashcommand_t& event)
 	
 	const auto cmdUser               = event.command.usr;
     auto       usrId                 = cmdUser.id;
+
+    /**
+     * Notes:
+     * 
+     * For now, these emojis are not the same size, I'll clone a new one using
+     * Discord assets library (.svg). 
+     * 
+     * The size when the bot clone the emoji is: 200 x 200
+     */
     
     const auto StaffBadge            = "<:BadgeStaff:1043810278564970568>";
     const auto PartnerBadge          = "<:BadgePartner:1043810326862381078>";

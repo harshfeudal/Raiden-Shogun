@@ -16,24 +16,23 @@
 
 #include <spdlog/spdlog.h>
 
-#include "../../commands/moderation/move.h"
+#include "../../commands/moderation/deafen.h"
 #include "../../handler/handler.h"
 #include "../../handler/btnHandler.h"
 
-void move(dpp::cluster& client, const dpp::slashcommand_t& event)
+void deafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 {
 	const auto  errorTitle       = "<:failed:1036206712916553748> Error";
 	const auto  warnTitle        = "Warning message";
 
 	const auto  usr              = std::get<dpp::snowflake>(event.get_parameter("user"));
-    const auto  NewChannel       = std::get<dpp::snowflake>(event.get_parameter("channel"));
 	const auto  gFind            = dpp::find_guild(event.command.guild_id);
 
 	const auto  tgtReason        = event.get_parameter("reason");
 	const auto  source           = event.command.usr.id;
 	const auto  tgtGuild         = event.command.guild_id;
 	const auto  tgtChannel       = event.command.channel_id;
-	const auto  clientPermission = event.command.app_permissions.has(dpp::p_move_members);
+	const auto  clientPermission = event.command.app_permissions.has(dpp::p_deafen_members);
 
 	const auto  tgtUser          = gFind->members.find(usr);
 	
@@ -63,9 +62,9 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 
 	// If the command user doesn't have any permission
-	if (!gFind->base_permissions(event.command.member).has(dpp::p_move_members))
+	if (!gFind->base_permissions(event.command.member).has(dpp::p_deafen_members))
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to move member", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to deafen member", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -76,7 +75,7 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 	// If the bot doesn't have any permission
 	if (!clientPermission)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to move member", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I have lack of permission to deafen member", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -84,10 +83,10 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	// If they try to move a guild owner
+	// If they try to deafen a guild owner
 	if (usr == gFind->owner_id)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot move the owner", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot deafen the owner", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -95,10 +94,10 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	// If they move theirselves
+	// If they deafen theirselves
 	if (usr == source)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot move yourself", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot deafen yourself", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -106,10 +105,10 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	// If they try to move the bot
+	// If they try to deafen the bot
 	if (usr == client.me.id)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Why do you move me :(", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Why do you deafen me :(", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -131,28 +130,21 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 	auto d_Component   = dpp::component();
 	auto cnl_Component = dpp::component();
 
-	d_Component.set_label("Move").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("d_Id");
+	d_Component.set_label("Deafen").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("d_Id");
 	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("d_cnl_Id");
 
 	// Button for moving
-	ButtonBind(d_Component, [&client, NewChannel, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
+	ButtonBind(d_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
 			// If not the user who request that interaction
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto  mContent = fmt::format("<@{}> has been moved!", usr);
-            std::string m_Reason = "No reason provided";
+			const auto  mContent   = fmt::format("<@{}> has been deafened!", usr);
+            auto        DeafenUser = dpp::find_guild_member(tgtGuild, usr);
 
-			// If reason is provided
-			if (std::holds_alternative<std::string>(tgtReason))
-                m_Reason = std::get<std::string>(tgtReason);
-
-            // Note: this is Discord Bug!
-			client.set_audit_reason(m_Reason);
-
-            // Move the target user
-            client.guild_member_move(NewChannel, tgtGuild, usr);
+            // Deafen the target user - Working in progress ...
+			// DeafenUser.set_deaf(true);
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
@@ -182,7 +174,7 @@ void move(dpp::cluster& client, const dpp::slashcommand_t& event)
 		});
 
 	dpp::message d_Confirm(
-		fmt::format("Do you want to move <@{}>? Press the button below to confirm", usr)
+		fmt::format("Do you want to deafen <@{}>? Press the button below to confirm", usr)
 	);
 
 	d_Confirm.add_component(
