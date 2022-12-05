@@ -30,6 +30,7 @@
 #include "../commands/moderation/move.h"
 #include "../commands/moderation/deafen.h"
 #include "../commands/moderation/undeafen.h"
+#include "../commands/moderation/mute.h"
 
 #include "../commands/information/ping.h"
 #include "../commands/information/infouser.h"
@@ -135,9 +136,18 @@ inline std::map<std::string, commandDef> commands
 	{
         "undeafen",
             {
-                "Uneafen a user in the voice call", deafen,
+                "Uneafen a user in the voice call", undeafen,
                 {
                     dpp::command_option(dpp::co_user,  "user",   "User that you want to undeafen",  true)
+                }
+            }
+    },
+	{
+        "mute",
+            {
+                "Mute a user in the voice call", mute,
+                {
+                    dpp::command_option(dpp::co_user,  "user",   "User that you want to mute",  true)
                 }
             }
     },

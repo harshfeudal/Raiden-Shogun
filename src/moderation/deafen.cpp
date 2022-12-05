@@ -133,7 +133,7 @@ void deafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 	d_Component.set_label("Deafen").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("d_Id");
 	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("d_cnl_Id");
 
-	// Button for moving
+	// Button for defening
 	ButtonBind(d_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
 			// If not the user who request that interaction
