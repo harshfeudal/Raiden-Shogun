@@ -62,7 +62,7 @@ void undeafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 
 	// If the command user doesn't have any permission
-	if (!gFind->base_permissions(event.command.member).has(dpp::p_un-deafen_members))
+	if (!gFind->base_permissions(event.command.member).has(dpp::p_deafen_members))
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You have lack of permission to un-deafen member", event.command.usr);
 		event.reply(
@@ -127,14 +127,14 @@ void undeafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	auto d_Component   = dpp::component();
-	auto cnl_Component = dpp::component();
+	auto ud_Component   = dpp::component();
+	auto cnl_Component  = dpp::component();
 
-	d_Component.set_label("Un-deafen").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("d_Id");
+	ud_Component.set_label("Un-deafen").set_type(dpp::cot_button).set_style(dpp::cos_danger).set_emoji("success", 1036206685779398677).set_id("d_Id");
 	cnl_Component.set_label("Cancel").set_type(dpp::cot_button).set_style(dpp::cos_success).set_emoji("failed", 1036206712916553748).set_id("d_cnl_Id");
 
 	// Button for moving
-	ButtonBind(d_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
+	ButtonBind(ud_Component, [&client, tgtGuild, tgtReason, usr, source](const dpp::button_click_t& event)
 		{
 			// If not the user who request that interaction
 			if (source != event.command.usr.id)
@@ -178,7 +178,7 @@ void undeafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 	);
 
 	d_Confirm.add_component(
-		dpp::component().add_component(d_Component)
+		dpp::component().add_component(ud_Component)
 		                .add_component(cnl_Component)
 	);
 
