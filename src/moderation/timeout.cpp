@@ -100,20 +100,7 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	if (usr == client.me.id)
-	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Why do you timeout me :(", event.command.usr);
-		event.reply(
-			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
-		);
-
-		return;
-	}
-
 	// Time format engine
-	// Working in progress ...
-
-	// Making a function to input number string and automatically output as minute
 
 	std::string   input        = duration;
 
@@ -198,6 +185,22 @@ void timeout(dpp::cluster& client, const dpp::slashcommand_t& event)
 	if (error)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Wrong time format", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
+
+	// If target the bot
+	if (usr == client.me.id)
+	{
+		std::string TimeOutErrorContent = "Why do you timeout me :(";
+
+		if (sec = 0)
+			TimeOutErrorContent = "Thanks, but I'll never get a mute :>";
+
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, TimeOutErrorContent, event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
