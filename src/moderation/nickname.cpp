@@ -82,10 +82,10 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	// If they try to ban a guild owner
-	if (usr == gFind->owner_id)
+	// If they try to change nickname a guild owner
+	if (usr == gFind->owner_id && event.command.usr.id != gFind->owner_id)
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot change nickname the owner", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot change or clear nickname from the owner", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -93,8 +93,24 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	std::string NicknameStatus;
-	const auto  announce = fmt::format("Nickname {} from <@{}>!", NicknameStatus, usr);
+	// If the owner use the bot to change their nickname
+	if (event.command.usr.id == gFind->owner_id)
+	{
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, 
+					"I'm sorry, currently Discord doesn't allow me to change your nickname because you're owner of this server", event.command.usr);
+		event.reply(
+			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
+		);
+
+		return;
+	}
+
+	std::string       NicknameStatus = "changed";
+
+	const std::string SelfNickStatus = fmt::format("You have {} your nickname", NicknameStatus     );
+	const auto        announce       = fmt::format("Nickname {} from <@{}>!",   NicknameStatus, usr);
+
+	std::string       ReplyContent   = announce;
 
 	// If the nickname is set or clear
 	if (std::holds_alternative<std::string>(setNickname) == true)
@@ -103,10 +119,11 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 			getNicknameEditUsr.set_nickname(std::get<std::string>(setNickname))
 		);
 
-		NicknameStatus = "changed";
+		if (event.command.usr.id == usr)
+			ReplyContent = SelfNickStatus;
 
 		event.reply(
-			dpp::message().set_content(announce)
+			dpp::message().set_content(ReplyContent)
 			              .set_flags(dpp::m_ephemeral)
 		);
 	}
@@ -118,8 +135,11 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 
 		NicknameStatus = "cleared";
 
+		if (event.command.usr.id == usr)
+			ReplyContent = SelfNickStatus;
+
 		event.reply(
-			dpp::message().set_content(announce)
+			dpp::message().set_content(ReplyContent)
 			              .set_flags(dpp::m_ephemeral)
 		);
 	}

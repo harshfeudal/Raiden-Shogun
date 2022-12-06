@@ -143,7 +143,7 @@ void mute(dpp::cluster& client, const dpp::slashcommand_t& event)
 			const auto  mContent    = fmt::format("<@{}> has been muted!", usr);
 			auto        GuildMember = dpp::find_guild_member(tgtGuild, usr);
 
-            // Mute the target user
+            // Mute the target user - Checking all cases ...
 			client.guild_edit_member(GuildMember.set_mute(true));
 
 			event.reply(

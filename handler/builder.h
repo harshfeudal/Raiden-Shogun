@@ -152,7 +152,7 @@ inline std::map<std::string, commandDef> commands
             }
     },
 	{
-		"setnickname",
+		"nick",
 			{
 				"Change member nickname or reset to their original username", nickname,
 				{
