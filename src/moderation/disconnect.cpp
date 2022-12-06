@@ -106,9 +106,9 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 
 	// If they try to disconnect the bot
-	if (usr == client.me.id)
+	if (!Guild->connect_member_voice(client.me.id))
 	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "Why do you disconnect me :(", event.command.usr);
+		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "I'm not in voice call to disconnect :>", event.command.usr);
 		event.reply(
 			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
 		);
@@ -140,8 +140,11 @@ void disconnect(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto  dContent = fmt::format("<@{}> has been disconnected!", usr);
+			auto        dContent = fmt::format("<@{}> has been disconnected!", usr);
             std::string d_Reason = "No reason provided";
+
+			if (usr == client.me.id)
+				dContent = "I have disconnected :>";
 
 			// If reason is provided
 			if (std::holds_alternative<std::string>(tgtReason))

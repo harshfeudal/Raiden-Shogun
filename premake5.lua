@@ -23,6 +23,7 @@ project "Raiden Shogun"
 		"commands/**.h", 
 		"commands/moderation/**.h",
 		"commands/utility/**.h",
+		"handler/**.h",
 		"Raiden Shogun.rc" 
 	}
 

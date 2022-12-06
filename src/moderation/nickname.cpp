@@ -93,6 +93,9 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
+	std::string NicknameStatus;
+	const auto  announce = fmt::format("Nickname {} from <@{}>!", NicknameStatus, usr);
+
 	// If the nickname is set or clear
 	if (std::holds_alternative<std::string>(setNickname) == true)
 	{
@@ -100,7 +103,8 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 			getNicknameEditUsr.set_nickname(std::get<std::string>(setNickname))
 		);
 
-		const auto announce = fmt::format("Nickname {} from <@{}>!", "changed", usr);
+		NicknameStatus = "changed";
+
 		event.reply(
 			dpp::message().set_content(announce)
 			              .set_flags(dpp::m_ephemeral)
@@ -112,7 +116,8 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 			getNicknameEditUsr.set_nickname(dpp::find_user(usr)->username)
 		);
 
-		const auto announce = fmt::format("Nickname {} from <@{}>!", "cleared", usr);
+		NicknameStatus = "cleared";
+
 		event.reply(
 			dpp::message().set_content(announce)
 			              .set_flags(dpp::m_ephemeral)

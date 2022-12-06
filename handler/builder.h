@@ -175,8 +175,8 @@ inline void SlashCommandCreate(dpp::cluster& client)
 
 			// Create slash command template
 			cmd.set_name(def.first)
-			.set_description(def.second.description)
-			.set_application_id(client.me.id);
+			   .set_description(def.second.description)
+			   .set_application_id(client.me.id);
 
 			cmd.options = def.second.param;
 
