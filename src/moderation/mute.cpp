@@ -144,7 +144,10 @@ void mute(dpp::cluster& client, const dpp::slashcommand_t& event)
 			auto        GuildMember = dpp::find_guild_member(tgtGuild, usr);
 
             // Mute the target user - Checking all cases ...
-			client.guild_edit_member(GuildMember.set_mute(true));
+			if (GuildMember.is_deaf())
+				client.guild_edit_member(GuildMember.set_mute(true).set_deaf(true));
+			else
+				client.guild_edit_member(GuildMember.set_mute(true));
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
