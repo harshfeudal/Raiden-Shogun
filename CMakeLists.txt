@@ -22,7 +22,7 @@ aux_source_directory(src/information information)
 aux_source_directory(src/moderation moderation)
 aux_source_directory(src/utility utility)
 
-add_executable(${PROJECT_NAME} ${mainsrc} ${information} ${moderation} ${utility} )
+add_executable(${PROJECT_NAME} ${mainsrc} ${information} ${moderation} ${utility} "Raiden Shogun.rc" )
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/lib/dpp.lib)
 target_include_directories(${PROJECT_NAME} PRIVATE "include" "lib")

@@ -140,14 +140,16 @@ void mute(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto  mContent    = fmt::format("<@{}> has been muted!", usr);
-			auto        GuildMember = dpp::find_guild_member(tgtGuild, usr);
+			const auto      mContent       = fmt::format("<@{}> has been muted!", usr);
+			auto            TargetVoiceMem = dpp::find_guild_member(tgtGuild, usr);
 
-            // Mute the target user - Checking all cases ...
-			if (GuildMember.is_deaf())
-				client.guild_edit_member(GuildMember.set_mute(true).set_deaf(true));
+			dpp::voicestate VoiceState;
+
+			if (VoiceState.is_deaf())
+				// Don't know why, but it detects self deafen not server deafen
+				client.guild_edit_member(TargetVoiceMem.set_deaf(true).set_mute(true));
 			else
-				client.guild_edit_member(GuildMember.set_mute(true));
+				client.guild_edit_member(TargetVoiceMem.set_mute(true));
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
