@@ -152,6 +152,15 @@ inline std::map<std::string, commandDef> commands
             }
     },
 	{
+        "unmute",
+            {
+                "Unmute a user in the voice call", mute,
+                {
+                    dpp::command_option(dpp::co_user,  "user",   "User that you want to unmute",  true)
+                }
+            }
+    },
+	{
 		"nick",
 			{
 				"Change member nickname or reset to their original username", nickname,
