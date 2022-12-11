@@ -42,7 +42,7 @@ void SlashCommandCreate(dpp::cluster& client);
 inline std::map<std::string, commandDef> commands
 {
 	{
-		"ping", { "Check bot latecy", ping }
+		"ping", { "Check bot latency", ping }
 	},
 	{
 		"kick",
