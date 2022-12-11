@@ -31,6 +31,7 @@
 #include "../commands/moderation/deafen.h"
 #include "../commands/moderation/undeafen.h"
 #include "../commands/moderation/mute.h"
+#include "../commands/moderation/unmute.h"
 
 #include "../commands/information/ping.h"
 #include "../commands/information/infouser.h"
@@ -154,7 +155,7 @@ inline std::map<std::string, commandDef> commands
 	{
         "unmute",
             {
-                "Unmute a user in the voice call", mute,
+                "Unmute a user in the voice call", unmute,
                 {
                     dpp::command_option(dpp::co_user,  "user",   "User that you want to unmute",  true)
                 }
