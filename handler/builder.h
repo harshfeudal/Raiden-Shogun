@@ -67,7 +67,7 @@ inline std::map<std::string, commandDef> commands
 	{
 		"unban",
 			{
-				"Ban a member you mentioned", unban,
+				"Unban a member you mentioned", unban,
 				{
 					dpp::command_option(dpp::co_user,   "member", "Mention a member to unban",  true),
 					dpp::command_option(dpp::co_string, "reason", "Reason why they remove ban", false)
@@ -136,7 +136,7 @@ inline std::map<std::string, commandDef> commands
 	{
         "undeafen",
             {
-                "Uneafen a user in the voice call", undeafen,
+                "Undeafen a user in the voice call", undeafen,
                 {
                     dpp::command_option(dpp::co_user,  "user",   "User that you want to undeafen",  true)
                 }
