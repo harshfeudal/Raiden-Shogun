@@ -140,11 +140,21 @@ void undeafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 			if (source != event.command.usr.id)
 				return false;
 
-			const auto  mContent    = fmt::format("<@{}> has been un-deafened!", usr);
-			auto        GuildMember = dpp::find_guild_member(tgtGuild, usr);
+			const auto  mContent       = fmt::format("<@{}> has been un-deafened!", usr);
+			auto        TargetVoiceMem = dpp::find_guild_member(tgtGuild, usr);
 
-            // Un-deafen the target user
-			client.guild_edit_member(GuildMember.set_deaf(false));
+            dpp::voicestate VoiceState;
+
+			std::cout << "------------------ UNDEAFEN" << std::endl;
+			std::cout << "Self Deaf: " << dpp::voicestate().is_self_deaf() << std::endl;
+			std::cout << "Server Deaf: " << dpp::voicestate().is_deaf() << std::endl;
+			std::cout << "Self Mute: " << dpp::voicestate().is_self_mute() << std::endl;
+			std::cout << "Server Mute: " << dpp::voicestate().is_mute() << std::endl;
+
+			if (VoiceState.is_mute())
+				client.guild_edit_member(TargetVoiceMem.set_mute(true).set_deaf(false));
+			else
+				client.guild_edit_member(TargetVoiceMem.set_deaf(false));
 
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
