@@ -147,10 +147,10 @@ void mute(dpp::cluster& client, const dpp::slashcommand_t& event)
 			dpp::voicestate VoiceState;
 
 			std::cout << "------------------ MUTE" << std::endl;
-			std::cout << "Self Deaf: " << dpp::voicestate().is_self_deaf() << std::endl;
-			std::cout << "Server Deaf: " << dpp::voicestate().is_deaf() << std::endl;
-			std::cout << "Self Mute: " << dpp::voicestate().is_self_mute() << std::endl;
-			std::cout << "Server Mute: " << dpp::voicestate().is_mute() << std::endl;
+			std::cout << "Self Deaf: " << VoiceState.is_self_deaf() << std::endl;
+			std::cout << "Server Deaf: " << VoiceState.is_deaf() << std::endl;
+			std::cout << "Self Mute: " << VoiceState.is_self_mute() << std::endl;
+			std::cout << "Server Mute: " << VoiceState.is_mute() << std::endl;
 
 			if (VoiceState.is_deaf())
 				client.guild_edit_member(TargetVoiceMem.set_mute(true).set_deaf(true));
