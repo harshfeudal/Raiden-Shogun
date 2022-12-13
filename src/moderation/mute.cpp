@@ -143,6 +143,7 @@ void mute(dpp::cluster& client, const dpp::slashcommand_t& event)
 			const auto      mContent       = fmt::format("<@{}> has been muted!", usr);
 			auto            TargetVoiceMem = dpp::find_guild_member(tgtGuild, usr);
 
+			// This need to fix!
 			dpp::voicestate VoiceState;
 
 			std::cout << "------------------ MUTE" << std::endl;
