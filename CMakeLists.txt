@@ -15,7 +15,7 @@
 # 
 
 cmake_minimum_required(VERSION 3.15)
-project(Raiden-Shogun VERSION 0.1.6.0 DESCRIPTION "A new Genshin Impact Discord bot, using Dpp version 10.0.21")
+project(Raiden-Shogun VERSION 0.1.6.0 DESCRIPTION "A new Genshin Impact Discord bot, using Dpp version 10.0.22 BETA")
 
 aux_source_directory(src mainsrc)
 aux_source_directory(src/information information)
