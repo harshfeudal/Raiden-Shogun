@@ -28,7 +28,7 @@ These are libraries that we're using in this project:
 - [Base64](https://gist.github.com/tomykaira/f0fd86b6c73063283afe550bc5d77594)
 
 Bot current version: 
-- BETA version - `0.1.6` (`x64` Release) [Not official BETA released]
+- BETA version - `0.1.7` (`x64` Release) [Not official BETA released]
 - Stable version - `Unknown` (Will be officially released on late December if possible, or at final BETA version - `v0.1.9.0`)
 
  For downloading **latest version**, please click [here](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases).
