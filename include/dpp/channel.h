@@ -75,6 +75,7 @@ enum channel_flags : uint16_t {
 	c_pinned_thread =	0b0000000010000000,
 	/// Whether a tag is required to be specified when creating a thread in a forum channel. Tags are specified in the thread::applied_tags field.
 	c_require_tag =		0b0000000100000000,
+	/* Note that the 9th and 10th bit are used for the forum layout type */
 };
 
 /**
@@ -95,6 +96,15 @@ enum default_forum_sort_order_t : uint8_t {
 	so_latest_activity = 0,
 	/// Sort forum posts by creation time (from most recent to oldest)
 	so_creation_date = 1,
+};
+
+/**
+ * @brief Types of forum layout views that indicates how the threads in a forum channel will be displayed for users by default
+ */
+enum forum_layout_type : uint8_t {
+	fl_not_set = 0, //!< No default has been set for the forum channel
+	fl_list_view = 1, //!< Display posts as a list
+	fl_gallery_view = 2, //!< Display posts as a collection of tiles
 };
 
 /**
@@ -306,7 +316,7 @@ public:
 	/** Sorting position, lower number means higher up the list */
 	uint16_t position;
 
-	/** the bitrate (in bits) of the voice channel */
+	/** the bitrate (in kilobits) of the voice channel */
 	uint16_t bitrate;
 
 	/** amount of seconds a user has to wait before sending another message (0-21600); bots, as well as users with the permission manage_messages or manage_channel, are unaffected*/
@@ -335,6 +345,13 @@ public:
 
 	/** Destructor */
 	virtual ~channel();
+
+	/**
+	* @brief Create a mentionable channel.
+	* @param id The ID of the channel.
+	* @return std::string The formatted mention of the channel.
+	*/
+	static std::string get_mention(const snowflake& id);
 
 	/** Read class values from json object
 	 * @param j A json object to read from
@@ -378,6 +395,14 @@ public:
 	 * @return Reference to self, so these method calls may be chained
 	 */
 	channel& set_type(channel_type type);
+
+	/**
+	 * @brief Set the default forum layout type for the forum channel
+	 *
+	 * @param layout_type The layout type
+	 * @return Reference to self, so these method calls may be chained
+	 */
+	channel& set_default_forum_layout(forum_layout_type layout_type);
 
 	/**
 	 * @brief Set flags for this channel object
@@ -438,7 +463,7 @@ public:
 	/**
 	 * @brief Set bitrate of this channel object
 	 *
-	 * @param bitrate Bitrate to set
+	 * @param bitrate Bitrate to set (in kilobits)
 	 * @return Reference to self, so these method calls may be chained 
 	 */
 	channel& set_bitrate(const uint16_t bitrate);
@@ -486,6 +511,13 @@ public:
 	 * @return channel_type Channel type
 	 */
 	channel_type get_type() const;
+
+	/**
+	 * @brief Get the default forum layout type used to display posts in forum channels
+	 *
+	 * @return forum_layout_types Forum layout type
+	 */
+	forum_layout_type get_default_forum_layout() const;
 
 	/**
 	 * @brief Get the mention ping for the channel

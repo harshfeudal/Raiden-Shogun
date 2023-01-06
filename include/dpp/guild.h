@@ -114,7 +114,9 @@ enum guild_flags : uint32_t {
 	g_monetization_enabled =		0b00000001000000000000000000000000,
 	/** guild has increased custom sticker slots */
 	g_more_stickers =			0b00000010000000000000000000000000,
-	/** guild has access to create private threads */
+	/** guild has access to create private threads
+	 * @deprecated Removed by Discord
+	 * */
 	g_private_threads =			0b00000100000000000000000000000000,
 	/** guild is able to set role icons */
 	g_role_icons =				0b00001000000000000000000000000000,
@@ -150,15 +152,15 @@ enum guild_flags_extra : uint8_t {
  */
 enum guild_member_flags : uint8_t {
 	/** Member deafened in voice channels */
-	gm_deaf =		0b00001,
+	gm_deaf =		0b00000001,
 	/** Member muted in voice channels */
-	gm_mute =		0b00010,
+	gm_mute =		0b00000010,
 	/** Member pending verification by membership screening */
-	gm_pending =		0b00100,
+	gm_pending =		0b00000100,
 	/** Member has animated guild-specific avatar */
-	gm_animated_avatar = 	0b01000,
+	gm_animated_avatar = 	0b00001000,
 	/** gm_deaf or gm_mute has been toggled */
-	gm_voice_action = 			0b10000,
+	gm_voice_action = 		0b00010000,
 };
 
 /**
@@ -864,6 +866,7 @@ public:
 	/**
 	 * @brief guild has access to create private threads
 	 * @return bool has private threads
+	 * @deprecated Removed by Discord
 	 */
 	bool has_private_threads() const;
 
