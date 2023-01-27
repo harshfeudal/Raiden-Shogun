@@ -85,7 +85,7 @@ int main()
 			// Handling the button event
 			ButtonHandle(event);
 		});
-	
+
 	// Console log prettier
 	SetConsoleTitle(TEXT("[BETA] 0.1.7.0 - Raiden Shogun Discord Bot - The Harshfeudal Projects"));
 
