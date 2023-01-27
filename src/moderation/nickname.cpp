@@ -83,7 +83,7 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 	}
 
 	// If they try to change nickname a guild owner
-	if (usr == gFind->owner_id && event.command.usr.id != gFind->owner_id)
+	if (event.command.usr.id != gFind->owner_id && usr == gFind->owner_id)
 	{
 		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, "You cannot change or clear nickname from the owner", event.command.usr);
 		event.reply(
@@ -93,19 +93,7 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 		return;
 	}
 
-	// If the owner use the bot to change their nickname
-	if (event.command.usr.id == gFind->owner_id)
-	{
-		EmbedBuild(embed, 0xFF7578, errorTitle, warnTitle, 
-					"I'm sorry, currently Discord doesn't allow me to change your nickname because you're owner of this server", event.command.usr);
-		event.reply(
-			dpp::message(event.command.channel_id, embed).set_flags(dpp::m_ephemeral)
-		);
-
-		return;
-	}
-
-	std::string       NicknameStatus = "changed";
+	std::string       NicknameStatus;
 
 	const std::string SelfNickStatus = fmt::format("You have {} your nickname", NicknameStatus     );
 	const auto        announce       = fmt::format("Nickname {} from <@{}>!",   NicknameStatus, usr);
@@ -118,6 +106,8 @@ void nickname(dpp::cluster& client, const dpp::slashcommand_t& event)
 		client.guild_edit_member(
 			getNicknameEditUsr.set_nickname(std::get<std::string>(setNickname))
 		);
+
+		NicknameStatus = "changed";
 
 		if (event.command.usr.id == usr)
 			ReplyContent = SelfNickStatus;
