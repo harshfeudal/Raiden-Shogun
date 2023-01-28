@@ -68,6 +68,13 @@ int main()
 			// Confirm logger
 			fmt::print("[{} - STARTED]: {} is online!\n", dpp::utility::current_date_time(), client.me.format_username());
 			fmt::print("[{} - REGISTERED]: Successfully registered slash commands!\n", dpp::utility::current_date_time());
+			std::cout << "Dpp version: " << dpp::utility::version() << std::endl;
+		});
+
+	client.on_button_click([](const dpp::button_click_t& event)
+		{
+			// Handling the button event
+			ButtonHandle(event);
 		});
 
 	client.on_slashcommand([&client](const dpp::slashcommand_t& event)
@@ -80,14 +87,8 @@ int main()
 				commandFilter->second.function(client, event);
 		});
 
-	client.on_button_click([](const dpp::button_click_t& event)
-		{
-			// Handling the button event
-			ButtonHandle(event);
-		});
-
 	// Console log prettier
-	SetConsoleTitle(TEXT("[BETA] 0.1.7.0 - Raiden Shogun Discord Bot - The Harshfeudal Projects"));
+	SetConsoleTitle(TEXT("[BETA] 0.1.7.1 - Raiden Shogun Discord Bot - The Harshfeudal Projects"));
 
 	// Use this logger to check why the code is error (remove when done)
 	// client.on_log(dpp::utility::cout_logger());

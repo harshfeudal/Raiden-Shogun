@@ -143,19 +143,9 @@ void deafen(dpp::cluster& client, const dpp::slashcommand_t& event)
 			const auto  mContent       = fmt::format("<@{}> has been deafened!", usr);
 			auto        TargetVoiceMem = dpp::find_guild_member(tgtGuild, usr);
 
-			if (TargetVoiceMem.is_muted())
-			{
-				TargetVoiceMem.set_mute(true);
-				TargetVoiceMem.set_deaf(true);
-
-				client.guild_edit_member(TargetVoiceMem);
-			}
-			else
-			{
-				TargetVoiceMem.set_deaf(true);
-				client.guild_edit_member(TargetVoiceMem);
-			}
-
+			TargetVoiceMem.set_deaf(true);
+			client.guild_edit_member(TargetVoiceMem);
+			
 			event.reply(
 				dpp::interaction_response_type::ir_update_message,
 				dpp::message().set_flags(dpp::m_ephemeral)

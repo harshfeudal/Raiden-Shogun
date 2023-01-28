@@ -24,7 +24,8 @@ project "Raiden Shogun"
 		"commands/moderation/**.h",
 		"commands/utility/**.h",
 		"handler/**.h",
-		"Raiden Shogun.rc" 
+		"Raiden Shogun.rc",
+        "resource.h"
 	}
 
 	filter { "system:windows", "toolset:msc" }

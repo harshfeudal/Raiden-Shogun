@@ -196,5 +196,6 @@ inline void SlashCommandCreate(dpp::cluster& client)
 
 		// Create a global slash commands
 		client.global_bulk_command_create(slashCmds);
+		client.guild_bulk_command_create({ }, 788499352297406484);
 	}
 }
