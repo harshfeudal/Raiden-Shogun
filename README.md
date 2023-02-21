@@ -4,15 +4,15 @@
         <p>A new Genshin Impact Discord bot, using Dpp version 10.0.22</p>
     </b>
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/Harshfeudal-Projects/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Harshfeudal-Projects/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
-[![GitHub issues](https://img.shields.io/github/issues/Harshfeudal-Projects/Raiden-Shogun)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/issues)
-[![GitHub license](https://img.shields.io/github/license/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/LICENSE)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b02c00e09b054b0ca1e3d64227000259)](https://www.codacy.com/gh/harshfeudal/Raiden-Shogun/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=harshfeudal/Raiden-Shogun&amp;utm_campaign=Badge_Grade)
+[![GitHub issues](https://img.shields.io/github/issues/harshfeudal/Raiden-Shogun)](https://github.com/harshfeudal/Raiden-Shogun/issues)
+[![GitHub license](https://img.shields.io/github/license/harshfeudal/Raiden-Shogun?color=brightgreen)](https://github.com/harshfeudal/Raiden-Shogun/blob/main/LICENSE)
 [![Discord](https://img.shields.io/discord/900408551573438584?style=flat&logo=discord)](https://discord.gg/6Faaqhaqjs)
 <br />
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/blob/main/CODE_OF_CONDUCT.md)
-[![GitHub stars](https://img.shields.io/github/stars/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/Harshfeudal-Projects/Raiden-Shogun?color=ff69b4)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/network)
-[![Release](https://img.shields.io/github/v/release/Harshfeudal-Projects/Raiden-Shogun?color=brightgreen)](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases/latest)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/harshfeudal/Raiden-Shogun/blob/main/CODE_OF_CONDUCT.md)
+[![GitHub stars](https://img.shields.io/github/stars/harshfeudal/Raiden-Shogun?color=ff69b4)](https://github.com/harshfeudal/Raiden-Shogun/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/harshfeudal/Raiden-Shogun?color=ff69b4)](https://github.com/harshfeudal/Raiden-Shogun/network)
+[![Release](https://img.shields.io/github/v/release/harshfeudal/Raiden-Shogun?color=brightgreen)](https://github.com/harshfeudal/Raiden-Shogun/releases/latest)
 [![Build status](https://ci.appveyor.com/api/projects/status/rw24l1muco30hkqx?svg=true)](https://ci.appveyor.com/project/harshfeudal/raiden-shogun)
 </div>
 
@@ -31,7 +31,7 @@ Bot current version:
 - BETA version - `0.1.7` (`x64` Release) [Not official BETA released]
 - Stable version - `Unknown` (Will be officially released on late December if possible, or at final BETA version - `v0.1.9.0`)
 
- For downloading **latest version**, please click [here](https://github.com/Harshfeudal-Projects/Raiden-Shogun/releases).
+ For downloading **latest version**, please click [here](https://github.com/harshfeudal/Raiden-Shogun/releases).
 
 ### 🚨 Generate and use
  This project was made using Visual Studio, so basically you cannot see my `.sln` files because I have ignored it. To use this project, you should generate it by using [Premake](https://premake.github.io/).
